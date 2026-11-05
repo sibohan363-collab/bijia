@@ -1,0 +1,1188 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>双十一到手价比价</title>
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="比价"><meta name="application-name" content="比价">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23e4393c%22%2F%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-size%3D%2234%22%20text-anchor%3D%22middle%22%20fill%3D%22%23fff%22%20font-family%3D%22sans-serif%22%20font-weight%3D%22700%22%3E%E6%AF%94%3C%2Ftext%3E%3C%2Fsvg%3E">
+<style>:root{color-scheme:light dark}body{margin:0;font:14px system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head><body>
+<style>
+/* Layout: phone = one column; wide = cart + coupon tools left, plans right */
+:root{
+  --bg:#f3f5f7; --surface:#ffffff; --sunk:#eef1f4; --fg:#18202a; --muted:#5b6675; --line:#dde2e8;
+  --accent:#0d6b66; --accent-soft:#dcefed;
+  --bad:#c0352b; --bad-soft:#fbe7e5; --warn:#9a5b00; --warn-soft:#fbefd9; --good:#1c7a3d; --good-soft:#e1f3e6; --info:#2f5f9e; --info-soft:#e4ecf8;
+  --jd:#c8362e; --tb:#2368b0; --pdd:#a86d00; --on:#ffffff;
+  --sans:"PingFang SC","Microsoft YaHei","Noto Sans SC","Hiragino Sans GB",system-ui,sans-serif;
+  --num:"DIN Alternate","Bahnschrift","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11151a; --surface:#1a2027; --sunk:#151a20; --fg:#e5e9ee; --muted:#9aa4b2; --line:#2b333d;
+  --accent:#4cbdb4; --accent-soft:#163533;
+  --bad:#ff7a6e; --bad-soft:#3a1f1d; --warn:#f2b04c; --warn-soft:#352914; --good:#62c987; --good-soft:#16301f; --info:#86b2f0; --info-soft:#18263a;
+  --jd:#e05a50; --tb:#4a8fd8; --pdd:#c08a1e; --on:#11151a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11151a; --surface:#1a2027; --sunk:#151a20; --fg:#e5e9ee; --muted:#9aa4b2; --line:#2b333d;
+  --accent:#4cbdb4; --accent-soft:#163533;
+  --bad:#ff7a6e; --bad-soft:#3a1f1d; --warn:#f2b04c; --warn-soft:#352914; --good:#62c987; --good-soft:#16301f; --info:#86b2f0; --info-soft:#18263a;
+  --jd:#e05a50; --tb:#4a8fd8; --pdd:#c08a1e; --on:#11151a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55}
+.wrap{max-width:1120px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+h1{font-size:24px;margin:0;text-wrap:balance;letter-spacing:.02em}
+h2{font-size:17px;margin:0;text-wrap:balance}
+h3{font-size:15px;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+.muted{color:var(--muted)} .small{font-size:13px} .note{font-size:12.5px;color:var(--muted)}
+.n{font-family:var(--num);font-variant-numeric:tabular-nums}
+.head{display:flex;flex-direction:column;gap:6px}
+.sig{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);letter-spacing:.04em;margin-top:-2px}
+.sig-mark{color:var(--tb);font-size:14px;line-height:1}
+.safe{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--good);background:var(--good-soft);border-radius:999px;padding:3px 10px;width:fit-content}
+.fresh{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.fresh .st{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600}
+.led{width:9px;height:9px;border-radius:50%;background:var(--good);flex:none}
+.led.old{background:var(--warn)}
+.fresh .btn{margin-left:auto}
+.changes{flex-basis:100%;display:flex;flex-direction:column;gap:2px;font-size:13px}
+.changes div::before{content:"• ";color:var(--accent)}
+.grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px;align-items:start}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;min-width:0;overflow-wrap:anywhere}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.dot{width:20px;height:20px;border-radius:5px;color:var(--on);font-size:12px;font-weight:700;display:inline-grid;place-items:center;flex:none}
+.badge{display:inline-block;font-size:11.5px;border-radius:4px;padding:1px 6px;font-weight:600;white-space:nowrap}
+.b-good{background:var(--good-soft);color:var(--good)} .b-bad{background:var(--bad-soft);color:var(--bad)} .b-warn{background:var(--warn-soft);color:var(--warn)} .b-info{background:var(--info-soft);color:var(--info)} .b-plain{background:var(--sunk);color:var(--muted)}
+/* cart */
+.selbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--sunk);border-radius:8px;padding:8px 10px;font-size:13.5px}
+.selbar .btn{margin-left:auto}
+#allChk{width:18px;height:18px;accent-color:var(--accent)}
+.items{display:flex;flex-direction:column}
+.item{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item.off .iname,.item.off .offers{opacity:.55}
+.item input[type=checkbox]{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent);cursor:pointer}
+.ibody{display:flex;flex-direction:column;gap:6px;min-width:0}
+.iname{font:inherit;font-weight:600;text-align:left;background:none;border:0;padding:0;color:var(--fg);cursor:pointer;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.iname .arr{font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+.offers{display:flex;flex-wrap:wrap;gap:6px}
+.offer{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;background:var(--sunk);border-radius:6px;padding:3px 8px}
+.offer .dot{width:16px;height:16px;font-size:10px;border-radius:4px}
+.offer.na{color:var(--muted)}
+.offer.pick{outline:2px solid var(--good);background:var(--good-soft)}
+.offer.chg{outline:2px dashed var(--accent)}
+.fold>summary{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;cursor:pointer;list-style:none}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::after{content:"展开 ▾";margin-left:auto;font-size:12.5px;color:var(--accent)}
+.fold[open]>summary::after{content:"收起 ▴"}
+.fold>summary h2{display:inline}
+.cards{display:flex;flex-direction:column;gap:6px}
+.jb{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.jb:last-child{border-bottom:0}
+.jb .d{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:6px;font-size:13px}
+.qb{font:inherit;width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:var(--sunk);color:var(--fg);cursor:pointer;font-size:16px;line-height:1}
+.qb:disabled{opacity:.4;cursor:default}
+.line.f .v{color:var(--bad)}
+@media (pointer:coarse){.qb{width:38px;height:38px}}
+.idet{grid-column:2/3;background:var(--sunk);border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;font-size:13px;min-width:0}
+.idet .src{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.idet .url{word-break:break-all}
+.x{font:inherit;border:0;background:none;color:var(--muted);cursor:pointer;font-size:12.5px;padding:0;text-decoration:underline;width:fit-content}
+textarea{font:inherit;font-size:14px;width:100%;min-height:64px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);color:var(--fg);resize:vertical}
+.btn{font:inherit;font-size:14px;font-weight:600;border:0;border-radius:8px;padding:8px 14px;background:var(--accent);color:var(--on);cursor:pointer}
+.btn.ghost{background:var(--sunk);color:var(--fg);border:1px solid var(--line)}
+.btn.sm{font-size:12.5px;padding:4px 10px;border-radius:6px}
+.btn.done{background:var(--good-soft);color:var(--good)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.file{display:inline-flex;align-items:center;gap:6px;cursor:pointer;position:relative}
+.file input{position:absolute;opacity:0;width:1px;height:1px}
+button:focus-visible,.file:focus-within,textarea:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* plans */
+.plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pc{font:inherit;color:inherit;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:3px;cursor:pointer;min-width:0}
+.pc[aria-pressed="true"]{border:2px solid var(--accent);padding:9px 11px;background:var(--accent-soft)}
+.pc .nm{font-weight:700;font-size:14px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pc .cost{font-size:22px;font-weight:700;line-height:1.15}
+.pc .meta{font-size:12px;color:var(--muted)}
+.pc .diff{font-size:12.5px;font-weight:600;color:var(--bad)}
+.pc .diff.zero{color:var(--good)}
+.hero{display:flex;flex-wrap:wrap;gap:6px 20px;align-items:flex-end}
+.big{font-size:30px;font-weight:700;line-height:1.05}
+.big small{font-size:16px}
+.save{font-size:14.5px;color:var(--good);font-weight:700}
+.uf{display:flex;flex-direction:column;gap:6px;margin:6px 0}
+.ufr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:6px 8px;border:1px solid var(--line);border-radius:8px}
+.ufr.pick{border-color:var(--good)}
+.ufl{display:inline-flex;align-items:center;gap:4px;min-width:6.5em;font-size:13px}
+.ufi{display:inline-flex;align-items:center;gap:2px}
+.ufi input{width:6.5em;font:inherit;font-size:16px;padding:5px 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:inherit}
+.order{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.oh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600}
+.oh .pay{margin-left:auto;font-size:18px}
+.lines{display:flex;flex-direction:column;font-size:13.5px}
+.line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line)}
+.line:last-child{border-bottom:0}
+.line .v{text-align:right}
+.line.m .v{color:var(--good)}
+.line .sub{grid-column:1/-1;font-size:12px;color:var(--muted);margin-top:-2px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-weight:600;color:var(--muted);font-size:12px}
+td.r,th.r{text-align:right}
+.traps{display:flex;flex-direction:column;gap:8px}
+.trap{border-radius:8px;padding:9px 12px;display:flex;flex-direction:column;gap:2px;font-size:13.5px}
+.trap b{font-size:14px}
+.trap.bad{background:var(--bad-soft);border-left:4px solid var(--bad)} .trap.bad b{color:var(--bad)}
+.trap.warn{background:var(--warn-soft);border-left:4px solid var(--warn)} .trap.warn b{color:var(--warn)}
+.trap.info{background:var(--info-soft);border-left:4px solid var(--info)} .trap.info b{color:var(--info)}
+/* claims */
+.claims{display:flex;flex-direction:column}
+.claim{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:start}
+.claim:last-child{border-bottom:0}
+.claim .what{font-size:14px;font-weight:600;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.claim .where{grid-column:2/4;font-size:12.5px;color:var(--muted)}
+.code{display:inline-grid;place-items:center;min-width:28px;height:24px;padding:0 6px;border-radius:6px;background:var(--fg);color:var(--surface);font-weight:700;font-size:13px;font-family:var(--num);flex:none;vertical-align:middle}
+.code.sm{min-width:24px;height:20px;font-size:11.5px;padding:0 5px}
+.acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.failed{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--bad-soft)}
+.failed .frow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px}
+.trap .x{margin-top:4px}
+/* AI settings */
+.ai summary{font-size:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;list-style:none}
+.ai summary::-webkit-details-marker{display:none}
+.ai summary::after{content:"展开 ▾";margin-left:auto;font-size:12.5px;color:var(--accent)}
+.ai[open] summary::after{content:"收起 ▴"}
+.ai[open]{gap:12px}
+.aibody{display:flex;flex-direction:column;gap:12px}
+.aigrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);min-width:0}
+.field input,.field select{font:inherit;font-size:14px;color:var(--fg);padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--sunk);width:100%;min-width:0}
+.aiout{white-space:pre-wrap;font-size:14px;background:var(--sunk);border-radius:8px;padding:10px 12px}
+.ck{display:inline-flex;gap:6px;align-items:center;font-size:13px;cursor:pointer}
+.ck input{width:16px;height:16px;accent-color:var(--accent)}
+.queue{border:2px solid var(--accent);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--accent-soft)}
+.bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.qcur{display:flex;flex-direction:column;gap:4px}
+.qcur b{font-size:15px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.why{font-size:13px;display:flex;flex-direction:column;gap:4px}
+details{border-top:1px solid var(--line);padding-top:8px}
+summary{cursor:pointer;font-weight:600;font-size:14px}
+.plist{display:flex;flex-direction:column;gap:4px;font-size:13px;margin-top:8px}
+#howPanel h3{margin:10px 0 0;font-size:14px}#howPanel h3:first-child{margin-top:0}#howPanel p{margin:0;line-height:1.6}
+.hid{display:flex;flex-direction:column}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.hrow:last-child{border-bottom:0}
+.hrow b{font-size:14px}
+.hrow .d{grid-column:1/-1;font-size:13px;color:var(--muted)}
+/* price history */
+.hchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.hchip{font:inherit;font-size:13px;white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:4px 12px;cursor:pointer}
+.hchip[aria-pressed="true"]{background:var(--fg);color:var(--surface);border-color:var(--fg)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--muted)}
+.sw{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.hbox{position:relative;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.hbox svg{display:block;width:100%;height:auto;overflow:visible}
+.hbox .ax{font-size:11px;font-family:var(--num);fill:var(--muted)}
+.hbox .lbl{font-size:12px;font-weight:700;fill:var(--fg);font-family:var(--sans);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round}
+.tip{position:absolute;top:4px;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;white-space:nowrap;display:flex;flex-direction:column;gap:2px}
+.tip b{font-size:12.5px}
+.future ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)} .big{font-size:26px}}
+@media (max-width:400px){.pc .cost{font-size:19px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+/* finger-sized targets on touch screens */
+@media (pointer:coarse){
+  .btn{min-height:44px}
+  .btn.sm{min-height:38px;padding:6px 12px;font-size:13.5px}
+  .item input[type=checkbox],#allChk{width:26px;height:26px}
+  .ck input{width:24px;height:24px}
+  .ck,.selbar label{min-height:40px}
+  .iname{min-height:40px;align-items:center}
+  .x{padding:10px 2px;min-height:40px}
+  summary{padding-block:8px}
+  .hchip{min-height:38px}
+}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <h1>双十一到手价比价</h1>
+    <p class="sig"><span class="sig-mark" aria-hidden="true">✳</span>Claude · 时间均为北京时间</p>
+    <p class="muted">把想买的商品链接都丢进来，勾上这次要买的，自动联网查最新的价格和券，告诉你怎么买最便宜，再一键排队领券。</p>
+    <span class="safe">✓ 不需要登录京东、淘宝、拼多多，不保存任何账号密码</span>
+  </header>
+
+  <details class="panel fold" id="howPanel">
+    <summary><h2>在手机上怎么用</h2><span class="note">苹果 / 安卓 · 1 分钟看完</span></summary>
+    <div class="plist">
+      <h3>第一步：放到手机桌面（只做一次）</h3>
+      <p><b>苹果 iPhone：</b>用 <b>Safari</b> 打开这个网页 → 点底部中间的分享按钮（方框加向上箭头）→ 往下滑，点“添加到主屏幕” → 点“添加”。桌面上就多了一个图标，以后点它就行。</p>
+      <p><b>安卓（华为、小米、OPPO、一加、vivo 等）：</b>用 <b>Chrome</b> 打开 → 点右上角 ⋮ → 菜单<b>往下滑</b>，点“安装并创建快捷方式”（旧版叫“添加到主屏幕”）。用手机自带浏览器的话，点底部“菜单”，再点“添加到桌面”或“添加快捷方式”。</p>
+      <p><b>收到的是“双十一比价.html”文件：</b>安卓手机在“文件管理”里点它，选 Chrome 打开就能用，不用联网也能比价。iPhone 打不开这种文件里的功能，要用网页链接。</p>
+      <p class="small muted">在微信、QQ 里点开的链接：先点右上角 ··· → “在浏览器打开”，再按上面的方法添加。微信里也能用，但购物车可能存不住。</p>
+      <h3>第二步：加商品</h3>
+      <p>1. 在京东、淘宝或拼多多 App 里打开商品 → 点“分享” → 点“复制链接”。</p>
+      <p>2. 回到这个网页，<b>长按</b>“我的比价购物车”下面的输入框 → 点“粘贴” → 点“识别并加入”。</p>
+      <p>3. 在商品下面填价格：选好你要买的颜色、尺寸、版本后，填每个平台的<b>到手价</b>，别填搜索页上带“起”字的价格。没卖这件商品的平台空着不填。</p>
+      <p>4. 淘金币、国补这类页面价里还没扣的优惠，填到“每件还能再减”里。</p>
+      <h3>第三步：看方案，自己去买</h3>
+      <p>页面会给出最便宜的买法：在哪个平台买、拆成几单、领哪些券。点“打开原商品 ↗”会跳到京东、淘宝或拼多多 App，下单和付款都由你自己在 App 里完成。</p>
+      <p class="small muted">在浏览器里点链接，一般会先打开平台的网页版，网页上的价格要登录才看得到。点网页上的“打开京东APP”或“立即打开”，要是弹出让你选用什么打开，选京东、淘宝或拼多多，就能跳进 App。平台有时会先让你做一次安全验证，照着提示点就行。</p>
+      <h3>要注意的</h3>
+      <p>· 不用注册，也不用登录。每个人打开的都是自己手机上的一份：购物车、银行卡设置、AI Key 都只存在自己手机里，别人看不到，也互不影响。</p>
+      <p>· 购物车只存在<b>这部手机的这个浏览器</b>里。换手机、换浏览器、用无痕模式，都看不到之前加的商品。</p>
+      <p>· 长时间不打开，浏览器可能会清掉这些记录，iPhone 尤其明显。重要的价格自己截图留一份。</p>
+      <p>· 价格随时会变，比如京东的限时补贴几分钟就变一次。下单前以平台页面上的到手价为准。</p>
+      <p>· 这个网页不需要、也不会保存你的京东、淘宝、拼多多账号密码。</p>
+    </div>
+  </details>
+
+  <details class="panel ai" id="aiPanel">
+    <summary><b>AI 助手</b><span class="badge b-plain">可选 · 用你自己的 API Key</span></summary>
+    <div class="aibody">
+      <p class="small muted">每个人填自己的 Key，只存在自己的手机或电脑上，不会传给你或别人。你把 App 分享到朋友圈、家庭群，别人用的是他们自己的 Key，不会用到你的账号。价格还是由程序算，AI 只负责看懂乱七八糟的券规则、帮你检查方案。</p>
+      <div class="aigrid">
+        <label class="field">用哪家<select id="aiProv"></select></label>
+        <label class="field">API Key<input type="password" id="aiKey" autocomplete="off" spellcheck="false" placeholder="sk-…"></label>
+        <label class="field">模型<input type="text" id="aiModel" spellcheck="false"></label>
+        <label class="field">接口地址<input type="text" id="aiBase" spellcheck="false"></label>
+      </div>
+      <div class="btns">
+        <label class="ck"><input type="checkbox" id="aiRemember">记在这台设备上（不勾的话关掉页面就忘）</label>
+        <button class="btn sm" id="aiTest">测试连接</button><button class="btn ghost sm" id="aiClear">清除 Key</button>
+      </div>
+      <p class="note" id="aiStatus"></p>
+      <hr style="border:0;border-top:1px solid var(--line);margin:0">
+      <h3>用 AI 做什么</h3>
+      <div class="btns"><button class="btn sm" id="aiReview">让 AI 检查当前方案</button><button class="btn ghost sm" id="aiDemoReview">看示例效果</button></div>
+      <textarea id="aiRule" placeholder="把看不懂的优惠规则贴进来，例如：每满300减50，可与店铺券叠加，不与百亿补贴同享；88VIP 95折；平台券满500减30仅限11月11日0点-2点使用"></textarea>
+      <div class="btns"><button class="btn sm" id="aiParse">让 AI 解读这段规则</button><button class="btn ghost sm" id="aiDemoParse">看示例效果</button></div>
+      <div id="aiOut"></div>
+      <details>
+        <summary>安全提醒（分享给别人之前看一下）</summary>
+        <div class="plist">
+          <p>· Key 等于钱包：别把自己的 Key 发给别人，也别写进要分享的 App 里。</p>
+          <p>· 在各家平台给 Key 设一个每月花费上限，丢了也损失不大。</p>
+          <p>· 用 AI 时，购物车里的商品名和价格会发给你选的那家 AI 公司。</p>
+        </div>
+      </details>
+    </div>
+  </details>
+
+  <section class="fresh" aria-label="数据更新">
+    <span class="st"><span class="led" id="led"></span><span id="freshTxt"></span></span>
+    <span class="note">演示：正式版每次打开、加商品、下单前都会自动联网核实</span>
+    <button class="btn sm" id="refreshBtn">联网刷新优惠</button>
+    <div class="changes" id="changes" hidden></div>
+  </section>
+
+  <div class="grid">
+    <div class="col">
+      <details class="panel fold" id="mePanel">
+        <summary><h2>我的情况</h2><span class="note" id="meSum"></span></summary>
+        <div class="plist">
+          <p class="small muted">设一次就行。勾上你有的卡，付款立减会自动算进总价，不用每次自己算。</p>
+          <div class="cards" id="meCards"></div>
+          <label class="ck"><input type="checkbox" id="meMember">愿意加入店铺会员领入会券（入会一般要授权手机号）</label>
+        </div>
+      </details>
+      <details class="panel fold" id="jbPanel" hidden>
+        <summary><h2>价保提醒</h2><span class="note" id="jbSum"></span></summary>
+        <div class="plist" id="jbList"></div>
+      </details>
+      <section class="panel" aria-label="比价购物车">
+        <div class="ph"><h2>我的比价购物车</h2><span class="badge b-warn">演示数据</span></div>
+        <textarea id="paste" placeholder="在京东、淘宝、拼多多 App 里点“分享 → 复制链接”，整段粘贴到这里"></textarea>
+        <div class="btns"><button class="btn" id="addBtn">识别并加入</button><button class="btn ghost sm" id="sampleLink">贴一条示例链接</button></div>
+        <p class="note" id="addMsg">会从分享文字里认出商品名和来自哪个平台。</p>
+        <div class="selbar"><label style="display:inline-flex;gap:6px;align-items:center;cursor:pointer"><input type="checkbox" id="allChk">全选</label><span id="selTxt"></span></div>
+        <div class="items" id="items"></div>
+        <div class="btns"><button class="btn ghost sm" id="resetBtn">恢复示例购物车</button></div>
+      </section>
+
+      <details class="panel fold" aria-label="商家藏起来的券">
+        <summary><h2>商家藏起来的券，去哪找</h2></summary>
+        <p class="small muted">很多券商家并不想让所有人都领到，所以不放在显眼的位置。下面是常见的藏法，以及 App 能帮到哪一步。</p>
+        <div class="hid">
+          <div class="hrow"><b>推广券（隐藏券）</b><span class="badge b-good">自动用上</span><span class="d">商品页上看不到，三家官方推广平台的接口能查到。通过本 App 的链接下单，券会自动带上，不用单独领。</span></div>
+          <div class="hrow"><b>店铺会员券 / 粉丝券</b><span class="badge b-info">排进领券队列</span><span class="d">要先加入店铺会员或关注店铺才发。领券时 App 直接跳到入会页，入会一般要授权手机号，值不值你自己定。</span></div>
+          <div class="hrow"><b>主会场红包、定时券</b><span class="badge b-info">到点提醒</span><span class="d">每天固定时段发，过了就没了。App 按时间点推送提醒，点提醒直接跳到抢券页。</span></div>
+          <div class="hrow"><b>购物车津贴、凑单券</b><span class="badge b-info">截图识别</span><span class="d">加入平台购物车后才显示。在平台购物车或结算页截图上传，App 识别后算进方案。</span></div>
+          <div class="hrow"><b>直播间券、问客服才给的券</b><span class="badge b-plain">只能提醒</span><span class="d">接口查不到。App 会提示这家店常有直播券，或者提醒你问问客服。</span></div>
+        </div>
+      </details>
+
+      <details class="panel fold" aria-label="我的卡券包">
+        <summary><h2>核对我的卡券包</h2></summary>
+        <p class="small muted">领到的券都在平台 App 的“我的 → 优惠券/卡券包/红包”里。截图上传，App 核对哪些真领到了，红包、会员券也一起算进去。</p>
+        <div class="btns">
+          <label class="file btn ghost sm" for="shot">上传卡券包截图<input type="file" id="shot" accept="image/*"></label>
+          <button class="btn ghost sm" id="demoShot">用示例截图试试</button>
+          <button class="btn ghost sm" id="clearShot" hidden>移除</button>
+        </div>
+        <div id="personal" class="plist"></div>
+      </details>
+
+      <details class="panel fold" aria-label="自动找到的优惠">
+        <summary><h2>查到的全部优惠</h2></summary>
+        <div id="found"></div>
+      </details>
+    </div>
+
+    <div class="col">
+      <section class="panel" aria-label="下单方案">
+        <div class="ph"><h2 id="plansTitle">几套下单方案</h2><span class="note">点一套看明细</span></div>
+        <div class="plans" id="plans"></div>
+      </section>
+      <section class="panel" aria-label="方案明细" id="plan"></section>
+      <section class="panel" aria-label="价格走势" id="histPanel">
+        <div class="ph"><h2>价格走势（近 4 个月）</h2><span class="badge b-warn">演示数据</span></div>
+        <div class="hchips" id="histChips"></div>
+        <p class="small" id="histSum"></p>
+        <div class="legend" id="histLegend"></div>
+        <div class="hbox" id="histBox"></div>
+        <div class="tbl" id="histTbl"></div>
+        <p class="note">按页面售价画的，不含券。手指按住图表左右滑，可以看每一天三个平台的价格。官方接口不提供历史价，正式版靠 App 每天自动记录一次；演示版的走势是随机生成的。</p>
+      </section>
+      <section class="panel" aria-label="领券" id="claimPanel">
+        <div class="ph"><h2>领券</h2><span class="note" id="claimCnt"></span></div>
+        <div id="queue"></div>
+        <div class="claims" id="claims"></div>
+        <details open>
+          <summary>各方案要领的券对照</summary>
+          <div class="plist" id="matrix"></div>
+        </details>
+        <details>
+          <summary>为什么不能在后台全自动领完？</summary>
+          <div class="why plist">
+            <p>领券这一步必须在你自己登录的京东、淘宝、拼多多 App 里点。别的 App 想替你在后台点，只能拿你的账号密码，或者读屏自动点击，这两种都违反平台规则，账号可能被封。</p>
+            <p>所以 App 做到“半自动”：隐藏推广券下单时自动带上；剩下的券一键排好队，自动一张张跳过去，你只用在每张上点一下“领取”，回来自动跳下一张。</p>
+          </div>
+        </details>
+      </section>
+      <section class="panel" aria-label="套路提示">
+        <h2>套路提示</h2>
+        <div class="traps" id="traps"></div>
+      </section>
+    </div>
+  </div>
+
+  <section class="panel future">
+    <h2>正式版怎么做到</h2>
+    <ul class="small">
+      <li><b>认出商品</b>：分享出来的链接或淘口令，交给京东联盟、淘宝联盟（阿里妈妈）、多多进宝这三家官方推广平台的接口解析，拿到商品名、图片、详情、价格。现在演示版只能从分享文字里认出商品名，价格是随机编的。</li>
+      <li><b>别的平台有没有同款</b>：用商品名和规格去另外两个平台的接口搜，App 挑出最像的同款，让你确认是不是同一个东西。</li>
+      <li><b>数据最新</b>：App 背后放一个小服务器实时查接口，打开 App、加商品、下单前都会重查。接口密钥放在服务器上，不放进手机里。需要先申请开发者账号并通过审核。</li>
+      <li><b>不做的事</b>：不在 App 里登录这三家账号，不模拟登录，不读屏自动点击，不爬网页。这些违反平台规则，可能封号，也不安全。</li>
+    </ul>
+    <p class="note">计算规则按常见做法估算：店铺券和跨店满减按商品合计判断门槛，每单再用一张平台券，最后用红包；百亿补贴商品不参加店铺券和跨店满减；每个平台最多拆两单。实际以结算页为准。</p>
+  </section>
+</div>
+
+<script>
+const PLATS=[{id:'jd',name:'京东',mark:'京'},{id:'tb',name:'淘宝/天猫',mark:'淘'},{id:'pdd',name:'拼多多',mark:'拼'}];
+const PN=Object.fromEntries(PLATS.map(p=>[p.id,p]));
+const O=(price,store,list,low30,extra)=>Object.assign({price,store,list,low30},extra||{});
+const DEMO=[
+ // seen on a real OnePlus 15 on 2026-11-05 (JD checkout read off the phone; Tmall from the product page). PDD not checked yet.
+ {id:'r1',name:'维达抽纸 棉韧3层100抽（实测）',real:true,unit:'包',links:{jd:'https://3.cn/3atJbo-D'},o:{jd:O(66.8,'京东超市·维达',66.9,66.8,{pack:24,newbie:true,jiabao:7}),tb:O(54.9,'维达官方旗舰店',54.9,54.9,{pack:20}),pdd:null}},
+ {id:'a',name:'无线降噪耳机',o:{jd:O(999,'某音频京东自营',1299,949),tb:O(1099,'某音频天猫旗舰店',1499,899,{dep:[50,150]}),pdd:O(899,'百亿补贴',1299,879,{sub:true,limit:{n:1,over:1029,store:'某音频拼多多店'}})}},
+ {id:'b',name:'洗衣液 2kg×4 瓶',o:{jd:O(89.9,'京东超市',129,79.9),tb:O(79.9,'某日化天猫店',119,69.9),pdd:O(72.8,'某日化官方店',99,72.8)}},
+ {id:'c',name:'电动牙刷',o:{jd:O(399,'某个护京东自营',599,359),tb:O(429,'某个护天猫旗舰店',699,329),pdd:O(319,'百亿补贴',599,309,{sub:true,limit:{n:1,over:369,store:'某个护拼多多店'}})}},
+ {id:'d',name:'加绒卫衣',o:{jd:null,tb:O(259,'某服饰天猫店',399,239),pdd:O(199,'某服饰工厂店',299,189)}},
+ {id:'e',name:'零食大礼包',o:{jd:O(129,'京东超市',169,119),tb:O(139,'某零食天猫店',199,129),pdd:O(99,'某零食官方店',159,95)}},
+ {id:'f',name:'保温杯 500ml',o:{jd:O(159,'某杯具京东自营',239,149),tb:O(169,'某杯具天猫店',259,139),pdd:null}},
+];
+const T=(th,amt,src)=>({th,amt,src});
+const RULES={
+ jd:{cross:{per:300,amt:50,name:'跨店每满减'},coupons:[{id:'jd-p1',name:'京东平台券',th:500,amt:60,src:'venue'},{id:'jd-p2',name:'京东品类券',th:400,amt:55,src:'page'},{id:'jd-lj',name:'京东礼金',th:0,amt:3,src:'page'}],
+     stores:{'京东超市':[T(199,20,'page')],'某音频京东自营':[T(900,50,'union')],'某个护京东自营':[T(300,30,'member')],'某杯具京东自营':[T(150,15,'page')],
+       // real: 1 件 ¥66.8−17−3=46.8；2 件 133.6×(1−20%−5%)−3=97.2；3 件 200.4×75%−3=147.3
+       '京东超市·维达':[{th:60,amt:17,promo:true,name:'满60减17',src:'page'},{th:99,pct:0.25,promo:true,name:'满99享8折+立减5%',src:'page'}]},
+     ship:{'京东超市·维达':{free:59,fee:6}},
+     // seen on the real JD checkout, 2026-11-05
+     pay:[{card:'boc_c',amt:12},{card:'boc_d',amt:3.5},{card:'ccb_d',amt:5},{card:'ccb_c62',amt:6}]},
+ tb:{cross:{per:300,amt:50,name:'天猫跨店满减'},coupons:[{id:'tb-p1',name:'淘宝平台券',th:500,amt:30,src:'venue'},{id:'tb-p2',name:'淘宝品类券',th:200,amt:15,src:'page'},{id:'tb-live95',name:'直播间 95 折券',th:0,pct:0.05,cap:20,src:'live'}],
+     stores:{'维达官方旗舰店':[{th:0,pct:0.15,promo:true,stack:true,name:'官方立减15%',src:'page'},{th:0,amt:4.7,promo:true,stack:true,name:'立减',src:'page'},{th:0,amt:1,stack:true,name:'入会减',src:'member'}],
+       '某音频天猫旗舰店':[T(900,40,'member')],'某日化天猫店':[T(79,10,'page'),T(159,25,'union')],'某个护天猫旗舰店':[T(400,40,'page')],'某服饰天猫店':[T(200,20,'union')],'某零食天猫店':[T(99,10,'page')],'某杯具天猫店':[T(150,20,'member')]}},
+ pdd:{cross:null,coupons:[{id:'pdd-p1',name:'拼多多平台券',th:300,amt:20,src:'venue'},{id:'pdd-p2',name:'拼多多平台券',th:100,amt:5,src:'page'}],
+     stores:{'某服饰工厂店':[T(199,15,'page')],'某零食官方店':[T(99,8,'union')]}},
+};
+const SRC={
+ page:{b:'b-plain',t:'商品页可见',w:'商品详情页价格下方的“领券”一栏',q:true},
+ union:{b:'b-good',t:'隐藏推广券',w:'商品页上看不到。通过本 App 的链接下单会自动带上，不用单独领',q:false},
+ member:{b:'b-info',t:'入会才发',w:'店铺首页 → 加入店铺会员后发放，入会一般要授权手机号',q:true},
+ venue:{b:'b-warn',t:'主会场定时发',w:'平台双十一主会场 → 红包/券入口，每天整点发，可能抢光',q:true},
+ me:{b:'b-info',t:'已在你卡券包',w:'你上传的卡券包截图里识别到的，不用再领',q:false},
+ ai:{b:'b-info',t:'AI 识别',w:'你贴的规则里 AI 识别出来的，按规则说明去领',q:true},
+ live:{b:'b-warn',t:'直播间才发',w:'在店铺直播间里点“领取”，直播结束可能就领不到了',q:true},
+};
+const UPDATES=[
+ [{k:'gone',pl:'tb',id:'tb-p2',msg:'淘宝品类券 满200减15 已被领完'},
+  {k:'price',item:'e',pl:'pdd',price:95,msg:'拼多多 零食大礼包 ¥99 → ¥95'},
+  {k:'new',pl:'jd',store:'京东超市',tier:T(99,10,'union'),msg:'京东超市 新查到隐藏推广券 满99减10'}],
+ [{k:'price',item:'a',pl:'jd',price:979,msg:'京东 无线降噪耳机 ¥999 → ¥979'},
+  {k:'new',pl:'tb',store:'某服饰天猫店',tier:T(400,45,'member'),msg:'某服饰天猫店 新增会员券 满400减45'}],
+ [{k:'price',item:'r1',pl:'jd',price:62.8,msg:'京东 维达抽纸 ¥66.8 → ¥62.8（已下单的话，在价保期内可以申请退差价）'}],
+];
+const SAMPLE_LINKS=[
+ '【京东】https://3.cn/2-AbCdEfG「小米 米家空气净化器 4 Lite 家用除甲醛」点击链接直接打开',
+ '7￥Xk9aBcDeF2￥ https://m.tb.cn/h.5xYzAbC 「优衣库 男装 摇粒绒拉链茄克 秋冬保暖」点击链接直接打开 或者 淘宝搜索直接打开',
+ 'https://mobile.yangkeduo.com/goods.html?goods_id=123456789 【拼多多】得力 A4 打印纸 70g 500张×5包 整箱',
+];
+const PERSONAL_DEMO={coupons:{jd:[{id:'jd-me',name:'PLUS 会员专享券',th:199,amt:20,src:'me',me:true}],tb:[],pdd:[{id:'pdd-me',name:'个人专属券',th:100,amt:8,src:'me',me:true}]},red:{jd:0,tb:15,pdd:0}};
+const DEFAULT_CART=()=>DEMO.map(d=>({id:d.id,on:d.id!=='f',qty:d.id==='r1'?3:1}));
+
+// ---------- pasted links ----------
+function hash(s){let h=2166136261;for(const ch of s){h^=ch.codePointAt(0);h=Math.imul(h,16777619);}return h>>>0;}
+function prng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function parseShare(text){
+  const t=text.trim(), url=(t.match(/https?:\/\/[^\s「」【】，,]+/)||[])[0]||'';
+  let pl=null;
+  if(/jd\.com|3\.cn|jd\.hk|【京东】/i.test(t))pl='jd';
+  else if(/tb\.cn|taobao\.com|tmall\.com|【淘宝】|【天猫】|[￥¥$€][A-Za-z0-9]{8,}[￥¥$€]/i.test(t))pl='tb';
+  else if(/yangkeduo\.com|pinduoduo\.com|pdd|【拼多多】/i.test(t))pl='pdd';
+  let name=(t.match(/「([^」]{2,})」/)||[])[1]||'';
+  if(!name){let s=t.replace(/https?:\/\/\S+/g,' ').replace(/[￥¥$€][A-Za-z0-9]{6,}[￥¥$€]/g,' ').replace(/【[^】]{0,6}】/g,' ')
+      .replace(/(点击链接直接打开|复制本条信息|打开(手机)?(淘宝|京东|拼多多)(App)?|或者?\s*淘宝搜索直接打开|快来和我一起.*|直接打开)/g,' ');
+    name=s.split(/\s{2,}|\n/).map(x=>x.trim()).filter(Boolean).sort((a,b)=>b.length-a.length)[0]||'';}
+  name=name.replace(/\s+/g,' ').slice(0,40);
+  return {url,pl,name};
+}
+// a link the user pasted from a real app: no invented prices. The user types the price the page shows.
+// (tested 2026-11-05: a real Tmall share text has name + link but no price; random prices were 9x too low)
+function makeUserItem(parsed){
+  const src=parsed.pl||'jd', name=parsed.name||`未认出名字的商品（${PN[src].name}）`;
+  return {id:'u'+hash(parsed.url||parsed.name).toString(36),name,src,url:parsed.url,o:{jd:null,tb:null,pdd:null},tiers:{},user:true};
+}
+// sizes like 16g/32g/64g in one title mean the link sells several versions at different prices
+function specsIn(name){const m=(name.match(/\d+(\.\d+)?\s*(GB|G|TB|T|ml|ML|L|kg|KG|寸|包|片|抽)(?![A-Za-z])/gi)||[]).map(s=>s.replace(/\s/g,'').toLowerCase());return [...new Set(m)];}
+function setUserPrice(id,pl,field,raw){
+  const it=mine.find(i=>i.id===id);if(!it)return;const v=r2(parseFloat(String(raw).replace(/[^\d.]/g,'')));
+  if(field==='price'){
+    if(!(v>0)){it.o[pl]=null;return;}
+    const old=it.o[pl]||{};it.o[pl]=O(v,`${PN[pl].name}·你填的价`,v,v,{net:true,user:true,unitOff:old.unitOff||0});
+  } else if(it.o[pl]){it.o[pl].unitOff=v>0?Math.min(v,it.o[pl].price):0;}
+}
+function makeItem(parsed){
+  const key=parsed.url||parsed.name, r=prng(hash(key)), src=parsed.pl||'jd';
+  const name=parsed.name||`未认出名字的商品（${PN[src].name}）`;
+  const base=39+Math.floor(r()*460), short=name.replace(/[^一-龥A-Za-z0-9]/g,'').slice(0,4)||'商品';
+  const o={}, tiers={};
+  for(const {id:pl} of PLATS){
+    if(pl!==src&&r()<0.18){o[pl]=null;continue;}
+    let price=Math.round(base*(pl===src?1:0.85+r()*0.3)); if(r()<0.5)price=r2(price-0.1);
+    const sub=pl==='pdd'&&r()<0.3;
+    const store=sub?'百亿补贴':`${short}${pl==='jd'?'京东店':pl==='tb'?'天猫店':'官方店'}`;
+    o[pl]=O(price,store,Math.round(price*(1.25+r()*0.5)),r2(price*(0.9+r()*0.12)),sub?{sub:true}:{});
+    if(!sub)tiers[pl+'|'+store]=[T(Math.ceil(price*0.9/10)*10,Math.max(5,Math.round(price*0.07)),['page','union','member'][Math.floor(r()*3)])];
+  }
+  return {id:'u'+hash(key).toString(36),name,src,url:parsed.url,o,tiers,gen:true};
+}
+function registerTiers(it){for(const k in it.tiers){const [pl,st]=k.split('|');RULES[pl].stores[st]=it.tiers[k];}}
+
+let mine=[], cart=DEFAULT_CART(), personal=null, claimed={}, sel='best', upd=0, checkedAt=Date.now(), changed=new Set(), lastMsgs=[], open=new Set(), queue=null, lastClaims=[], planCache={}, failed={}, failNote=null, pendingFail=null, impactCache={}, aiCoupons=[];
+let savedUpd=0;
+try{const s=JSON.parse(localStorage.getItem('bj5')||'null');if(s){if(Array.isArray(s.mine))mine=s.mine;if(Array.isArray(s.cart))cart=s.cart;personal=s.personal?PERSONAL_DEMO:null;claimed=s.claimed||{};failed=s.failed||{};if(Array.isArray(s.aiCoupons))aiCoupons=s.aiCoupons;savedUpd=Math.min(UPDATES.length,s.upd|0);}}catch(e){}
+mine.forEach(registerTiers);
+const ALL=()=>DEMO.concat(mine);
+cart=cart.filter(c=>ALL().some(i=>i.id===c.id));
+const save=()=>{try{localStorage.setItem('bj5',JSON.stringify({mine,cart,personal:!!personal,claimed,upd,failed,aiCoupons}))}catch(e){}};
+
+const r2=x=>Math.round(x*100)/100;
+const y=x=>'¥'+r2(x).toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const dot=pl=>`<span class="dot" style="background:var(--${pl})">${PN[pl].mark}</span>`;
+const priceOf=(o,noDep)=>(!noDep&&o.dep)?r2(o.price-(o.dep[1]-o.dep[0])):o.price;
+const coupons=pl=>RULES[pl].coupons.concat(personal?personal.coupons[pl]:[],aiCoupons.filter(c=>c.pl===pl));
+const red=pl=>personal?personal.red[pl]:0;
+// ---------- the user's own situation, set once ----------
+const CARDS=[{id:'boc_c',name:'中国银行银联信用卡'},{id:'boc_d',name:'中国银行储蓄卡'},{id:'ccb_d',name:'建设银行储蓄卡'},{id:'ccb_c62',name:'建设银行 62 开头信用卡'}];
+let PROFILE={cards:[],member:true,set:false};
+try{const p=JSON.parse(localStorage.getItem('bj5-me')||'null');if(p)PROFILE=Object.assign(PROFILE,p);}catch(e){}
+const saveProfile=()=>{try{localStorage.setItem('bj5-me',JSON.stringify(PROFILE))}catch(e){}};
+function payDisc(pl,amount){let b=null;for(const p of (RULES[pl].pay||[]))if(PROFILE.cards.includes(p.card)&&(!b||p.amt>b.amt))b=p;
+  return b&&amount>0.01?{amt:Math.min(b.amt,r2(amount-0.01)),name:(CARDS.find(c=>c.id===b.card)||{}).name}:null;}
+const profileExcl=()=>PROFILE.member?[]:['member'];
+function renderProfile(){const el=document.getElementById('meCards');if(!el||!el.querySelectorAll)return;
+  if(!el.dataset.built){el.innerHTML=CARDS.map(c=>`<label class="ck"><input type="checkbox" data-card="${c.id}">${c.name}</label>`).join('');el.dataset.built='1';}
+  el.querySelectorAll('[data-card]').forEach(i=>{i.checked=PROFILE.cards.includes(i.dataset.card);});
+  document.getElementById('meMember').checked=PROFILE.member;
+  document.getElementById('meSum').textContent=PROFILE.cards.length?`已勾 ${PROFILE.cards.length} 张卡，付款立减自动算进总价${PROFILE.member?'':'；不入会'}`:'还没设：勾上你有的银行卡，自动多省';
+  if(!PROFILE.set)document.getElementById('mePanel').open=true;}
+// ---------- price protection: after ordering, watch for price drops ----------
+let bought=[];try{const b=JSON.parse(localStorage.getItem('bj5-bought')||'[]');if(Array.isArray(b))bought=b;}catch(e){}
+const saveBought=()=>{try{localStorage.setItem('bj5-bought',JSON.stringify(bought))}catch(e){}};
+function renderJiabao(){const p=document.getElementById('jbPanel');if(!p)return;p.hidden=!bought.length;if(!bought.length)return;
+  const now=Date.now();let back=0;
+  document.getElementById('jbList').innerHTML=bought.map((b,i)=>{const it=ALL().find(x=>x.id===b.id),o=it&&it.o[b.pl],left=b.days-Math.floor((now-b.t)/864e5),drop=o?r2(b.price-o.price):0;
+    if(drop>0&&left>=0)back+=drop*b.n;
+    return `<div class="jb"><span>${dot(b.pl)} ${esc(b.name)} ×${b.n}</span>${left<0?'<span class="badge b-plain">价保已过期</span>':drop>0?`<span class="badge b-good">可退 ${y(drop*b.n)}</span>`:`<span class="badge b-plain">还能盯 ${left} 天</span>`}
+      <span class="d">${drop>0&&left>=0?`下单时页面价 ${y(b.price)}，现在 ${y(o.price)}，每件降了 ${y(drop)}。去${PN[b.pl].name} App：我的 → 客户服务 → 价格保护，找到这一单点“申请价保”。<a href="${esc(itemLink(b.pl,it))}" target="_blank" rel="noopener noreferrer">打开商品 ↗</a>`:`下单时页面价 ${y(b.price)}。降价了 App 会在这里提醒你。`} <button class="x" data-jbdel="${i}">不用盯了</button></span></div>`;}).join('');
+  document.getElementById('jbSum').textContent=back>0?`有 ${y(back)} 可以申请退回`:`在盯 ${bought.length} 件`;
+  if(back>0)p.open=true;}
+// ---------- where each coupon is claimed ----------
+const enc=encodeURIComponent;
+const SEARCH={jd:q=>'https://so.m.jd.com/ware/search.action?keyword='+enc(q),tb:q=>'https://s.m.taobao.com/h5?q='+enc(q),pdd:q=>'https://mobile.yangkeduo.com/search_result.html?search_key='+enc(q)};
+// tested on a real phone 2026-11-06: a product link (e.g. JD 3.cn short link) opens the product page with its coupon row;
+// JD's old coupon-centre web address only lands on the home page, so platform coupons open the home page plus a hint
+const CENTER={jd:'https://m.jd.com',tb:'https://m.taobao.com',pdd:'https://mobile.yangkeduo.com'};
+const CENTER_HINT={jd:'打开后点首页的“领券中心”',tb:'打开后点首页的“领券中心/红包”（淘宝这条还没实测）',pdd:'打开后点首页的“优惠券/红包”（拼多多这条还没实测）'};
+const itemLink=(pl,it)=>!it?CENTER[pl]:((it.links&&it.links[pl])||(it.url&&it.src===pl?it.url:'')||SEARCH[pl](it.name.replace(/（.*?）/g,'')));
+const unitCount=()=>cart.filter(c=>c.on).reduce((s,c)=>s+(c.qty||1),0);
+
+// ---------- price history (demo: generated; real app records one price per day) ----------
+const DAYS=122, histCache=new Map();
+// all dates and times use Beijing time (UTC+8), whatever time zone the phone is set to; read them with getUTC*
+const CN_MS=8*3600e3, cnTime=ms=>new Date(ms+CN_MS);
+function dayDate(i){const d=cnTime(Date.now());d.setUTCHours(12,0,0,0);d.setUTCDate(d.getUTCDate()-(DAYS-1-i));return d;}
+const md=d=>`${d.getUTCMonth()+1}月${d.getUTCDate()}日`;
+function history(it,pl){
+  const o=it.o[pl];if(!o)return null;
+  const key=`${it.id}|${pl}|${o.price}|${o.low30}`;if(histCache.has(key))return histCache.get(key);
+  const r=prng(hash(it.id+'#'+pl)), cur=o.price, reg=cur*(1.05+r()*0.12), s=new Array(DAYS);
+  let i=0;
+  while(i<DAYS-30){const len=6+Math.floor(r()*10), p=reg*(0.97+r()*0.06);for(let k=0;k<len&&i<DAYS-30;k++)s[i++]=p;}
+  for(let q=0;q<2;q++){const st=5+Math.floor(r()*(DAYS-45)), len=2+Math.floor(r()*3), p=cur*(0.84+r()*0.12);for(let k=0;k<len&&st+k<DAYS-30;k++)s[st+k]=p;}
+  const up=reg*(1.02+r()*0.06);           // marked up before Double 11
+  for(let d=DAYS-30;d<DAYS-7;d++)s[d]=up;
+  for(let d=DAYS-7;d<DAYS;d++)s[d]=cur;
+  if(o.low30<cur){const st=DAYS-28+Math.floor(r()*16);s[st]=s[st+1]=o.low30;}
+  const res=s.map(v=>{const n=Math.round(v);return n%3===0?r2(n-0.1):n;});
+  for(let d=DAYS-7;d<DAYS;d++)res[d]=cur;
+  if(o.low30<cur)res.forEach((v,d)=>{if(d>=DAYS-30&&s[d]===o.low30)res[d]=o.low30;});
+  histCache.set(key,res);return res;
+}
+function histStats(v){let mi=0;for(let i=1;i<v.length;i++)if(v[i]<=v[mi])mi=i;return {min:v[mi],at:mi};}
+function syncLow30(it){if(it.user)return;for(const {id:pl} of PLATS){const o=it.o[pl];if(!o)continue;o.low30=Math.min(...history(it,pl).slice(-30));}}
+ALL().forEach(syncLow30);
+for(let i=0;i<savedUpd;i++){applyUpdate(UPDATES[i]);upd++;}
+changed=new Set();
+function niceStep(raw){const p=Math.pow(10,Math.floor(Math.log10(raw||1))), f=raw/p;return (f<=1?1:f<=2?2:f<=5?5:10)*p;}
+let histSel=null;
+function drawHist(list){
+  const chips=document.getElementById('histChips'), box=document.getElementById('histBox'), sum=document.getElementById('histSum'), leg=document.getElementById('histLegend'), tbl=document.getElementById('histTbl');
+  // prices the user typed in have no history yet; never draw an invented one for them
+  const items=list.filter(i=>!i.user), userN=list.filter(i=>i.user).length;
+  // an unticked item is only shown when you asked for its chart, and not in place of the items you ticked
+  const extra=histSel&&!userN&&!items.some(i=>i.id===histSel)?ALL().find(i=>i.id===histSel&&!i.user):null;
+  if(extra)items.unshift(extra);
+  if(!items.length){chips.innerHTML=leg.innerHTML=tbl.innerHTML=box.innerHTML='';sum.textContent=userN?'你粘贴的商品还没有历史价。正式版每天自动记一次价格，攒够了这里就能看走势。':'勾选商品后，这里显示它近 4 个月在三个平台的价格。';return;}
+  if(!items.some(i=>i.id===histSel))histSel=items[0].id;
+  const it=items.find(i=>i.id===histSel);
+  chips.innerHTML=items.map(i=>`<button class="hchip" data-hsel="${i.id}" aria-pressed="${i.id===histSel}">${esc(i.name)}</button>`).join('');
+  const ser=PLATS.filter(p=>it.o[p.id]).map(p=>{const v=history(it,p.id);return {pl:p.id,v,st:histStats(v)};});
+  const g=ser.reduce((a,b)=>b.st.min<a.st.min?b:a), nb=ser.reduce((a,b)=>b.v[DAYS-1]<a.v[DAYS-1]?b:a), now=nb.v[DAYS-1];
+  sum.innerHTML=`<b>${esc(it.name)}</b> 近 4 个月最低 <b class="n">${y(g.st.min)}</b>，是 <b>${md(dayDate(g.st.at))}</b> 在${PN[g.pl].name}。`+
+    (now<=g.st.min+0.01?' <span class="badge b-good">现在就是最低价</span>':` 现在最便宜是${PN[nb.pl].name} <span class="n">${y(now)}</span>，比那时贵 <b class="n">${y(now-g.st.min)}</b>。`);
+  leg.innerHTML=ser.map(s=>`<span><i class="sw" style="background:var(--${s.pl})"></i>${PN[s.pl].name}</span>`).join('')+'<span>● 4 个月最低点</span>';
+  tbl.innerHTML=`<table><thead><tr><th>平台</th><th class="r">今天</th><th class="r">4个月最低</th><th>哪天</th><th class="r">30天最低</th><th class="r">4个月最高</th></tr></thead><tbody>${ser.map(s=>`<tr><td>${dot(s.pl)} ${PN[s.pl].name}</td><td class="r n">${y(s.v[DAYS-1])}</td><td class="r n"><b>${y(s.st.min)}</b></td><td>${md(dayDate(s.st.at))}</td><td class="r n">${y(Math.min(...s.v.slice(-30)))}</td><td class="r n">${y(Math.max(...s.v))}</td></tr>`).join('')}</tbody></table>`;
+  drawChart(box,ser,g);
+}
+function drawChart(box,ser,g){
+  const W=Math.max(280,Math.round(box.clientWidth||340)), H=W<480?210:240, L=46, R=24, Tp=30, B=24;
+  const all=ser.flatMap(s=>s.v);let lo=Math.min(...all), hi=Math.max(...all);
+  const step=niceStep((hi-lo)/3||lo*0.1);lo=Math.max(0,Math.floor((lo-step*0.3)/step)*step);hi=Math.ceil((hi+step*0.1)/step)*step;
+  const X=i=>L+(W-L-R)*i/(DAYS-1), Y=v=>Tp+(H-Tp-B)*(1-(v-lo)/(hi-lo));
+  let s=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="近4个月价格走势">`;
+  for(let v=lo;v<=hi+1e-9;v+=step)s+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" style="stroke:var(--line)" stroke-width="1"/><text class="ax" x="${L-6}" y="${Y(v)+4}" text-anchor="end">¥${r2(v)}</text>`;
+  for(let i=0;i<DAYS;i++){const d=dayDate(i);if(d.getUTCDate()===1){s+=`<line x1="${X(i)}" x2="${X(i)}" y1="${Tp}" y2="${H-B}" style="stroke:var(--line)" stroke-dasharray="2 3"/>`+(X(i)<W-R-50?`<text class="ax" x="${X(i)+3}" y="${H-6}">${d.getUTCMonth()+1}月</text>`:'');}}
+  s+=`<text class="ax" x="${W-R}" y="${H-6}" text-anchor="end">今天</text>`;
+  for(const se of ser){let p=`M${X(0)},${Y(se.v[0])}`;for(let i=1;i<DAYS;i++)p+=`H${X(i)}V${Y(se.v[i])}`;
+    s+=`<path d="${p}" fill="none" style="stroke:var(--${se.pl})" stroke-width="2" stroke-linejoin="round"/>`;}
+  // end labels, pushed apart so they don't overlap
+  const ends=ser.map(se=>({pl:se.pl,y:Y(se.v[DAYS-1])})).sort((a,b)=>a.y-b.y);
+  for(let i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<13)ends[i].y=ends[i-1].y+13;
+  for(const e of ends)s+=`<text class="ax" x="${W-R+5}" y="${e.y+4}" style="fill:var(--${e.pl});font-weight:700;font-family:var(--sans)">${PN[e.pl].mark}</text>`;
+  // lowest point of the 4 months
+  const mx=X(g.st.at), my=Y(g.st.min), lab=`最低 ${y(g.st.min)} · ${md(dayDate(g.st.at))}`;
+  const anchor=mx>W-110?'end':mx<L+60?'start':'middle', ly=my-12<14?my+22:my-12;
+  s+=`<line x1="${mx}" x2="${mx}" y1="${my}" y2="${H-B}" style="stroke:var(--${g.pl})" stroke-dasharray="3 3" stroke-width="1"/>`;
+  s+=`<circle cx="${mx}" cy="${my}" r="5.5" style="fill:var(--${g.pl});stroke:var(--surface)" stroke-width="2"/><text class="lbl" x="${mx}" y="${ly}" text-anchor="${anchor}">${lab}</text>`;
+  s+=`<g id="hov" visibility="hidden"><line id="hovL" y1="${Tp}" y2="${H-B}" style="stroke:var(--muted)" stroke-width="1"/>${ser.map(se=>`<circle data-hp="${se.pl}" r="4.5" style="fill:var(--${se.pl});stroke:var(--surface)" stroke-width="2"/>`).join('')}</g>`;
+  s+=`<rect x="${L}" y="${Tp}" width="${W-L-R}" height="${H-Tp-B}" fill="transparent"/></svg><div class="tip" id="htip" hidden></div>`;
+  box.innerHTML=s;
+  const svg=box.querySelector('svg'), hov=box.querySelector('#hov'), tip=box.querySelector('#htip');
+  const hide=()=>{hov.setAttribute('visibility','hidden');tip.hidden=true;};
+  const move=e=>{const rc=svg.getBoundingClientRect(), k=W/rc.width, px=(e.clientX-rc.left)*k;
+    if(px<L-6||px>W-R+6){hide();return;}
+    const i=Math.max(0,Math.min(DAYS-1,Math.round((px-L)/(W-L-R)*(DAYS-1)))), x=X(i);
+    hov.setAttribute('visibility','visible');const ln=box.querySelector('#hovL');ln.setAttribute('x1',x);ln.setAttribute('x2',x);
+    for(const se of ser){const c=box.querySelector(`[data-hp="${se.pl}"]`);c.setAttribute('cx',x);c.setAttribute('cy',Y(se.v[i]));}
+    tip.innerHTML=`<b>${md(dayDate(i))}${i===DAYS-1?'（今天）':''}</b>`+ser.slice().sort((a,b)=>a.v[i]-b.v[i]).map(se=>`<span><i class="sw" style="background:var(--${se.pl})"></i>${PN[se.pl].name} <span class="n">${y(se.v[i])}</span></span>`).join('');
+    tip.hidden=false;const tw=tip.offsetWidth, sx=x/k;tip.style.left=(sx+12+tw>rc.width?Math.max(0,sx-12-tw):sx+12)+'px';};
+  box.onpointermove=move;box.onpointerdown=move;box.onpointerleave=hide;
+}
+let rzT;window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(()=>{const list=cart.filter(c=>c.on).map(c=>ALL().find(i=>i.id===c.id)).filter(Boolean);drawHist(list);},150);});
+
+// ---------- calculation ----------
+// Rules, as seen on real JD/Tmall checkouts (Nov 2026):
+//  - every threshold ("满X") is checked against the order's original item total, and percentage discounts are taken from that total too
+//  - a store can have stacking discounts (all apply) plus exclusive tiers (only the best one applies)
+//  - promo: an activity that applies to every order; otherwise it is a coupon and can be used once
+//  - shipping is charged per order when the amount after discounts is below the free-shipping line
+const cid=(pl,st,t)=>`${pl}|${st}|${t.th}|${t.amt??''}|${t.pct??''}`;
+const tierVal=(t,base)=>t.pct?Math.min(r2(base*t.pct),t.cap||Infinity):t.amt;
+const tierTxt=t=>t.pct?`${t.th?`满 ${y(t.th)} `:''}打 ${r2((1-t.pct)*10)} 折${t.cap?`，最多减 ${y(t.cap)}`:''}`:(t.th?`满 ${y(t.th)} 减 ${y(t.amt)}`:`立减 ${y(t.amt)}`);
+const MAX_UNITS=8;
+function evalOrder(pl,items,c,opt){
+  const R=RULES[pl], cps=coupons(pl), stores={}, lines=[], ex=(opt.excl||[]).concat(profileExcl()), no=opt.noIds, used=[];
+  if(opt.promoOnly&&c>=0)return null;
+  // net: a price the user typed from the page, already after the platform's own discounts,
+  // so the demo store tiers, cross-store discounts and platform coupons don't apply to it again
+  let sub=0, elig=0, unitOff=0, cpBase=0, userOff=0;
+  for(const it of items){const o=it.o[pl], p=priceOf(o,opt.noDep);sub+=p;if(o.unitOff){unitOff+=o.unitOff;if(o.net)userOff+=o.unitOff;}
+    if(!o.net)cpBase+=p;
+    if(!o.sub&&!o.net){elig+=p;stores[o.store]=(stores[o.store]||0)+p;}}
+  const cp=c>=0?cps[c]:null;
+  if(cp&&(ex.includes(cp.src)||failed[cp.id]||(no&&no.has(cp.id))||cpBase<=0||cpBase<cp.th-1e-9))return null;
+  let after=sub;
+  if(unitOff){after-=unitOff;lines.push(userOff>=unitOff-1e-9?{t:'页面价没算进去的优惠',d:'你填的“还能再减”（淘金币、国补等）',v:r2(unitOff)}:{t:'单品立减',d:`每件立减，${items.length} 件合计（自动生效）`,v:r2(unitOff)});}
+  for(const st in stores){
+    const S=stores[st], ok=(R.stores[st]||[]).filter(t=>t.th<=S+1e-9&&(!opt.promoOnly||t.promo)&&!ex.includes(t.src)&&!failed[cid(pl,st,t)]&&!(no&&!t.promo&&no.has(cid(pl,st,t))));
+    const add=t=>{const v=tierVal(t,S);if(v<=0)return;after-=v;const id=cid(pl,st,t);if(!t.promo)used.push(id);
+      lines.push({t:`${t.name||(t.promo?'店铺活动':'店铺券')} · ${st}`,d:`${tierTxt(t)}（本店合计 ${y(S)}）${t.promo?'，自动生效':''}`,v:v,store:true,
+        claim:t.promo?null:{id,pl,name:`${st} ${tierTxt(t).replace(/ /g,'')}`,src:t.src,link:itemLink(pl,items.find(i=>i.o[pl].store===st))}});};
+    ok.filter(t=>t.stack).forEach(add);
+    const exc=ok.filter(t=>!t.stack);if(exc.length)add(exc.reduce((a,b)=>tierVal(b,S)>tierVal(a,S)?b:a));
+  }
+  const k=R.cross?Math.floor(elig/R.cross.per+1e-9):0;
+  if(k>0){after-=k*R.cross.amt;lines.push({t:R.cross.name,d:`参与满减的合计 ${y(elig)}，每满 ${R.cross.per} 减 ${R.cross.amt}，满 ${k} 次（自动生效，不用领）`,v:k*R.cross.amt});}
+  if(cp){const v=tierVal(cp,cpBase);after-=v;used.push(cp.id);
+    lines.push({t:cp.name,d:tierTxt(cp),v,claim:{id:cp.id,pl,name:`${cp.name} ${tierTxt(cp).replace(/ /g,'')}`,src:cp.src,link:cp.src==='live'?itemLink(pl,items[0]):CENTER[pl]}});}
+  after=Math.max(0,r2(after));
+  // shipping: the strictest rule among the stores in this order
+  let ship=0;
+  for(const st of new Set(items.map(it=>it.o[pl].store))){const s=(R.ship||{})[st];if(s&&after<s.free-1e-9)ship=Math.max(ship,s.fee);}
+  if(ship){after=r2(after+ship);lines.push({t:'运费',d:`这一单不满免运费线，要付运费`,v:-ship,fee:true});}
+  // bank-card discount at payment, only for cards the user said they have (counted once per order)
+  // bank discounts are usually "once a day per card", so across split orders it is used only once
+  if(!opt.promoOnly&&!(no&&no.has('pay|'+pl))){const pd=payDisc(pl,after);if(pd){after=r2(after-pd.amt);used.push('pay|'+pl);lines.push({t:`付款立减 · ${pd.name}`,d:'用这张卡付款时立减，一般每天限一次，拆单时只算在一单上',v:pd.amt,pay:true});}}
+  return {pay:after,sub:r2(sub),elig:r2(elig),lines,items,used};
+}
+const storeIds=o=>new Set(o.used||[]);
+const groupNames=items=>{const m=new Map();for(const it of items)m.set(it.name,(m.get(it.name)||0)+1);return [...m].map(([n,k])=>esc(n)+(k>1?` ×${k}`:'')).join('、');};
+// best way to split one platform's items into at most K orders; each coupon can be used once across them
+function platTables(list,opt){
+  const n=list.length, full=(1<<n)-1, best={}, K=opt.split?(n<=6?3:2):1;
+  for(const {id:pl} of PLATS){
+    const k=coupons(pl).length, avail=list.reduce((m,it,i)=>it.o[pl]?m|(1<<i):m,0);
+    const om=new Map(), memo=new Map(), key=s=>[...s].sort().join(',');
+    const one=(m,c,ex)=>{const kk=m+'|'+c+'|'+key(ex);if(om.has(kk))return om.get(kk);
+      const r=evalOrder(pl,list.filter((_,i)=>m>>i&1),c,{...opt,noIds:ex});om.set(kk,r);return r;};
+    const bestK=(m,kk,ex)=>{
+      const mk=m+'|'+kk+'|'+key(ex);if(memo.has(mk))return memo.get(mk);
+      let b=null;
+      for(let c=-1;c<k;c++){const r=one(m,c,ex);if(r&&(!b||r.pay<b.cost-0.001))b={cost:r.pay,orders:[r]};}
+      if(kk>1){const low=m&-m;
+        for(let a=(m-1)&m;a>0;a=(a-1)&m){if(!(a&low))continue;
+          for(let c=-1;c<k;c++){const o1=one(a,c,ex);if(!o1||(b&&o1.pay>=b.cost))continue;
+            const rest=bestK(m^a,kk-1,o1.used.length?new Set([...ex,...o1.used]):ex);if(!rest)continue;
+            if(!b||o1.pay+rest.cost<b.cost-0.001)b={cost:r2(o1.pay+rest.cost),orders:[o1,...rest.orders]};}}}
+      memo.set(mk,b);return b;};
+    const bp=[];bp[0]={cost:0,orders:[]};
+    for(let m=1;m<=full;m++){if((m&avail)!==m){bp[m]=null;continue;}
+      const b=bestK(m,K,new Set());if(!b){bp[m]=null;continue;}
+      const rd=Math.min(red(pl),b.cost);bp[m]={cost:r2(b.cost-rd),orders:b.orders,red:rd};}
+    best[pl]=bp;}
+  return best;
+}
+// cart lines with a quantity become single units, so units of one product can go into different orders
+// a platform selling a different pack size isn't the same purchase, so it's left out of the plan and compared per pack instead
+function units(entries){const out=[];for(const {c,it} of entries)if(c.on&&PLATS.some(p=>it.o[p.id])){
+    const ref=(PLATS.map(p=>it.o[p.id]).find(o=>o&&o.pack)||{}).pack, o={};
+    for(const {id:pl} of PLATS){const x=it.o[pl];o[pl]=x&&(!ref||!x.pack||x.pack===ref)?x:null;}
+    for(let q=0;q<(c.qty||1);q++){
+      // "限购 N 件": units past the limit are charged the normal price from the normal shop
+      const oq={};for(const pl in o){const x=o[pl];oq[pl]=x&&x.limit&&q>=x.limit.n?{...x,price:x.limit.over,sub:false,store:x.limit.store||x.store,overLimit:true}:x;}
+      out.push({...it,o:oq,uid:it.id+'#'+q,base:it});}}
+  return out;}
+function bestSplit(best,n){
+  const full=(1<<n)-1;let top=null;
+  for(let A=full;;A=(A-1)&full){const ja=best.jd[A];if(ja){const rest=full^A;
+      for(let B=rest;;B=(B-1)&rest){const tb=best.tb[B],pd=best.pdd[rest^B];
+        if(tb&&pd){const cost=ja.cost+tb.cost+pd.cost;if(!top||cost<top.cost-0.001)top={cost:r2(cost),plats:{jd:ja,tb,pdd:pd}};}
+        if(B===0)break;}}
+    if(A===0)break;}
+  return top;
+}
+function buildPlans(list){
+  const n=list.length, full=(1<<n)-1, plans=[];
+  if(!n)return plans;
+  const T1=platTables(list,{split:true}), A=bestSplit(T1,n);
+  if(A)plans.push({key:'best',name:'最省',desc:'允许分平台、拆单',opt:{},...A});
+  const B=bestSplit(platTables(list,{split:false}),n);
+  if(B)plans.push({key:'easy',name:'少折腾',desc:'每个平台只下一单',opt:{},...B});
+  const S=bestSplit(platTables(list,{split:true,excl:['venue','member']}),n);
+  if(S)plans.push({key:'safe',name:'稳妥',desc:'不抢定时券、不入会',opt:{excl:['venue','member']},...S});
+  let one=null;
+  for(const {id:pl} of PLATS){const b=T1[pl][full];if(b&&(!one||b.cost<one.cost)){const plats={jd:{cost:0,orders:[]},tb:{cost:0,orders:[]},pdd:{cost:0,orders:[]}};plats[pl]=b;one={cost:b.cost,plats,pl};}}
+  plans.push(one?{key:'one',name:`只在${PN[one.pl].name}买`,desc:'一个平台买齐',opt:{},...one}:{key:'one',name:'一个平台买齐',desc:'没有一个平台全都有卖',none:true});
+  if(list.some(it=>PLATS.some(p=>it.o[p.id]&&it.o[p.id].dep))){
+    const D=bestSplit(platTables(list,{split:true,noDep:true}),n);
+    if(D)plans.push({key:'nodep',name:'不付定金',desc:'不参加预售，直接买现货',opt:{noDep:true},...D});}
+  for(const p of plans){if(p.none)continue;
+    p.orders=Object.values(p.plats).reduce((s,P)=>s+P.orders.length,0);
+    p.platN=Object.values(p.plats).filter(P=>P.orders.length).length;
+    const ids=new Set();for(const P of Object.values(p.plats))for(const o of P.orders)for(const l of o.lines)if(l.claim&&SRC[l.claim.src].q)ids.add(l.claim.id);
+    p.claimN=ids.size;}
+  const b0=plans[0];
+  const out=plans.filter(p=>p===b0||p.none||p.key==='one'||!(Math.abs(p.cost-b0.cost)<0.01&&p.orders===b0.orders));
+  // each kind of plan keeps its own letter, so codes people wrote down don't move around
+  for(const p of out)p.letter={best:'A',easy:'B',safe:'C',one:'D',nodep:'E'}[p.key];
+  return out;
+}
+// coupons a plan needs, hardest-to-get first, numbered A1, A2… (only the ones you have to claim get a number)
+const RISK={venue:0,live:1,member:2,ai:3,page:4,union:5,me:6};
+function planClaims(p){
+  if(!p||p.none)return [];
+  const out=[];
+  for(const {id:pl} of PLATS)for(const o of p.plats[pl].orders)for(const l of o.lines)if(l.claim&&!out.some(c=>c.id===l.claim.id))out.push(l.claim);
+  out.sort((a,b)=>RISK[a.src]-RISK[b.src]);
+  let n=0;return out.map(c=>({...c,code:SRC[c.src].q?p.letter+(++n):''}));
+}
+// what a plan would cost if one coupon can't be claimed
+const PLAN_OPT={best:{split:true},easy:{split:false},safe:{split:true,excl:['venue','member']},nodep:{split:true,noDep:true}};
+function costWithout(list,key,id){
+  const had=failed[id];failed[id]=true;let c=Infinity;
+  try{
+    if(key==='one'){const T=platTables(list,{split:true}),full=(1<<list.length)-1;for(const {id:pl} of PLATS)if(T[pl][full])c=Math.min(c,T[pl][full].cost);}
+    else{const t=bestSplit(platTables(list,PLAN_OPT[key]),list.length);if(t)c=t.cost;}
+  }finally{if(had)failed[id]=had;else delete failed[id];}
+  return c;
+}
+function markFailed(c){
+  const prev={};for(const p of planCache.plans||[])if(!p.none)prev[p.key]=p.cost;
+  failed[c.id]={name:c.name,pl:c.pl};claimed[c.id]=false;save();
+  pendingFail={c,prev,prevSel:sel};render();
+}
+// baseline: each item ordered on its own, on its cheapest platform, with the best coupon that order can use
+function separate(list){let s=0;for(const it of list){let b=Infinity;for(const {id:pl} of PLATS){if(!it.o[pl])continue;for(let c=-1;c<coupons(pl).length;c++){const r=evalOrder(pl,[it],c,{});if(r&&r.pay<b)b=r.pay;}}s+=b;}return r2(s);}
+// what someone pays without the App: each item where its listed price is lowest, one order per platform,
+// only the discounts the platform applies by itself (no coupons to claim, no bank card, no splitting)
+// a pasted item is bought where its link came from (that's what people do without the App)
+function direct(list){const by={};for(const it of list){let pl=it.user&&it.o[it.src]?it.src:null;if(!pl)for(const p of PLATS)if(it.o[p.id]&&(!pl||it.o[p.id].price<it.o[pl].price))pl=p.id;(by[pl]=by[pl]||[]).push(it);}
+  let s=0;for(const pl in by){const r=evalOrder(pl,by[pl],-1,{promoOnly:true});s+=r?r.pay:by[pl].reduce((a,it)=>a+it.o[pl].price,0);}return r2(s);}
+
+// ---------- refresh ----------
+function renderFresh(){
+  const min=Math.floor((Date.now()-checkedAt)/60000), old=min>=30;
+  document.getElementById('led').className='led'+(old?' old':'');
+  const t=cnTime(checkedAt), hm=String(t.getUTCHours()).padStart(2,'0')+':'+String(t.getUTCMinutes()).padStart(2,'0');
+  document.getElementById('freshTxt').textContent=old?`优惠数据是北京时间 ${hm} 查的，可能过期了，下单前请刷新`:`优惠数据已是最新（北京时间 ${hm} 联网核实${min?`，${min} 分钟前`:''}）`;
+  const ch=document.getElementById('changes');ch.hidden=!lastMsgs.length;ch.innerHTML=lastMsgs.map(m=>`<div>${m}</div>`).join('');
+}
+function applyUpdate(set){
+  for(const u of set){
+    if(u.k==='gone')RULES[u.pl].coupons=RULES[u.pl].coupons.filter(c=>c.id!==u.id);
+    if(u.k==='price'){DEMO.find(c=>c.id===u.item).o[u.pl].price=u.price;changed.add(u.item+'|'+u.pl);}
+    if(u.k==='new')(RULES[u.pl].stores[u.store]=RULES[u.pl].stores[u.store]||[]).push(u.tier);}
+  ALL().forEach(syncLow30);
+}
+function refresh(){
+  const b=document.getElementById('refreshBtn');b.disabled=true;b.textContent='正在联网核实…';
+  setTimeout(()=>{
+    const set=UPDATES[upd];changed=new Set();
+    if(set){applyUpdate(set);upd++;save();lastMsgs=['刚才查到这些变化，方案已按最新数据重新计算：',...set.map(u=>u.msg)];}
+    else lastMsgs=['价格和券都没有变化。'];
+    checkedAt=Date.now();b.disabled=false;b.textContent='联网刷新优惠';render();
+  },900);
+}
+
+// ---------- rendering ----------
+// a pasted item: one box per platform for the price its page shows, plus what the page leaves out
+function userForm(it,picked){
+  const sp=specsIn(it.name), none=!PLATS.some(p=>it.o[p.id]);
+  return `<div class="uf">${none?`<p class="small"><b>填上页面显示的价格，App 才按真实价格算。</b>演示版查不到真实价格，不再随便编。</p>`:''}
+    ${sp.length>1?`<p class="small" style="color:var(--warn)">这个链接里有好几个规格（${sp.map(esc).join('、')}），价格不一样。填你要买的那个规格的价格。</p>`
+      :`<p class="note">一个链接常常有好几个版本（颜色、型号、容量），价格能差几千。填你要买的那个版本的价，别填搜索页上带“起”的价。</p>`}
+    ${PLATS.map(({id:pl})=>{const o=it.o[pl];return `<div class="ufr${picked===pl?' pick':''}"><span class="ufl">${dot(pl)}${PN[pl].name}</span>
+      <label class="ufi"><span class="note">页面价 ¥</span><input type="text" inputmode="decimal" data-up="${it.id}|${pl}|price" value="${o?o.price:''}" placeholder="${pl===it.src?'填页面上的价':'没卖就空着'}" aria-label="${PN[pl].name}页面价"></label>
+      ${o?`<label class="ufi"><span class="note">每件还能再减 ¥</span><input type="text" inputmode="decimal" data-up="${it.id}|${pl}|off" value="${o.unitOff||''}" placeholder="淘金币/国补" aria-label="${PN[pl].name}页面价没算的优惠"></label>`:''}
+      ${pl===it.src&&it.url?`<a class="note" href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">打开原商品 ↗</a>`:`<a class="note" href="${esc(SEARCH[pl](it.name))}" target="_blank" rel="noopener noreferrer">去${PN[pl].name}搜同款 ↗</a>`}</div>`;}).join('')}
+    ${none?`<p class="note">页面价填商品页最显眼的那个价（“券后/到手价/国补后”）。“还能再减”填页面写着但没算进去的，比如“淘金币可抵 ¥452”、还没领的国补。别的平台搜到同款再填，App 会比出在哪买、怎么拆单最省。</p>`:''}</div>`;
+}
+function itemDetail(it){
+  if(it.user)return `<div class="idet"><div class="src"><span>来自 ${dot(it.src)} ${PN[it.src].name}分享</span><span class="badge b-good">价格是你填的</span></div>${it.url?`<div class="url">原链接：<a href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">${esc(it.url)}</a></div>`:''}<button class="x" data-del="${it.id}">从购物车删掉这件</button></div>`;
+  const rows=PLATS.map(({id:pl})=>{const o=it.o[pl];if(!o)return `<tr><td>${dot(pl)} ${PN[pl].name}</td><td colspan="5" class="muted">没有找到同款</td></tr>`;
+    const tiers=(RULES[pl].stores[o.store]||[]).map(t=>`满${t.th}减${t.amt} <span class="badge ${SRC[t.src].b}">${SRC[t.src].t}</span>`).join('<br>')||(o.sub?'不参加店铺券':'—');
+    return `<tr><td>${dot(pl)} ${PN[pl].name}</td><td class="r n"><b>${y(o.price)}</b></td><td class="r n">${y(o.list)}</td><td class="r n">${y(o.low30)}</td><td>${esc(o.store)}${o.dep?`<br><span class="badge b-warn">定金${o.dep[0]}抵${o.dep[1]}</span>`:''}</td><td>${tiers}</td></tr>`}).join('');
+  const cross=PLATS.filter(p=>RULES[p.id].cross&&it.o[p.id]&&!it.o[p.id].sub).map(p=>`${RULES[p.id].cross.name}每满${RULES[p.id].cross.per}减${RULES[p.id].cross.amt}`).join('；');
+  return `<div class="idet">
+    <div class="src">${it.gen?`<span>来自 ${dot(it.src)} ${PN[it.src].name}分享</span>`:'<span class="badge b-warn">示例商品</span>'}${it.gen?'<span class="badge b-warn">价格为演示随机生成</span>':''}</div>
+    ${it.url?`<div class="url">原链接：<a href="${esc(it.url)}" target="_blank" rel="noopener noreferrer">${esc(it.url)}</a></div>`:''}
+    <div class="tbl"><table><thead><tr><th>平台</th><th class="r">售价</th><th class="r">划线价</th><th class="r">30天最低</th><th>店铺</th><th>店铺券</th></tr></thead><tbody>${rows}</tbody></table></div>
+    ${cross?`<div>还能参加：${cross}</div>`:''}
+    ${(()=>{const ss=PLATS.filter(p=>it.o[p.id]).map(p=>({pl:p.id,st:histStats(history(it,p.id))}));const g=ss.reduce((a,b)=>b.st.min<a.st.min?b:a);
+      return `<div class="btns"><span>近 4 个月最低 <b class="n">${y(g.st.min)}</b>（${md(dayDate(g.st.at))}，${PN[g.pl].name}）</span><button class="btn ghost sm" data-hist="${it.id}">看价格走势</button></div>`})()}
+    <p class="note">正式版这里还会显示接口返回的商品图片、规格、销量和评价。</p>
+    <button class="x" data-del="${it.id}">从购物车删掉这件</button></div>`;
+}
+
+function render(){
+  renderFresh();
+  const all=ALL(), entries=cart.map(c=>({c,it:all.find(i=>i.id===c.id)})).filter(e=>e.it);
+  const onItems=entries.filter(e=>e.c.on).map(e=>e.it), list=units(entries);
+  document.getElementById('selTxt').innerHTML=`共 ${entries.length} 种，已勾选 <b>${onItems.length}</b> 种、${list.length} 件${list.length>=MAX_UNITS?`（最多同时算 ${MAX_UNITS} 件）`:''}`;
+  const allChk=document.getElementById('allChk');allChk.checked=entries.length>0&&onItems.length===entries.length;allChk.indeterminate=onItems.length>0&&onItems.length<entries.length;
+  document.getElementById('plansTitle').textContent=list.length?`勾选的 ${list.length} 件，几套下单方案`:'几套下单方案';
+  drawHist(onItems);
+  // prices the user typed are part of the key, so changing one recalculates the plans
+  const key=list.map(i=>i.uid).join(',')+'|'+mine.filter(m=>m.user).map(m=>PLATS.map(p=>m.o[p.id]?m.o[p.id].price+'-'+(m.o[p.id].unitOff||0):'').join('/')).join(';')+'|'+upd+'|'+!!personal+'|'+Object.keys(failed).sort().join()+'|'+aiCoupons.length+'|'+PROFILE.cards.join()+PROFILE.member;
+  renderProfile();renderJiabao();
+  if(planCache.key!==key)planCache={key,plans:list.length?buildPlans(list):[]};
+  const plans=planCache.plans;
+  if(!plans.some(p=>p.key===sel&&!p.none))sel='best';
+  const P=plans.find(p=>p.key===sel), base=plans.find(p=>p.key==='best');
+  if(pendingFail){const pf=pendingFail;pendingFail=null;const np=plans.find(p=>p.key===pf.prevSel&&!p.none)||base;
+    if(np){const before=pf.prev[np.key], d=before==null?0:r2(np.cost-before);
+      let body=d>0.01?`方案${np.letter}（${np.name}）从 ${y(before)} 变成 ${y(np.cost)}，多花 ${y(d)}。`:`方案${np.letter}（${np.name}）价格没变，有别的券顶上了。`;
+      if(base&&base!==np&&base.cost<np.cost-0.01)body+=` 现在最便宜的是方案${base.letter}（${y(base.cost)}）。`;
+      failNote={title:`「${pf.c.name}」没领到，已从方案里去掉并重新计算`,body:body+' 剩下的券编号按新方案重新排了。'};}}
+  const pick={};if(P&&!P.none)for(const pl in P.plats)for(const o of P.plats[pl].orders)for(const it of o.items)pick[it.id]=pl;
+  // cart
+  document.getElementById('items').innerHTML=entries.length?entries.map(({c,it})=>`<div class="item${c.on?'':' off'}">
+    <input type="checkbox" data-chk="${it.id}" ${c.on?'checked':''} aria-label="勾选${esc(it.name)}">
+    <div class="ibody"><button class="iname" data-open="${it.id}" aria-expanded="${open.has(it.id)}">${it.gen?dot(it.src):''}<span>${esc(it.name)}</span><span class="arr">${open.has(it.id)?'收起 ▴':'详情 ▾'}</span></button>
+    ${it.user?userForm(it,pick[it.id]):''}
+    <div class="offers"${it.user?' hidden':''}>${PLATS.map(({id:pl})=>{const o=it.o[pl];if(!o)return `<span class="offer na">${dot(pl)}没有卖</span>`;
+      return `<span class="offer${pick[it.id]===pl?' pick':''}${changed.has(it.id+'|'+pl)?' chg':''}">${dot(pl)}<span class="n">${y(o.price)}</span>${o.pack?`<span class="muted">/${o.pack}${it.unit||'包'}</span>`:''}${o.sub?'<span class="badge b-info">补贴</span>':''}${o.dep?`<span class="badge b-warn">定金</span>`:''}${o.newbie?'<span class="badge b-warn">新人价</span>':''}${changed.has(it.id+'|'+pl)?'<span class="badge b-good">刚降价</span>':''}</span>`}).join('')}</div>
+    <div class="qty"><span class="note">数量</span><button class="qb" data-dq="${it.id}" data-d="-1" aria-label="减少数量" ${(c.qty||1)<=1?'disabled':''}>−</button><span class="n">${c.qty||1}</span><button class="qb" data-dq="${it.id}" data-d="1" aria-label="增加数量">+</button>${it.real?'<span class="badge b-good">实测数据</span>':''}</div></div>
+    ${open.has(it.id)?itemDetail(it):''}</div>`).join('')
+    :'<p class="small muted">购物车是空的。粘贴商品链接加入，或点“恢复示例购物车”。</p>';
+  // personal
+  document.getElementById('clearShot').hidden=!personal;
+  document.getElementById('personal').innerHTML=personal?
+    `<span class="badge b-warn" style="width:fit-content">演示识别结果</span>`+PLATS.map(({id:pl})=>{const cs=personal.coupons[pl].map(c=>`${c.name} 满${c.th}减${c.amt}`);if(personal.red[pl])cs.push(`红包 ${y(personal.red[pl])}`);return cs.length?`<div>${dot(pl)} ${cs.join('，')}</div>`:''}).join('')
+    :'<span class="note">还没上传。不传也能算，只是可能不是最低价。</span>';
+  // found
+  const used=new Set(list.flatMap(it=>PLATS.map(p=>it.o[p.id]&&it.o[p.id].store)).filter(Boolean));
+  document.getElementById('found').innerHTML=PLATS.map(({id:pl})=>{const R=RULES[pl],rows=[];
+    if(R.cross)rows.push(`${R.cross.name}：每满 ${R.cross.per} 减 ${R.cross.amt} <span class="badge b-plain">自动生效</span>`);
+    for(const c of coupons(pl))rows.push(`${c.name}：${tierTxt(c)} <span class="badge ${SRC[c.src].b}">${SRC[c.src].t}</span>`);
+    for(const st in R.stores)if(used.has(st))for(const t of R.stores[st])rows.push(`${esc(st)}：${t.name?esc(t.name)+' ':''}${tierTxt(t)} <span class="badge ${t.promo?'b-plain':SRC[t.src].b}">${t.promo?'自动生效':SRC[t.src].t}</span>`);
+    for(const st in (R.ship||{}))if(used.has(st))rows.push(`${esc(st)}：满 ${y(R.ship[st].free)} 免运费，否则运费 ${y(R.ship[st].fee)}`);
+    for(const p of (R.pay||[])){const c=CARDS.find(x=>x.id===p.card);rows.push(`付款立减：${esc(c.name)} 减 ${y(p.amt)} <span class="badge ${PROFILE.cards.includes(p.card)?'b-good">你有这张卡，已算进总价':'b-plain">你没勾这张卡'}</span>`);}
+    if(red(pl))rows.push(`红包 ${y(red(pl))} <span class="badge b-info">已在你卡券包</span>`);
+    return `<details${pl==='jd'?' open':''}><summary>${dot(pl)} ${PN[pl].name}：${rows.length} 项</summary><div class="plist">${rows.map(r=>`<div>${r}</div>`).join('')}</div></details>`}).join('');
+  // plan cards
+  document.getElementById('plans').innerHTML=plans.length?plans.map(p=>p.none?
+    `<div class="pc" style="cursor:default"><span class="nm"><span class="code">${p.letter}</span>${p.name}</span><span class="meta">${p.desc}</span></div>`:
+    `<button class="pc" data-plan="${p.key}" aria-pressed="${p.key===sel}"><span class="nm"><span class="code">${p.letter}</span>${p.name}${p.key==='best'?'<span class="badge b-good">最便宜</span>':''}</span>
+      <span class="cost n">${y(p.cost)}</span>
+      <span class="diff${p.cost-base.cost<0.01?' zero':''}">${p.cost-base.cost<0.01?(p.key==='best'?'基准':'和最省一样'):`多花 ${y(p.cost-base.cost)}`}</span>
+      <span class="meta">${p.desc} · ${p.platN} 个平台 · ${p.orders} 单 · 要领 ${p.claimN} 张券</span></button>`).join('')
+    :'<p class="small muted">在左边购物车里勾上这次要买的商品。</p>';
+  // detail
+  const plan=document.getElementById('plan'), traps=[], claims=planClaims(P), codeOf=Object.fromEntries(claims.map(c=>[c.id,c.code]));
+  if(!P||P.none){plan.innerHTML='<h2>方案明细</h2><p class="small muted">勾选商品后这里会显示怎么下单。</p>';
+    document.getElementById('claims').innerHTML='';document.getElementById('queue').innerHTML='';document.getElementById('claimCnt').textContent='';
+    document.getElementById('traps').innerHTML='<p class="small muted">勾选商品后这里会提示坑。</p>';return;}
+  const dir=direct(list);
+  let html=`<h2>方案明细：<span class="code">${P.letter}</span> ${P.name}</h2>
+    <div class="hero"><div><div class="note">勾选的 ${list.length} 件一共要付</div><div class="big n"><small>¥</small>${y(P.cost).slice(1)}</div></div>
+      <div class="save">${dir-P.cost>0.01?`比直接下单省 <span class="n">${y(dir-P.cost)}</span>（${Math.round((dir-P.cost)/dir*100)}%）`:'<span class="muted">和直接下单差不多</span>'}</div></div>
+    <p class="note">直接下单 = 不用 App：${list.some(i=>i.user)?'你粘贴的商品在链接来的那个平台买，其他':'每件'}在标价最低的平台买，一个平台一单，只有平台自动给的优惠，共 <span class="n">${y(dir)}</span>。</p>
+    ${P.key===sel?`<div class="btns"><button class="btn sm" id="orderedBtn">我已按方案${P.letter}下单</button><span class="note">点一下，App 会在价保期内盯着降价，降了提醒你去申请退差价</span></div>`:''}`;
+  const shares=[];
+  for(const {id:pl} of PLATS){const Q=P.plats[pl];if(!Q.orders.length)continue;
+    Q.orders.forEach((o,i)=>{
+      html+=`<div class="order"><div class="oh">${dot(pl)}<span>${PN[pl].name}${Q.orders.length>1?` 第 ${i+1} 单`:''}</span><span class="muted small">${o.items.length} 件</span><span class="pay n">${y(o.pay)}</span></div>
+      <div class="small">${groupNames(o.items)}</div>
+      <div class="lines"><div class="line"><span>商品合计${!P.opt.noDep&&o.items.some(it=>it.o[pl].dep)?'（定金膨胀后）':''}</span><span class="v n">${y(o.sub)}</span></div>
+      ${o.lines.map(l=>`<div class="line ${l.fee?'f':'m'}"><span>${l.claim&&codeOf[l.claim.id]?`<span class="code sm">${codeOf[l.claim.id]}</span> `:''}${esc(l.t)}</span><span class="v n">${l.fee?'+'+y(-l.v):'−'+y(l.v)}</span><span class="sub">${esc(l.d)}</span></div>`).join('')}</div></div>`;
+      for(const it of o.items){const p=priceOf(it.o[pl],P.opt.noDep);let sh=shares.find(s=>s.it.id===it.id&&s.pl===pl);
+        // a per-item discount belongs to that item; the rest of the order's discounts are shared by price
+        if(!sh){sh={it,pl,n:0,sum:0};shares.push(sh);}sh.n++;
+        const uo=items=>items.reduce((a,x)=>a+(x.o[pl].unitOff||0),0), mine1=it.o[pl].unitOff||0, rest=o.sub-uo(o.items)-o.pay;
+        sh.sum+=o.sub?p-mine1-rest*p/o.sub:p;}
+      const R=RULES[pl];
+      for(const it of o.items.filter(it=>it.o[pl].overLimit))traps.push(['warn',`${esc(it.name)}：补贴价限购`,`${PN[pl].name}这件补贴价每人限购 ${it.base.o[pl].limit.n} 件，多出来的按 ${y(it.o[pl].price)} 算（已经算进总价）。`]);
+      if(R.cross&&o.elig>0){const rem=r2(R.cross.per-(o.elig%R.cross.per));if(rem<R.cross.per*0.2)traps.push(['info',`${PN[pl].name}${Q.orders.length>1?'第'+(i+1)+'单':''}差 ${y(rem)} 再满一档`,`再买 ${y(rem)} 参加满减的东西能多减 ${y(R.cross.amt)}。只有本来就要买的东西才值得凑。`]);}
+    });
+    if(Q.red)html+=`<div class="order"><div class="oh">${dot(pl)}<span>${PN[pl].name}红包（你的卡券包）</span><span class="pay n" style="color:var(--good)">−${y(Q.red)}</span></div></div>`;
+    if(Q.orders.length>1)traps.push(['info',`${PN[pl].name}拆成 ${Q.orders.length} 单更省`,`按上面的分法分 ${Q.orders.length} 次提交、分别付款，别合并成一单。每单各自满减、各用各的券；运费已经按每单算进去了。`]);
+    {const miss=(RULES[pl].pay||[]).filter(p=>!PROFILE.cards.includes(p.card)).sort((a,b)=>b.amt-a.amt);
+     if(miss.length&&!Q.orders.some(o=>o.lines.some(l=>l.pay)))traps.push(['info',`${PN[pl].name}用银行卡付款还能再省`,`${miss.map(p=>`${CARDS.find(c=>c.id===p.card).name}立减 ${y(p.amt)}`).join('；')}。如果你有其中一张，在上面“我的情况”里勾上，App 会自动算进总价。`]);}
+  }
+  for(const s of shares)s.share=s.sum/s.n;
+  html+=`<h3>每件分摊后多少钱</h3><div class="tbl"><table><thead><tr><th>商品</th><th>在哪买</th><th class="r">件数</th><th class="r">标价</th><th class="r">分摊到手/件</th><th class="r">每${'包'}</th><th class="r">近30天最低</th></tr></thead><tbody>
+    ${shares.map(s=>{const o=s.it.o[s.pl];return `<tr><td>${esc(s.it.name)}</td><td>${PN[s.pl].name}</td><td class="r n">${s.n}</td><td class="r n">${y(o.price)}</td><td class="r n"><b>${y(s.share)}</b></td><td class="r n">${o.pack?y(s.share/o.pack):'—'}</td><td class="r n">${y(o.low30)}</td></tr>`}).join('')}</tbody></table></div>
+    <div class="btns"><button class="btn ghost sm" id="verifyBtn">下单前再联网核实一次</button><span class="note">分摊按价格比例计算，红包另算。</span></div>`;
+  plan.innerHTML=html;
+  // traps
+  const fake=shares.filter(s=>s.it.o[s.pl].list>s.it.o[s.pl].low30*1.15);
+  if(fake.length)traps.push(['bad',`${fake.length} 件商品划线价虚高，像先涨后降`,fake.map(s=>`${esc(s.it.name)}：划线价 ${y(s.it.o[s.pl].list)}，近 30 天最低 ${y(s.it.o[s.pl].low30)}`).join('；')+'。页面上写的“直降多少”别当真，要和 30 天最低价比。']);
+  for(const s of shares){const o=s.it.o[s.pl];
+    const hs=s.it.user?{min:Infinity}:histStats(history(s.it,s.pl));
+    if(hs.min<s.share-1&&hs.min<o.low30-0.01)traps.push(['info',`${esc(s.it.name)}：4 个月里卖得更便宜过`,`${md(dayDate(hs.at))} 在${PN[s.pl].name}卖过 ${y(hs.min)}，比现在分摊后的 ${y(s.share)} 还便宜 ${y(s.share-hs.min)}。不急的话，下次活动可能还会到这个价。`]);
+    if(s.share>o.low30+0.5)traps.push(['warn',`${esc(s.it.name)}：比近 30 天最低还贵`,`分摊后 ${y(s.share)}，30 天最低 ${y(o.low30)}。不急可以先不买这件。`]);
+    if(o.dep&&!P.opt.noDep)traps.push(['warn',`${esc(s.it.name)}：定金一般不退`,`先付 ${y(o.dep[0])} 定金，尾款付了才抵 ${y(o.dep[1])}。不付尾款定金拿不回来，记好尾款时间。`]);
+    if(o.sub)traps.push(['info',`${esc(s.it.name)}：百亿补贴不参加满减`,'补贴价已经算进去，但这件不计入店铺券和跨店满减的门槛。']);
+    if(o.newbie)traps.push(['warn',`${esc(s.it.name)}：页面写的是“新人到手价”`,`${PN[s.pl].name}上这个价可能只给新用户或只给第一单。老用户、第二单可能拿不到，下单前看一眼结算页。`]);
+    // buying more of the same thing should not make each one dearer
+    // compare without the bank-card discount: it is once a day, so it can't make every single order cheaper
+    if(s.n>1){let one=Infinity;for(let c=-1;c<coupons(s.pl).length;c++){const r=evalOrder(s.pl,[s.it],c,P.opt);if(r)one=Math.min(one,r.pay+r.lines.filter(l=>l.pay).reduce((a,l)=>a+l.v,0));}
+      if(one<s.share-0.05)traps.push(['bad',`${esc(s.it.name)}：买 ${s.n} 件反而每件更贵`,`在${PN[s.pl].name}只买 1 件是 ${y(one)}，买 ${s.n} 件摊下来每件 ${y(s.share)}。多件凑的是另一档优惠，没有单件划算；如果只是想囤货，可以考虑分开几次买。`]);}}
+  // compare by pack when platforms sell different sizes
+  for(const it of onItems){const ps=PLATS.filter(p=>it.o[p.id]&&it.o[p.id].pack);if(ps.length<2)continue;
+    const sizes=new Set(ps.map(p=>it.o[p.id].pack));if(sizes.size<2)continue;
+    const q=(cart.find(c=>c.id===it.id)||{}).qty||1, u=it.unit||'包';
+    const per=ps.map(p=>{const its=Array.from({length:q},()=>it);let b=Infinity;for(let c=-1;c<coupons(p.id).length;c++){const r=evalOrder(p.id,its,c,{});if(r)b=Math.min(b,r.pay);}
+      return {p,v:b/(it.o[p.id].pack*q),n:it.o[p.id].pack,tot:b};}).sort((a,b)=>a.v-b.v);
+    traps.push([per[0].p.id===(pick[it.id]||'')?'info':'warn',`${esc(it.name)}：各平台规格不一样，按每${u}比`,per.map(x=>`${PN[x.p.id].name}买 ${q} 件（${x.n*q}${u}）${y(x.tot)}，每${u} ${y(x.v)}`).join('；')+`。按每${u}算，${PN[per[0].p.id].name}最便宜${per[0].p.id===(pick[it.id]||'')?'，就是方案里选的':`，比方案里选的${PN[pick[it.id]||per[1].p.id].name}每${u}便宜 ${y(per[1].v-per[0].v)}；不同规格没法直接放进同一个方案比，想换的话可以换规格买`}。`]);}
+  // a big gap between platforms for something you pasted usually means a different version or a non-official shop
+  // (seen 2026-11-05: 5090D V2 ¥33,999 in a small Taobao shop vs ¥41,999 at the official stores)
+  for(const it of onItems.filter(i=>i.user)){const ps=PLATS.filter(p=>it.o[p.id]).map(p=>({pl:p.id,v:it.o[p.id].price-(it.o[p.id].unitOff||0)})).sort((a,b)=>a.v-b.v);
+    if(ps.length>1&&ps[0].v<ps[ps.length-1].v*0.85)traps.push(['warn',`${esc(it.name)}：各平台差价很大`,`${PN[ps[0].pl].name} ${y(ps[0].v)}，${PN[ps[ps.length-1].pl].name} ${y(ps[ps.length-1].v)}，差 ${y(ps[ps.length-1].v-ps[0].v)}。差这么多，下单前先确认三件事：是同一个版本；是官方或授权店；有发票和保修。`]);}
+  if(claims.some(c=>c.src==='venue'))traps.push(['warn','有券要按时去抢','方案里有主会场定时发的券，可能几分钟就抢光。没抢到的话 App 会按剩下的券重新算。']);
+  if(claims.some(c=>c.src==='member'))traps.push(['info','有券要先入会','入店铺会员会要你授权手机号，之后可能收到营销短信。不想入会就选“稳妥”方案。']);
+  if(Object.values(P.plats).some(Q=>Q.orders.some(o=>o.items.length>1&&o.lines.length)))
+    traps.push(['warn','退货会扣回优惠','几件一起用了满减或券，退其中一件时平台会按比例扣回优惠，退款会比你想的少。']);
+  if(!personal)traps.push(['info','你卡券包里的券还没算进来','红包、会员券接口查不到。上传一张卡券包截图，方案可能更便宜。']);
+  const ord={bad:0,warn:1,info:2},seenT=new Set();
+  for(let i=traps.length-1;i>=0;i--){if(seenT.has(traps[i][1]))traps.splice(i,1);else seenT.add(traps[i][1]);}
+  traps.sort((a,b)=>ord[a[0]]-ord[b[0]]);
+  document.getElementById('traps').innerHTML=traps.map(t=>`<div class="trap ${t[0]}"><b>${t[0]==='bad'?'⚠ ':t[0]==='warn'?'! ':''}${t[1]}</b><span>${t[2]}</span></div>`).join('');
+  renderClaims(claims,plans,P,list);
+}
+
+const impHTML=d=>!isFinite(d)?'<span style="color:var(--bad)">没领到就买不成这套方案</span>':d<0.01?'<span style="color:var(--good)">没领到也不影响，有别的券顶上</span>':`<span style="color:var(--warn)">没领到会多花 ${y(d)}</span>`;
+let impT=null;
+function scheduleImpact(list,P,ids){
+  clearTimeout(impT);
+  const k=id=>planCache.key+'#'+P.key+'#'+id, todo=ids.filter(id=>!(k(id) in impactCache));
+  const paint=id=>{for(const el of document.querySelectorAll('[data-impact]'))if(el.dataset.impact===id)el.innerHTML=impHTML(impactCache[k(id)]);};
+  ids.filter(id=>k(id) in impactCache).forEach(paint);
+  let i=0;const step=()=>{if(i>=todo.length)return;const id=todo[i++];impactCache[k(id)]=r2(costWithout(list,P.key,id)-P.cost);paint(id);impT=setTimeout(step,30);};
+  impT=setTimeout(step,80);
+}
+function renderClaims(claims,plans,P,list){
+  const need=claims.filter(c=>SRC[c.src].q), left=need.filter(c=>!claimed[c.id]), auto=claims.filter(c=>c.src==='union');
+  document.getElementById('claimCnt').textContent=need.length?`方案${P.letter}：已领 ${need.length-left.length} / ${need.length}`:'';
+  const qe=document.getElementById('queue');
+  const note=failNote?`<div class="trap warn"><b>${esc(failNote.title)}</b><span>${failNote.body}</span><button class="x" id="failOk">知道了</button></div>`:'';
+  if(queue){
+    const q=queue, cur=q.list[q.i], doneN=q.got+q.miss+q.skipped, total=doneN+q.list.length-q.i;
+    if(!cur){qe.innerHTML=note+`<div class="queue"><b>领券完成 ✓</b><p class="small">领到 ${q.got} 张，没领到 ${q.miss} 张，跳过 ${q.skipped} 张。${q.miss?'没领到的已经从方案里去掉，价格按剩下的券重新算好了。':''}${auto.length?`另外 ${auto.length} 张隐藏推广券下单时自动带上。`:''}下单前可以上传卡券包截图核对一下。</p><div class="btns"><button class="btn sm" id="qClose">好的</button></div></div>`;}
+    else qe.innerHTML=note+`<div class="queue">
+      <div class="ph"><b>一键领券中 · 方案${P.letter}</b><span class="note n">第 ${doneN+1} / ${total} 张</span></div>
+      <div class="bar"><i style="width:${doneN/total*100}%"></i></div>
+      <div class="qcur"><b>${cur.code?`<span class="code">${cur.code}</span>`:''}${dot(cur.pl)}${esc(cur.name)}<span class="badge ${SRC[cur.src].b}">${SRC[cur.src].t}</span></b>
+        <span class="small muted">${q.ask?`从${PN[cur.pl].name}回来了。这张领到了吗？`:q.status||`点下面按钮，自动打开${PN[cur.pl].name} App 的领券页，点一下“领取”再回来。${cur.src==='venue'?' 这张要整点抢，没到时间 App 会到点提醒你。':''}${cur.src==='member'?' 这张要先入会，会跳到入会页。':''}`}</span>
+        ${q.ask?'':`<span class="small" data-impact="${esc(cur.id)}"></span>`}</div>
+      <div class="btns">${q.ask?`<button class="btn" id="qYes">领到了</button><button class="btn ghost" id="qNo">没领到（抢光了 / 领不了）</button>`
+        :q.busy?`<button class="btn" disabled>等你从 App 回来…</button>`:`<a class="btn" id="qGo" href="${esc(cur.link||CENTER[cur.pl])}" target="_blank" rel="noopener noreferrer">打开${PN[cur.pl].name}领这张 ↗</a><button class="btn ghost sm" id="qSkip" ${q.busy?'disabled':''}>跳过</button>`}<button class="btn ghost sm" id="qStop">停止</button></div></div>`;
+  } else qe.innerHTML=note+(left.length?`<div class="btns"><button class="btn" id="qStart">一键领方案${P.letter}的券（${left.length} 张）</button></div><p class="note">按编号顺序一张张跳过去。最容易被抢光的排在前面：万一没领到，App 马上按剩下的券重新算，后面的券就不会白领。</p>`
+    :need.length?'<p class="small" style="color:var(--good)">这套方案要领的券都领好了 ✓</p>':'');
+  const others=plans.filter(p=>!p.none&&p!==P).map(p=>({p,cl:planClaims(p)}));
+  document.getElementById('claims').innerHTML=(claims.length?claims.map(c=>{
+    const also=others.map(o=>{const x=o.cl.find(z=>z.id===c.id);return x&&x.code;}).filter(Boolean);
+    const acts=c.src==='union'?'<span class="badge b-good">下单自动用上</span>':c.src==='me'?'<span class="badge b-good">已有</span>'
+      :claimed[c.id]?`<button class="btn sm done" data-claim="${esc(c.id)}">已领 ✓</button>`
+      :`<a class="btn sm" href="${esc(c.link||CENTER[c.pl])}" target="_blank" rel="noopener noreferrer">去领 ↗</a><button class="btn ghost sm" data-claim="${esc(c.id)}">领到了</button><button class="btn ghost sm" data-fail="${esc(c.id)}">没领到</button>`;
+    return `<div class="claim">${c.code?`<span class="code">${c.code}</span>`:dot(c.pl)}
+    <span class="what">${c.code?dot(c.pl):''}${esc(c.name)}<span class="badge ${SRC[c.src].b}">${SRC[c.src].t}</span></span>
+    <span class="acts">${acts}</span>
+    <span class="where">在哪：${SRC[c.src].w}${(c.link||CENTER[c.pl])===CENTER[c.pl]?`。点“去领”：${CENTER_HINT[c.pl]}`:'。点“去领”直接打开商品页，领券那一栏就在价格下面'}${also.length?`。别的方案也用这张：${also.join('、')}`:''}${SRC[c.src].q&&!claimed[c.id]?`<br><span data-impact="${esc(c.id)}">正在算没领到的影响…</span>`:''}</span></div>`}).join('')
+    :'<p class="small muted">这套方案不用领券。</p>')
+    +(Object.keys(failed).length?`<div class="failed"><b class="small">没领到的券（已不算进任何方案）</b>${Object.entries(failed).map(([id,f])=>`<div class="frow">${dot(f.pl)}<span>${esc(f.name)}</span><button class="x" data-unfail="${esc(id)}">其实领到了，加回来</button></div>`).join('')}</div>`:'');
+  // which coupons each plan needs, side by side
+  const real=plans.filter(p=>!p.none), lists=real.map(p=>planClaims(p).filter(c=>c.code)), rows=[];
+  lists.forEach(l=>l.forEach(c=>{if(!rows.some(r=>r.id===c.id))rows.push(c);}));
+  rows.sort((a,b)=>RISK[a.src]-RISK[b.src]);
+  document.getElementById('matrix').innerHTML=rows.length?`<div class="tbl"><table><thead><tr><th>券</th>${real.map(p=>`<th class="r">方案${p.letter}</th>`).join('')}<th>状态</th></tr></thead><tbody>
+    ${rows.map(c=>`<tr><td>${dot(c.pl)} ${esc(c.name)}</td>${lists.map(l=>{const x=l.find(z=>z.id===c.id);return `<td class="r">${x?`<span class="code sm">${x.code}</span>`:'<span class="muted">—</span>'}</td>`}).join('')}<td>${claimed[c.id]?'<span class="badge b-good">已领</span>':'<span class="badge b-plain">未领</span>'}</td></tr>`).join('')}</tbody></table></div>
+    <p class="note">同一张券在不同方案里编号不同，领一次就行，所有方案都会打勾。</p>`:'<p class="small muted">这几套方案都不用领券。</p>';
+  lastClaims=claims;
+  const ids=need.filter(c=>!claimed[c.id]).map(c=>c.id);
+  if(ids.length&&list.length)scheduleImpact(list,P,ids);
+}
+
+// ---------- AI assistant: each person uses their own key, kept only on their device ----------
+const AI_PROV=[
+ {id:'deepseek',name:'DeepSeek',kind:'openai',base:'https://api.deepseek.com/v1',model:'deepseek-chat'},
+ {id:'kimi',name:'Kimi（月之暗面）',kind:'openai',base:'https://api.moonshot.cn/v1',model:'moonshot-v1-8k'},
+ {id:'qwen',name:'通义千问',kind:'openai',base:'https://dashscope.aliyuncs.com/compatible-mode/v1',model:'qwen-plus'},
+ {id:'glm',name:'智谱 GLM',kind:'openai',base:'https://open.bigmodel.cn/api/paas/v4',model:'glm-4-flash'},
+ {id:'openai',name:'OpenAI',kind:'openai',base:'https://api.openai.com/v1',model:'gpt-4o-mini'},
+ {id:'claude',name:'Claude（Anthropic）',kind:'anthropic',base:'https://api.anthropic.com/v1',model:'claude-sonnet-5-5'},
+ {id:'custom',name:'其他（兼容 OpenAI 格式）',kind:'openai',base:'',model:''},
+];
+const el=id=>document.getElementById(id);
+let aiKey='', aiParsed=[];
+function aiLoad(){
+  let s=null;try{s=JSON.parse(localStorage.getItem('bj-ai')||'null');}catch(e){}
+  el('aiProv').innerHTML=AI_PROV.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  const p=AI_PROV.find(x=>x.id===(s&&s.prov))||AI_PROV[0];el('aiProv').value=p.id;
+  el('aiBase').value=(s&&s.base)||p.base;el('aiModel').value=(s&&s.model)||p.model;
+  if(s&&s.key){aiKey=s.key;el('aiKey').value=s.key;el('aiRemember').checked=true;}
+  aiStatus();
+}
+function aiSave(){
+  aiKey=el('aiKey').value.trim();
+  const rec={prov:el('aiProv').value,base:el('aiBase').value.trim(),model:el('aiModel').value.trim()};
+  if(el('aiRemember').checked&&aiKey)rec.key=aiKey;
+  try{localStorage.setItem('bj-ai',JSON.stringify(rec));}catch(e){}
+  aiStatus();
+}
+function aiStatus(msg){el('aiStatus').textContent=msg||(aiKey?`已填 Key（${aiKey.slice(0,3)}…${aiKey.slice(-4)}）${el('aiRemember').checked?'，记在这台设备上':'，关掉页面就忘'}。`:'还没填 Key。不填也能正常比价，只是用不了 AI。');}
+const AI_ERR={nokey:'先在上面填你自己的 API Key。',
+  network:/claude|anthropic/.test(location.hostname)||location.protocol==='blob:'
+    ?'连不上这家 AI。现在打开的这个页面不允许连外部网站，换成独立网页版就能用。'
+    :'连不上这家 AI。可能是你的网络访问不到它（比如 OpenAI 在国内一般连不上），换 DeepSeek、Kimi、通义千问试试；也可能是这家不允许网页直接调用，App 版走自己的通道就没这个问题。',
+  auth:'Key 不对或已经失效，去这家平台重新复制一个。',rate:'调用太频繁或余额不够，等一会儿再试，或者去平台充值、调高上限。',
+  http:'这家 AI 返回了错误，检查一下模型名和接口地址对不对。',parse:'AI 的回答格式不对，再试一次。'};
+async function callAI(system,user){
+  const prov=AI_PROV.find(p=>p.id===el('aiProv').value)||AI_PROV[0], base=el('aiBase').value.trim().replace(/\/+$/,''), model=el('aiModel').value.trim();
+  if(!aiKey)throw {code:'nokey'};
+  let res;
+  try{
+    if(prov.kind==='anthropic')res=await fetch(base+'/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':aiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model,max_tokens:1200,system,messages:[{role:'user',content:user}]})});
+    else res=await fetch(base+'/chat/completions',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+aiKey},
+      body:JSON.stringify({model,temperature:0.3,messages:[{role:'system',content:system},{role:'user',content:user}]})});
+  }catch(e){throw {code:'network'};}
+  if(!res.ok)throw {code:res.status===401||res.status===403?'auth':res.status===429||res.status===402?'rate':'http'};
+  const j=await res.json().catch(()=>({}));
+  return prov.kind==='anthropic'?(j.content||[]).map(x=>x.text||'').join(''):((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||'');
+}
+function aiShow(title,text,demo){
+  const o=el('aiOut');o.innerHTML=`<div class="ph"><b>${esc(title)}</b>${demo?'<span class="badge b-warn">示例效果，不是真的 AI 回答</span>':''}</div><div class="aiout"></div>`;
+  o.querySelector('.aiout').textContent=text;
+}
+function aiErr(e){el('aiOut').innerHTML=`<div class="trap warn"><b>没用成 AI</b><span>${esc(AI_ERR[e&&e.code]||AI_ERR.http)}</span></div>`;}
+function planText(){
+  const P=(planCache.plans||[]).find(p=>p.key===sel&&!p.none);if(!P)return null;
+  const out=[`方案${P.letter}「${P.name}」，勾选的商品一共 ${y(P.cost)}。`];
+  for(const {id:pl} of PLATS){const Q=P.plats[pl];Q.orders.forEach((o,i)=>{out.push(`${PN[pl].name}${Q.orders.length>1?'第'+(i+1)+'单':''}：${o.items.map(it=>it.name).join('、')}，合计 ${y(o.sub)}，${o.lines.map(l=>l.t+' -'+y(l.v)).join('，')||'无优惠'}，实付 ${y(o.pay)}。`);});}
+  const cl=planClaims(P);if(cl.length)out.push('要用的券：'+cl.map(c=>`${c.code||'自动'} ${c.name}（${SRC[c.src].t}）`).join('；')+'。');
+  for(const {id:pl} of PLATS)for(const o of P.plats[pl].orders)for(const it of o.items){const s=histStats(history(it,pl));out.push(`${it.name} 近4个月在${PN[pl].name}最低 ${y(s.min)}（${md(dayDate(s.at))}），现价 ${y(it.o[pl].price)}。`);}
+  out.push('页面提示：'+el('traps').innerText.replace(/\s+/g,' ').slice(0,600));
+  return out.join('\n');
+}
+const AI_REVIEW_SYS='你是帮普通人省钱的购物顾问。下面的价格已经由程序精确算好，不要重新计算，也不要改任何数字。用简短的中文分三点回答：1. 这套方案最大的风险是什么；2. 哪几张券最可能领不到，领不到怎么办；3. 哪几件可以等更低价、哪几件现在买就行。总共不超过 220 字，不要客套话。';
+const AI_RULE_SYS='把用户贴的电商优惠规则整理成 JSON 数组，只输出 JSON，不要别的文字。每一项：{"平台":"京东|淘宝|拼多多|未知","类型":"店铺券|平台券|跨店满减|红包|折扣|其他","门槛":数字(没有写0),"减":数字(折扣写0),"说明":"一句大白话","能否叠加":"能|不能|不确定","限制":"时间、品类、人群等限制，没有写空字符串"}';
+function showParsed(arr,demo){
+  aiParsed=arr;
+  const PLN={'京东':'jd','淘宝':'tb','天猫':'tb','拼多多':'pdd'};
+  el('aiOut').innerHTML=`<div class="ph"><b>AI 解读结果</b>${demo?'<span class="badge b-warn">示例效果，不是真的 AI 回答</span>':''}</div>
+   <div class="tbl"><table><thead><tr><th>平台</th><th>类型</th><th class="r">门槛</th><th class="r">减</th><th>大白话</th><th>能叠加</th><th>限制</th><th></th></tr></thead><tbody>
+   ${arr.map((r,i)=>{const pl=PLN[r['平台']], ok=pl&&(r['类型']==='平台券'||r['类型']==='红包')&&+r['减']>0;
+     return `<tr><td>${esc(r['平台']||'未知')}</td><td>${esc(r['类型']||'')}</td><td class="r n">${+r['门槛']||0}</td><td class="r n">${+r['减']||0}</td><td style="white-space:normal;min-width:160px">${esc(r['说明']||'')}</td><td>${esc(r['能否叠加']||'')}</td><td style="white-space:normal;min-width:120px">${esc(r['限制']||'')}</td>
+     <td>${ok?`<button class="btn sm" data-aiadd="${i}">加入计算</button>`:'<span class="note">仅供参考</span>'}</td></tr>`;}).join('')}</tbody></table></div>
+   <p class="note">只有能确定平台的“平台券、红包”能直接加入计算；其他规则先看大白话说明。${aiCoupons.length?` 已加入 ${aiCoupons.length} 张。<button class="x" id="aiUndo">把 AI 加入的券都去掉</button>`:''}</p>`;
+}
+function initAI(){
+  if(!el('aiProv'))return;
+  aiLoad();
+  el('aiProv').addEventListener('change',()=>{const p=AI_PROV.find(x=>x.id===el('aiProv').value);el('aiBase').value=p.base;el('aiModel').value=p.model;aiSave();});
+  for(const id of ['aiKey','aiBase','aiModel','aiRemember'])el(id).addEventListener('change',aiSave);
+  el('aiClear').addEventListener('click',()=>{el('aiKey').value='';aiSave();aiStatus('Key 已清除。');});
+  el('aiTest').addEventListener('click',async()=>{aiSave();aiStatus('正在连接…');try{const t=await callAI('只回复两个字：好的','测试');aiStatus('连接成功 ✓ '+t.slice(0,30));}catch(e){aiStatus(AI_ERR[e.code]||AI_ERR.http);}});
+  el('aiReview').addEventListener('click',async()=>{aiSave();const t=planText();if(!t){aiShow('没有方案','先在购物车里勾选商品。');return;}
+    el('aiOut').innerHTML='<p class="note">AI 正在看你的方案…</p>';try{aiShow('AI 对方案'+(planCache.plans.find(p=>p.key===sel)||{}).letter+'的看法',await callAI(AI_REVIEW_SYS,t));}catch(e){aiErr(e);}});
+  el('aiParse').addEventListener('click',async()=>{aiSave();const r=el('aiRule').value.trim();if(!r){aiShow('没有内容','先把优惠规则贴进上面的框里。');return;}
+    el('aiOut').innerHTML='<p class="note">AI 正在解读…</p>';
+    try{const txt=await callAI(AI_RULE_SYS,r), m=txt.match(/\[[\s\S]*\]/);const arr=m?JSON.parse(m[0]):null;if(!Array.isArray(arr))throw {code:'parse'};showParsed(arr,false);}catch(e){aiErr(e.code?e:{code:'parse'});}});
+  el('aiDemoReview').addEventListener('click',()=>{const P=(planCache.plans||[]).find(p=>p.key===sel&&!p.none);
+    aiShow('AI 对方案'+(P?P.letter:'')+'的看法',`1. 最大风险：编号最前面的平台券是主会场整点发的，可能几分钟就抢光。没抢到会贵多少，领券列表里每张都写了；贵得多的话换一套方案更划算。\n2. 最可能领不到的是“主会场定时发”的券，先领；“入会才发”的券要授权手机号，不想入会就选方案C“稳妥”。\n3. 价格走势里比 4 个月最低贵很多的那几件，不急可以等下次活动；已经接近 30 天最低的，直接买就行。`,true);});
+  el('aiDemoParse').addEventListener('click',()=>{if(!el('aiRule').value.trim())el('aiRule').value=el('aiRule').placeholder.replace(/^.*例如：/,'');
+    showParsed([{'平台':'淘宝','类型':'跨店满减','门槛':300,'减':50,'说明':'同一单里参加活动的商品每满 300 减 50，可以跨店凑','能否叠加':'能','限制':'和店铺券能叠加，和百亿补贴商品不能同享'},
+      {'平台':'淘宝','类型':'折扣','门槛':0,'减':0,'说明':'88VIP 会员再打 95 折','能否叠加':'不确定','限制':'要先开 88VIP'},
+      {'平台':'淘宝','类型':'平台券','门槛':500,'减':30,'说明':'一单满 500 减 30','能否叠加':'能','限制':'只能 11月11日 0 点到 2 点用'}],true);});
+  document.addEventListener('click',ev=>{
+    const a=ev.target.closest('[data-aiadd]');
+    if(a){const r=aiParsed[+a.dataset.aiadd];const pl={'京东':'jd','淘宝':'tb','天猫':'tb','拼多多':'pdd'}[r['平台']];
+      const id='ai-'+hash(JSON.stringify(r)).toString(36);
+      if(!aiCoupons.some(c=>c.id===id))aiCoupons.push({id,pl,name:`AI识别·${r['类型']}`+(+r['门槛']?` 满${+r['门槛']}减${+r['减']}`:` 减${+r['减']}`),th:+r['门槛']||0,amt:+r['减'],src:'ai'});
+      save();render();showParsed(aiParsed,false);return;}
+    if(ev.target.id==='aiUndo'){aiCoupons=[];save();render();showParsed(aiParsed,false);}
+  });
+}
+
+// ---------- events ----------
+function addFromText(v){
+  const msg=document.getElementById('addMsg');
+  if(!v.trim()){msg.textContent='先粘贴商品链接或分享文字。';return;}
+  const p=parseShare(v);
+  if(!p.name&&!p.url){msg.textContent='没认出商品，请粘贴完整的分享文字。';return;}
+  // only the built-in example links get demo prices; a real link gets the prices its pages show
+  const sample=SAMPLE_LINKS.includes(v.trim()), it=sample?makeItem(p):makeUserItem(p);
+  // one listing often sells several sizes (16G / 32G / 64G): pasting it again adds another line for another size
+  let again=false;
+  if(!sample&&mine.some(i=>i.id===it.id)){let k=2;while(mine.some(i=>i.id===it.id+'-'+k))k++;it.id+='-'+k;it.name+=`（规格${k}）`;again=true;}
+  if(ALL().some(i=>i.id===it.id)){msg.textContent=`「${it.name}」已经在购物车里了。`;return;}
+  mine.push(it);registerTiers(it);syncLow30(it);
+  // your first own item: untick the example items so the plan is about what you actually want
+  let cleared=false;
+  if(!sample&&!cart.some(c=>c.on&&mine.some(m=>m.user&&m.id===c.id))){for(const c of cart)if(c.on&&DEMO.some(d=>d.id===c.id)){c.on=false;cleared=true;}}
+  const on=unitCount()<MAX_UNITS;
+  cart.unshift({id:it.id,on,qty:1});if(sample)open.add(it.id);save();
+  document.getElementById('paste').value='';
+  msg.textContent=`已识别：${it.name}（来自${PN[it.src].name}${p.pl?'':'，没认出平台，先按京东算'}）。`+
+    (sample?'这是示例链接，价格是演示随机生成的。':again?'这个链接已经加过了，又加了一行，可以填另一个规格的价格。':'在它下面填上页面显示的价格，App 就按真实价格算。')+
+    (cleared?'示例商品已先取消勾选。':'')+(on?'':`已勾满 ${MAX_UNITS} 件，这件先没勾。`);
+  render();
+}
+let sampleI=0;
+document.addEventListener('click',ev=>{
+  const t=ev.target;
+  const hsel=t.closest('[data-hsel]');if(hsel){histSel=hsel.dataset.hsel;render();return;}
+  const hb=t.closest('[data-hist]');if(hb){histSel=hb.dataset.hist;render();document.getElementById('histPanel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+  const op=t.closest('[data-open]');if(op){const id=op.dataset.open;open.has(id)?open.delete(id):open.add(id);render();return;}
+  const del=t.closest('[data-del]');if(del){const id=del.dataset.del;cart=cart.filter(c=>c.id!==id);mine=mine.filter(i=>i.id!==id);open.delete(id);save();render();return;}
+  if(t.id==='orderedBtn'){const P=(planCache.plans||[]).find(p=>p.key===sel&&!p.none);if(!P)return;let n=0;
+    for(const pl in P.plats)for(const o of P.plats[pl].orders)for(const it of o.items){const x=it.o[pl];if(!x.jiabao)continue;
+      const b=bought.find(b=>b.id===it.id&&b.pl===pl&&b.t>Date.now()-6e4);if(b)b.n++;else bought.push({id:it.id,name:it.name,pl,price:x.price,n:1,t:Date.now(),days:x.jiabao});n++;}
+    saveBought();t.textContent=n?`已记下，价保期内盯着 ${n} 件`:'这套方案里没有带价保的商品';t.disabled=true;renderJiabao();return;}
+  const jd=t.closest('[data-jbdel]');if(jd){bought.splice(+jd.dataset.jbdel,1);saveBought();render();return;}
+  const dq=t.closest('[data-dq]');if(dq){const c=cart.find(x=>x.id===dq.dataset.dq);if(!c)return;const d=+dq.dataset.d;
+    if(d>0&&c.on&&unitCount()>=MAX_UNITS){document.getElementById('addMsg').textContent=`最多同时算 ${MAX_UNITS} 件，先减掉别的再加。`;return;}
+    c.qty=Math.max(1,(c.qty||1)+d);queue=null;save();render();return;}
+  const cl=t.closest('[data-claim]');if(cl){claimed[cl.dataset.claim]=!claimed[cl.dataset.claim];save();render();return;}
+  const fl=t.closest('[data-fail]');if(fl){const c=lastClaims.find(x=>x.id===fl.dataset.fail);if(c){queue=null;markFailed(c);}return;}
+  const uf=t.closest('[data-unfail]');if(uf){delete failed[uf.dataset.unfail];claimed[uf.dataset.unfail]=true;save();render();return;}
+  const pc=t.closest('[data-plan]');if(pc){sel=pc.dataset.plan;queue=null;render();return;}
+  switch(t.id){
+    case 'refreshBtn':case 'verifyBtn':refresh();if(t.id==='verifyBtn')document.querySelector('.fresh').scrollIntoView({behavior:'smooth'});return;
+    case 'resetBtn':cart=DEFAULT_CART();mine=[];open.clear();save();render();return;
+    case 'demoShot':personal=PERSONAL_DEMO;save();render();return;
+    case 'clearShot':personal=null;document.getElementById('shot').value='';save();render();return;
+    case 'sampleLink':document.getElementById('paste').value=SAMPLE_LINKS[sampleI++%SAMPLE_LINKS.length];return;
+    case 'addBtn':addFromText(document.getElementById('paste').value);return;
+    case 'qStart':{const list=lastClaims.filter(c=>SRC[c.src].q&&!claimed[c.id]);queue={list,i:0,skipped:0,got:0,miss:0,skip:new Set()};render();document.getElementById('claimPanel').scrollIntoView({behavior:'smooth',block:'start'});return;}
+    case 'qGo':{if(!queue)return;const cur=queue.list[queue.i];queue.busy=true;queue.status=`正在打开${PN[cur.pl].name} App…（演示）`;render();
+      setTimeout(()=>{if(!queue||queue.list[queue.i]!==cur)return;queue.busy=false;queue.status='';queue.ask=true;render();},1000);return;}
+    case 'qYes':{if(!queue)return;const cur=queue.list[queue.i];claimed[cur.id]=true;save();queue.got++;queue.ask=false;queue.i++;render();return;}
+    case 'qNo':{if(!queue)return;const cur=queue.list[queue.i];queue.miss++;queue.ask=false;markFailed(cur);
+      // the plan was recalculated: continue with whatever the new plan still needs
+      queue.list=lastClaims.filter(c=>SRC[c.src].q&&!claimed[c.id]&&!failed[c.id]&&!queue.skip.has(c.id));queue.i=0;render();return;}
+    case 'qSkip':{if(!queue)return;queue.skip.add(queue.list[queue.i].id);queue.i++;queue.skipped++;queue.status='';render();return;}
+    case 'qStop':case 'qClose':queue=null;render();return;
+    case 'failOk':failNote=null;render();return;
+  }
+});
+document.addEventListener('change',ev=>{
+  const t=ev.target;
+  if(t.dataset&&t.dataset.card){const id=t.dataset.card;PROFILE.cards=t.checked?[...new Set([...PROFILE.cards,id])]:PROFILE.cards.filter(x=>x!==id);PROFILE.set=true;saveProfile();queue=null;render();return;}
+  if(t.dataset&&t.dataset.up){const [id,pl,f]=t.dataset.up.split('|');setUserPrice(id,pl,f,t.value);queue=null;save();render();return;}
+  if(t.id==='meMember'){PROFILE.member=t.checked;PROFILE.set=true;saveProfile();queue=null;render();return;}
+  if(t.dataset&&t.dataset.chk){const c=cart.find(x=>x.id===t.dataset.chk);
+    if(t.checked&&unitCount()+(c.qty||1)>MAX_UNITS){t.checked=false;document.getElementById('addMsg').textContent=`最多同时算 ${MAX_UNITS} 件，先取消一件或减少数量。`;return;}
+    c.on=t.checked;queue=null;save();render();return;}
+  if(t.id==='allChk'){let n=0;for(const c of cart){c.on=t.checked&&n+(c.qty||1)<=MAX_UNITS;if(c.on)n+=c.qty||1;}queue=null;save();render();return;}
+  if(t.id==='shot'&&t.files&&t.files.length){personal=PERSONAL_DEMO;save();render();}
+});
+setInterval(renderFresh,60000);
+try{initAI();}catch(e){}
+render();
+</script>
+
+</body></html>
