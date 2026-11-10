@@ -6,6 +6,7 @@
 <title>黑五比价 · Black-Friday-Preisvergleich</title>
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BF-Preis">
+<meta name="referrer" content="no-referrer">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='44' font-size='30' text-anchor='middle' fill='%23ffcc00' font-family='sans-serif' font-weight='700'%3EBF%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#f6f6f3;--card:#fff;--ink:#1b1b1b;--mut:#666;--line:#e2e2dc;--acc:#0b6e4f;--accbg:#e3f3ec;--warn:#a15c00;--warnbg:#fff3df;--bad:#b3261e;--badbg:#fdeceb;--in:#fff;color-scheme:light}
@@ -74,6 +75,14 @@ a{color:var(--acc)}
 .slinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .slinks a{border:1px solid var(--acc);border-radius:8px;padding:6px 10px;font-size:14px;text-decoration:none}
 .slinks a.cmp{background:var(--acc);color:#fff}
+.chart{margin:8px 0 0 30px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.chart .ch{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.chart img{display:block;width:100%;height:auto;margin-top:6px;border-radius:6px;background:#fff}
+.tabs{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tabs button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;padding:4px 10px;cursor:pointer}.tabs button.on{background:var(--acc);color:#fff}
+.asin{display:flex;flex-direction:column;font-size:12px;color:var(--mut);margin-top:6px}.asin input{max-width:260px}
+.linkbtn{border:0;background:none;color:var(--acc);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:0}
+@media (max-width:520px){.chart{margin-left:0}}
 @media (max-width:520px){.offers,.links,.addshop{margin-left:0}.ih{flex-wrap:wrap}.ih .nm{order:5;flex-basis:100%}.ih .qty{margin-left:auto}.rf input{width:110px}.big{font-size:26px}}
 </style>
 </head>
@@ -145,7 +154,7 @@ zh:{title:'黑五到手价比价 · 德国版',
  safe:'✓ 不用登录亚马逊或任何商店，不保存账号密码',
  cdBefore:'Black Friday：{0}（还有 {1} 天）· Cyber Monday：{2}',cdToday:'今天就是 Black Friday！Cyber Monday：{0}',cdCM:'今天是 Cyber Monday，黑五最后一天',cdBetween:'黑五周末进行中 · Cyber Monday：{0}',cdAfter:'今年黑五已结束，下次：{0}',
  howT:'怎么用（手机 / 电脑）',
- how:'<h3>放到手机桌面</h3><p><b>iPhone：</b>用 Safari 打开 → 点底部分享按钮 → “添加到主屏幕”。</p><p><b>安卓：</b>用 Chrome 打开 → 点右上角 ⋮ → 往下滑，点“安装并创建快捷方式”或“添加到主屏幕”。</p><h3>加商品</h3><p><b>最快：</b>在“搜一个商品”里输入名字、选类别，点各家店的按钮看价格，再点“加入购物车”。</p><p><b>或者：</b></p><p>1.在亚马逊、MediaMarkt、Douglas 等 App 里打开商品 → 分享 → 复制链接。</p><p>2. 回到这里，长按输入框 → 粘贴 → “识别并加入”。也可以直接写商品名。</p><p>3. 给每家店填价格。商品页上写的“30 天最低价”（Niedrigster Preis der letzten 30 Tage）也填上，App 会帮你看是不是真降价。</p><p>4. 在“各家店的运费和优惠”里，按结算页填运费、包邮门槛、优惠码和返现。</p><h3>看结果，自己去买</h3><p>App 会算出在哪家买哪几件最便宜。点“打开商品”去商店，下单和付款都由你自己完成。</p><p class="muted">不用注册、不用登录。每个人的数据只存在自己的设备上，互不影响。换设备用“导出 / 导入”。</p>',
+ how:'<h3>放到手机桌面</h3><p><b>iPhone：</b>用 Safari 打开 → 点底部分享按钮 → “添加到主屏幕”。</p><p><b>安卓：</b>用 Chrome 打开 → 点右上角 ⋮ → 往下滑，点“安装并创建快捷方式”或“添加到主屏幕”。</p><h3>加商品</h3><p><b>最快：</b>在“搜一个商品”里输入名字、选类别，点各家店的按钮看价格，再点“加入购物车”。</p><p><b>或者：</b></p><p>1.在亚马逊、MediaMarkt、Douglas 等 App 里打开商品 → 分享 → 复制链接。</p><p>2. 回到这里，长按输入框 → 粘贴 → “识别并加入”。也可以直接写商品名。</p><p>3. 给每家店填价格。商品页上写的“30 天最低价”（Niedrigster Preis der letzten 30 Tage）也填上，App 会帮你看是不是真降价。</p><p><b>亚马逊商品</b>会直接显示历史价格图（camelcamelcamel / Keepa），一眼看出是不是先涨后降。分享的短链接看不出商品编号，填一下 ASIN 就行。</p><p>4. 在“各家店的运费和优惠”里，按结算页填运费、包邮门槛、优惠码和返现。</p><h3>看结果，自己去买</h3><p>App 会算出在哪家买哪几件最便宜。点“打开商品”去商店，下单和付款都由你自己完成。</p><p class="muted">不用注册、不用登录。每个人的数据只存在自己的设备上，互不影响。换设备用“导出 / 导入”。</p>',
  cartT:'我的购物车',demoBadge:'示例（价格和运费都是编的）',
  pastePh:'在亚马逊、MediaMarkt、Douglas 等 App 里点“分享 → 复制链接”，粘贴到这里；也可以直接写商品名',
  add:'识别并加入',sample:'贴一条示例链接',clearDemo:'清空示例',
@@ -160,13 +169,14 @@ zh:{title:'黑五到手价比价 · 德国版',
  syncT:'换手机 / 电脑：导出和导入',syncSub:'这个网页不用登录，数据只存在这台设备的这个浏览器里。想换设备用：在这里生成导出代码，发到另一台设备，粘贴后点“导入”。',export:'生成导出代码',import:'导入',codePh:'把导出代码粘贴到这里',expOk:'已生成，复制下面整段代码发到另一台设备。',copied:'已生成并复制到剪贴板。',impOk:'导入成功。',impBad:'代码不对，没有导入。',reset:'全部清空',resetOk:'已清空。',
  foot:'价格都是你自己从商店页面看来填的，下单前以商店结算页为准。',
  srchT:'🔍 搜一个商品，看各家店卖多少',qPh:'输入商品名，例如 RTX 5080、Dyson V15、Chanel No 5',qAdd:'加入购物车，对比勾选的这几家',srchNote:'网页没法自己去商店读价格（浏览器不允许，我们也不爬取商店网站）。点上面每家店的按钮看价格，再填回购物车里对应的店。',pasteT:'或者：粘贴分享链接',
+ chartT:'📈 亚马逊历史价格',asinLbl:'ASIN（亚马逊商品编号）',asinPh:'B0 开头的 10 位，比如 B0DTJFSSZG',asinHint:'分享出来的短链接里看不出商品编号。在亚马逊商品页往下找“Produktinformation → ASIN”，填进来就会显示历史价格图。',chartFail:'这张图暂时加载不出来，点右边的链接去网站上看。',chartHow:'过去一年的价格（Keepa）：橙色是亚马逊自营价，蓝紫色是其他卖家的新品价，最右边是现在。',
  catPc:'电脑配件',catTech:'电器数码',catBeauty:'美妆香水',catFashion:'服饰鞋包',catAll:'全部商店',qEmpty:'先输入商品名。',qNone:'至少勾一家店。',qOk:'已加入：{0}，建好了 {1} 家店的价格行。点上面各家店的按钮看价格，再填进来。',qOkDemo:'已加入：{0}，建好了 {1} 家店的价格行，示例已清空。点上面各家店的按钮看价格，再填进来。',typeFirst:'输入商品名后，这里会出现各家店的搜索按钮。'},
 de:{title:'Black-Friday-Preisvergleich',
  intro:'Produktlinks einfügen, Preise der Shops eintragen – die Seite berechnet den günstigsten Einkauf inklusive Versand, Gutscheinen und Cashback und entlarvt Schein-Rabatte.',
  safe:'✓ Kein Login bei Amazon oder anderen Shops, keine Passwörter',
  cdBefore:'Black Friday: {0} (noch {1} Tage) · Cyber Monday: {2}',cdToday:'Heute ist Black Friday! Cyber Monday: {0}',cdCM:'Heute ist Cyber Monday – letzter Aktionstag',cdBetween:'Black-Friday-Wochenende läuft · Cyber Monday: {0}',cdAfter:'Black Friday ist vorbei – nächster: {0}',
  howT:'So geht’s (Handy / PC)',
- how:'<h3>Auf den Startbildschirm legen</h3><p><b>iPhone:</b> In Safari öffnen → Teilen-Symbol unten → „Zum Home-Bildschirm“.</p><p><b>Android:</b> In Chrome öffnen → ⋮ oben rechts → nach unten scrollen → „Installieren“ bzw. „Zum Startbildschirm hinzufügen“.</p><h3>Produkte hinzufügen</h3><p><b>Am schnellsten:</b> Unter „Produkt suchen“ den Namen eingeben, Kategorie wählen, auf die Shops tippen und Preise ansehen, dann „In den Warenkorb“.</p><p><b>Oder:</b></p><p>1.In der App von Amazon, MediaMarkt, Douglas usw. das Produkt öffnen → Teilen → Link kopieren.</p><p>2. Hier lange ins Feld tippen → Einfügen → „Erkennen und hinzufügen“. Du kannst auch einfach den Produktnamen eintippen.</p><p>3. Für jeden Shop den Preis eintragen, dazu den „niedrigsten Preis der letzten 30 Tage“ von der Produktseite – so siehst du, ob der Rabatt echt ist.</p><p>4. Unter „Versand & Rabatte der Shops“ Versandkosten, Grenze für Gratisversand, Gutschein und Cashback laut Kasse eintragen.</p><h3>Ergebnis ansehen, selbst bestellen</h3><p>Die Seite zeigt, in welchem Shop du was am günstigsten kaufst. Mit „Produkt öffnen“ gehst du zum Shop und bestellst dort selbst.</p><p class="muted">Ohne Anmeldung. Deine Daten bleiben nur auf deinem Gerät – jede Person hat ihre eigene Liste. Gerät wechseln: „Export / Import“.</p>',
+ how:'<h3>Auf den Startbildschirm legen</h3><p><b>iPhone:</b> In Safari öffnen → Teilen-Symbol unten → „Zum Home-Bildschirm“.</p><p><b>Android:</b> In Chrome öffnen → ⋮ oben rechts → nach unten scrollen → „Installieren“ bzw. „Zum Startbildschirm hinzufügen“.</p><h3>Produkte hinzufügen</h3><p><b>Am schnellsten:</b> Unter „Produkt suchen“ den Namen eingeben, Kategorie wählen, auf die Shops tippen und Preise ansehen, dann „In den Warenkorb“.</p><p><b>Oder:</b></p><p>1.In der App von Amazon, MediaMarkt, Douglas usw. das Produkt öffnen → Teilen → Link kopieren.</p><p>2. Hier lange ins Feld tippen → Einfügen → „Erkennen und hinzufügen“. Du kannst auch einfach den Produktnamen eintippen.</p><p>3. Für jeden Shop den Preis eintragen, dazu den „niedrigsten Preis der letzten 30 Tage“ von der Produktseite – so siehst du, ob der Rabatt echt ist.</p><p><b>Amazon-Produkte</b> zeigen direkt den Preisverlauf (camelcamelcamel / Keepa) – so erkennst du sofort, ob der Preis vorher erhöht wurde. Bei Kurzlinks einfach die ASIN eintragen.</p><p>4. Unter „Versand & Rabatte der Shops“ Versandkosten, Grenze für Gratisversand, Gutschein und Cashback laut Kasse eintragen.</p><h3>Ergebnis ansehen, selbst bestellen</h3><p>Die Seite zeigt, in welchem Shop du was am günstigsten kaufst. Mit „Produkt öffnen“ gehst du zum Shop und bestellst dort selbst.</p><p class="muted">Ohne Anmeldung. Deine Daten bleiben nur auf deinem Gerät – jede Person hat ihre eigene Liste. Gerät wechseln: „Export / Import“.</p>',
  cartT:'Mein Warenkorb',demoBadge:'Beispiel (Preise und Versand sind ausgedacht)',
  pastePh:'In der App von Amazon, MediaMarkt, Douglas usw. „Teilen → Link kopieren“ und hier einfügen – oder einfach den Produktnamen schreiben',
  add:'Erkennen und hinzufügen',sample:'Beispiel-Link einfügen',clearDemo:'Beispiel löschen',
@@ -181,6 +191,7 @@ de:{title:'Black-Friday-Preisvergleich',
  syncT:'Gerät wechseln: Export / Import',syncSub:'Ohne Anmeldung – die Daten liegen nur in diesem Browser auf diesem Gerät. Zum Übertragen: Export-Code erzeugen, auf das andere Gerät schicken, dort einfügen und „Importieren“ tippen.',export:'Export-Code erzeugen',import:'Importieren',codePh:'Export-Code hier einfügen',expOk:'Erzeugt – kopiere den ganzen Code unten auf das andere Gerät.',copied:'Erzeugt und in die Zwischenablage kopiert.',impOk:'Import erfolgreich.',impBad:'Ungültiger Code, nichts importiert.',reset:'Alles löschen',resetOk:'Gelöscht.',
  foot:'Alle Preise trägst du selbst von den Shopseiten ein. Maßgeblich ist der Preis an der Kasse des Shops.',
  srchT:'🔍 Produkt suchen – was kostet es in den Shops?',qPh:'Produktname, z. B. RTX 5080, Dyson V15, Chanel No 5',qAdd:'In den Warenkorb – diese Shops vergleichen',srchNote:'Die Seite kann Preise nicht selbst aus den Shops lesen (der Browser erlaubt das nicht, und wir lesen Shopseiten nicht automatisch aus). Tippe oben auf die Shops, schau dir den Preis an und trag ihn im Warenkorb beim jeweiligen Shop ein.',pasteT:'Oder: Teilen-Link einfügen',
+ chartT:'📈 Amazon-Preisverlauf',asinLbl:'ASIN (Amazon-Artikelnummer)',asinPh:'10 Zeichen, beginnt mit B0, z. B. B0DTJFSSZG',asinHint:'Geteilte Kurzlinks enthalten keine Artikelnummer. Auf der Amazon-Produktseite unter „Produktinformation → ASIN“ nachsehen und hier eintragen – dann erscheint der Preisverlauf.',chartFail:'Diese Grafik lädt gerade nicht – nutze den Link daneben.',chartHow:'Preise des letzten Jahres (Keepa): Orange = Amazon selbst, Lila = Neu von anderen Händlern, ganz rechts = heute.',
  catPc:'PC-Komponenten',catTech:'Elektronik',catBeauty:'Beauty & Parfum',catFashion:'Mode',catAll:'Alle Shops',qEmpty:'Bitte zuerst einen Produktnamen eingeben.',qNone:'Mindestens einen Shop anhaken.',qOk:'Hinzugefügt: {0} – mit Preiszeilen für {1} Shops. Tippe oben auf die Shops und trag die Preise ein.',qOkDemo:'Hinzugefügt: {0} – mit Preiszeilen für {1} Shops; das Beispiel wurde gelöscht. Tippe oben auf die Shops und trag die Preise ein.',typeFirst:'Gib einen Produktnamen ein – dann erscheinen hier die Such-Buttons der Shops.'}
 };
 const OTHER={zh:'其他商店',de:'Anderer Shop'};
@@ -198,7 +209,7 @@ function renderLinks(){
   if(!q){box.innerHTML=`<span class="note">${t('typeFirst')}</span>`;return;}
   const e=encodeURIComponent(q);
   box.innerHTML=CATS[S.cat].filter(id=>qShops.has(id)).map(id=>`<a href="${esc(SHOPS.find(s=>s.id===id).s(e))}" target="_blank" rel="noopener">${esc(shopName(id))} ↗</a>`).join('')
-   +`<a class="cmp" href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${e}" target="_blank" rel="noopener">idealo ↗</a><a class="cmp" href="https://geizhals.de/?fs=${e}" target="_blank" rel="noopener">geizhals ↗</a>`;
+   +`<a class="cmp" href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${e}" target="_blank" rel="noopener">idealo ↗</a><a class="cmp" href="https://geizhals.de/?fs=${e}" target="_blank" rel="noopener">geizhals ↗</a><a class="cmp" href="https://keepa.com/#!search/3-${e}" target="_blank" rel="noopener">Keepa ↗</a><a class="cmp" href="https://de.camelcamelcamel.com/search?sq=${e}" target="_blank" rel="noopener">camelcamelcamel ↗</a>`;
 }
 function addFromSearch(){
   const q=document.getElementById('q').value.trim();
@@ -224,10 +235,10 @@ function num(raw){let s=String(raw==null?'':raw).replace(/[€\s]/g,'');if(!s)re
 const shown=v=>v==null?'':(S.lang==='de'?String(v).replace('.',','):String(v));
 
 function demo(){
-  const it=(name,offers,qty)=>({id:uid(),name,url:'',src:null,qty:qty||1,on:true,demo:true,offers});
+  const it=(name,offers,asin)=>({id:uid(),name,url:'',src:null,qty:1,on:true,demo:true,offers,asin:asin||''});
   return {items:[
-    it('Grafikkarte RTX 5080 16 GB',{mindfactory:{p:1199,low:1199},alternate:{p:1219,low:1219},amazon:{p:1249,low:1249}}),
-    it('DDR5 32 GB (2×16) 6000',{amazon:{p:99.9,low:89.9},mindfactory:{p:104.9,low:104.9},alternate:{p:102.9,low:102.9}}),
+    it('Grafikkarte RTX 5090 32 GB',{mindfactory:{p:2849,low:2849},alternate:{p:2879,low:2879},amazon:{p:2985.97,low:2899}}),
+    it('Crucial Pro DDR5 32 GB (2×16) 6000',{amazon:{p:597.98,low:499},mindfactory:{p:579,low:579},alternate:{p:589,low:589}},'B0CTHXMYL8'),
     it('Parfum 100 ml',{douglas:{p:84.95,low:84.95},flaconi:{p:82.95,low:82.95},amazon:{p:86,low:86}})],
    cfg:{mindfactory:{ship:6.99},alternate:{ship:5.99,vAmt:25,vMin:1000},amazon:{ship:3.99,free:39},douglas:{ship:4.95,free:39,cb:3},flaconi:{ship:4.95,free:99}}};
 }
@@ -238,6 +249,17 @@ function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null');}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const cfg=id=>S.cfg[id]||(S.cfg[id]={});
 
+const asinOf=s=>{const m=String(s||'').match(/(?:\/dp\/|\/gp\/product\/|\/gp\/aw\/d\/|\/product\/|ASIN[:\s]*|^\s*)([A-Z0-9]{10})(?![A-Z0-9])/i);return m&&/\d/.test(m[1])?m[1].toUpperCase():'';};
+function chartHTML(it){
+  if(!it.asin&&!('amazon' in it.offers))return '';
+  if(!it.asin)return `<div class="chart"><b>${t('chartT')}</b><label class="asin">${t('asinLbl')}<input data-id="${it.id}" data-f="asin" placeholder="${esc(t('asinPh'))}"></label><p class="note">${t('asinHint')}</p></div>`;
+  const a=it.asin;
+  const src=`https://graph.keepa.com/pricehistory.png?asin=${a}&domain=de&range=365`;
+  return `<div class="chart"><div class="ch"><b>${t('chartT')}</b></div>
+    <img class="phimg" referrerpolicy="no-referrer" alt="${esc(t('chartT'))}" src="${esc(src)}">
+    <p class="note">${t('chartHow')} ASIN ${a} · <a href="https://de.camelcamelcamel.com/product/${a}" target="_blank" rel="noopener">camelcamelcamel ↗</a> · <a href="https://keepa.com/#!product/3-${a}" target="_blank" rel="noopener">Keepa ↗</a> · <button class="linkbtn" data-act="noasin" data-id="${it.id}">${t('asinLbl')} ✎</button></p></div>`;
+}
+document.addEventListener('error',e=>{const x=e.target;if(x&&x.classList&&x.classList.contains('phimg')){const p=document.createElement('p');p.className='note';p.textContent=t('chartFail');x.replaceWith(p);}},true);
 // ---- parsing a share text ----
 function parse(text){
   const m=text.match(/https?:\/\/[^\s"'<>，。）)]+/i);const url=m?m[0]:'';let host='';
@@ -258,7 +280,7 @@ function addFromText(){
   if(p.url&&S.items.some(i=>i.url===p.url)){msg(t('addDup'));return;}
   const wasDemo=S.demo;
   if(S.demo){S.items=S.items.filter(i=>!i.demo);S.cfg={};S.demo=false;}
-  const it={id:uid(),name:p.name||t('unknown'),url:p.url,src:p.shop,qty:1,on:true,offers:{}};
+  const it={id:uid(),name:p.name||t('unknown'),url:p.url,src:p.shop,qty:1,on:true,offers:{},asin:p.shop==='amazon'?asinOf(p.url):''};
   if(p.shop)it.offers[p.shop]={p:null,low:null};
   S.items.push(it);box.value='';
   msg(t(wasDemo?'addOkDemo':'addOk',it.name,p.shop?shopName(p.shop):t('fromNone')));
@@ -323,6 +345,7 @@ function itemsHTML(sol){
     const free=SHOPS.filter(s=>!(s.id in it.offers));
     return `<div class="item"><div class="ih"><input type="checkbox" data-act="on" data-id="${it.id}" ${it.on?'checked':''}><input class="nm" data-id="${it.id}" data-f="name" value="${esc(it.name)}"><span class="qty"><button data-act="q-" data-id="${it.id}">−</button><b>${it.qty}</b><button data-act="q+" data-id="${it.id}">+</button></span><button class="x" data-act="del" data-id="${it.id}" aria-label="×">×</button></div>
       <div class="links">${it.url?`<a href="${esc(it.url)}" target="_blank" rel="noopener">${t('open')}</a>`:''}<a href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${q}" target="_blank" rel="noopener">${t('idealo')}</a></div>
+      ${chartHTML(it)}
       <div class="offers">${rows}</div>
       ${free.length?`<div class="addshop"><select data-act="adds" data-id="${it.id}"><option value="">${t('addShop')}</option>${free.map(s=>`<option value="${s.id}">${esc(shopName(s.id))}</option>`).join('')}</select></div>`:''}</div>`;}).join('');
 }
@@ -375,6 +398,7 @@ document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
   if(d.qs){if(x.checked)qShops.add(d.qs);else qShops.delete(d.qs);renderSearch();return;}
   if(d.f&&d.id){const it=find(d.id);if(!it)return;
     if(d.f==='name'){it.name=x.value.trim()||t('unknown');}
+    else if(d.f==='asin'){it.asin=asinOf(x.value);}
     else{it.offers[d.s][d.f]=num(x.value);}
     render();return;}
   if(d.c&&d.s){cfg(d.s)[d.c]=num(x.value);render();return;}
@@ -390,6 +414,8 @@ document.addEventListener('click',e=>{const x=e.target.closest('[data-act],[data
   if(d.act==='q-'&&it){it.qty=Math.max(1,it.qty-1);render();}
   if(d.act==='del'&&it){S.items=S.items.filter(i=>i!==it);render();}
   if(d.act==='rmo'&&it){delete it.offers[d.s];render();}
+  if(d.act==='ch'&&it){it.ch=d.v;render();}
+  if(d.act==='noasin'&&it){it.asin='';render();}
 });
 document.getElementById('addBtn').onclick=addFromText;
 document.getElementById('sampleBtn').onclick=()=>{document.getElementById('paste').value='Schau dir das an: Kingston FURY Beast DDR5 32GB (2x16GB) 6000MT/s https://amzn.eu/d/0abcDEF';};
