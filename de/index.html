@@ -9,123 +9,97 @@
 <meta name="referrer" content="no-referrer">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111'/%3E%3Ctext x='32' y='44' font-size='30' text-anchor='middle' fill='%23ffcc00' font-family='sans-serif' font-weight='700'%3EBF%3C/text%3E%3C/svg%3E">
 <style>
-:root{--bg:#f6f6f3;--card:#fff;--ink:#1b1b1b;--mut:#666;--line:#e2e2dc;--acc:#0b6e4f;--accbg:#e3f3ec;--warn:#a15c00;--warnbg:#fff3df;--bad:#b3261e;--badbg:#fdeceb;--in:#fff;color-scheme:light}
+:root{--bg:#f6f6f3;--card:#fff;--ink:#1b1b1b;--mut:#6b6b6b;--line:#e2e2dc;--acc:#0b6e4f;--accbg:#e3f3ec;--warn:#9a5600;--warnbg:#fff3df;--bad:#b3261e;--badbg:#fdeceb;--in:#fff;color-scheme:light}
 @media (prefers-color-scheme:dark){:root{--bg:#141414;--card:#1e1e1e;--ink:#eee;--mut:#a3a3a3;--line:#333;--acc:#5fd3a6;--accbg:#13352a;--warn:#f0b55c;--warnbg:#3a2a10;--bad:#ff8a80;--badbg:#3b1715;--in:#262626;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:16px 16px 60px}
-h1{font-size:24px;margin:4px 0 2px}h2{font-size:18px;margin:0}h3{font-size:15px;margin:12px 0 2px}
-p{margin:4px 0}.muted{color:var(--mut)}.small{font-size:13px}
-.top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
-.sig{color:var(--mut);font-size:13px}.sig b{color:#d97757;font-weight:600}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:14px 16px 60px}
+h1{font-size:22px;margin:0}h2{font-size:17px;margin:0}h3{font-size:15px;margin:10px 0 2px}
+p{margin:4px 0}.muted{color:var(--mut)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.sig{color:var(--mut);font-size:13px}.sig b{color:#d97757}
 .lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-.lang button{border:0;background:transparent;color:var(--ink);padding:6px 14px;font:inherit;cursor:pointer}
-.lang button.on{background:var(--ink);color:var(--bg)}
-.pill{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--accbg);color:var(--acc);font-size:13px}
-.cd{margin:8px 0;padding:10px 12px;border-radius:10px;background:#111;color:#ffcc00;font-weight:600}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-details.panel>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:8px;align-items:center}
-details.panel>summary::-webkit-details-marker{display:none}
-details.panel>summary::after{content:"▾";color:var(--acc)}details[open].panel>summary::after{content:"▴"}
-.ph{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
-.badge{font-size:12px;padding:2px 8px;border-radius:6px;background:var(--warnbg);color:var(--warn)}
-textarea,input,select{font:inherit;font-size:16px;color:var(--ink);background:var(--in);border:1px solid var(--line);border-radius:8px;padding:8px}
-textarea{width:100%;min-height:76px;margin-top:10px}
-.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.btn{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:600;background:var(--acc);color:#fff;cursor:pointer}
-.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.btn.sm{padding:6px 12px;font-size:14px}
-.note{font-size:13px;color:var(--mut);margin-top:6px}
-.item{border-top:1px solid var(--line);padding:12px 0}
-.ih{display:flex;gap:8px;align-items:center}
-.ih input[type=checkbox]{width:22px;height:22px;flex:none}
-.ih .nm{flex:1;min-width:0;font-weight:600}
-.x{border:0;background:transparent;color:var(--mut);font-size:20px;cursor:pointer;padding:0 6px}
-.qty{display:inline-flex;align-items:center;gap:4px}.qty button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--in);color:var(--ink);font-size:18px;cursor:pointer}
-.links{font-size:13px;margin:4px 0 0 30px;display:flex;gap:12px;flex-wrap:wrap}
-a{color:var(--acc)}
-.offers{margin:8px 0 0 30px;display:grid;gap:8px}
-.row{border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.row.best{border-color:var(--acc)}
-.rh{display:flex;align-items:center;gap:8px}.rh b{flex:1}
-.rf{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
-.rf label{display:flex;flex-direction:column;font-size:12px;color:var(--mut)}
-.rf input{width:130px}
-.v{font-size:13px;margin-top:4px;padding:3px 8px;border-radius:6px;display:inline-block}
-.v.ok{background:var(--accbg);color:var(--acc)}.v.bad{background:var(--badbg);color:var(--bad)}
-.addshop{margin:8px 0 0 30px}
-.shops{display:grid;gap:10px;margin-top:8px}
-.shop{border:1px solid var(--line);border-radius:10px;padding:10px}
-.sf{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:6px}
-.sf label{display:flex;flex-direction:column;font-size:12px;color:var(--mut)}.sf input{width:100%}
-.big{font-size:30px;font-weight:700}
-.save{color:var(--acc);font-weight:600}
-.order{border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:10px}
-.order table{width:100%;border-collapse:collapse;font-size:14px}.order td{padding:2px 0}.order td:last-child{text-align:right;white-space:nowrap}
-.order .tot td{border-top:1px solid var(--line);font-weight:700;padding-top:4px}
-.hint{font-size:13px;color:var(--warn)}
-.warns p{font-size:14px}
-.ck{display:flex;gap:8px;align-items:center;margin-top:6px}
-.foot{color:var(--mut);font-size:12px;text-align:center;margin-top:20px}
-.srch{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:10px}
-.sr1{display:flex;gap:8px;flex-wrap:wrap}.sr1 input{flex:1;min-width:180px}
+.lang button{border:0;background:transparent;color:var(--ink);padding:6px 14px;font:inherit;cursor:pointer}.lang button.on{background:var(--ink);color:var(--bg)}
+.cd{margin:10px 0 0;padding:8px 12px;border-radius:10px;background:#111;color:#ffcc00;font-weight:600;font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.ask{display:flex;gap:8px}.ask input{flex:1;min-width:0}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--in);border:1px solid var(--line);border-radius:10px;padding:10px}
+textarea{width:100%;min-height:70px}
+.btn{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;background:var(--acc);color:#fff;cursor:pointer;white-space:nowrap}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}.btn.sm{padding:6px 12px;font-size:14px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;cursor:pointer;user-select:none}
-.chip input{margin:0}.chip.on{border-color:var(--acc);background:var(--accbg)}
-.slinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.slinks a{border:1px solid var(--acc);border-radius:8px;padding:6px 10px;font-size:14px;text-decoration:none}
-.slinks a.cmp{background:var(--acc);color:#fff}
-.chart{margin:8px 0 0 30px;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
-.chart .ch{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);border-radius:999px;padding:4px 10px;font-size:13px;background:transparent;color:var(--ink);cursor:pointer}
+.note{font-size:13px;color:var(--mut);margin-top:6px}
+.empty{text-align:center;color:var(--mut);padding:10px 0}
+.item{border-top:1px solid var(--line);padding:12px 0}.item:first-child{border-top:0;padding-top:0}
+.ih{display:flex;gap:8px;align-items:center}
+.ih input[type=checkbox]{width:22px;height:22px;flex:none;margin:0}
+.nm{flex:1;min-width:0;font-weight:700;border-color:transparent;background:transparent;padding:6px}
+.nm:focus{border-color:var(--line);background:var(--in)}
+.x{border:0;background:transparent;color:var(--mut);font-size:22px;cursor:pointer;padding:0 6px;line-height:1}
+.qty{display:inline-flex;align-items:center;gap:4px}.qty button{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--in);color:var(--ink);font-size:17px;cursor:pointer}
+.meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--mut);margin:2px 0 6px 30px}
+.meta select{font-size:13px;padding:3px 6px;border-radius:8px}
+.meta a{color:var(--acc)}
+.rows{display:grid;gap:6px;margin-left:30px}
+.row{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:6px 8px}
+.row.best{border-color:var(--acc);background:var(--accbg)}
+.row a{flex:1;min-width:0;color:var(--ink);text-decoration:none;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row a::after{content:" ↗";color:var(--acc);font-weight:400}
+.row input{width:112px;padding:7px 8px;text-align:right}
+.row .tag{font-size:12px;color:var(--acc);font-weight:700;white-space:nowrap}
+.row .tag.bad{color:var(--bad)}
+.more{margin:6px 0 0 30px}
+details>summary{cursor:pointer;color:var(--acc);font-size:14px;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::before{content:"▸ "}details[open]>summary::before{content:"▾ "}
+.lows{display:grid;gap:6px;margin-top:6px}
+.low{display:flex;align-items:center;gap:8px;font-size:13px}.low span{flex:1}.low input{width:112px;padding:6px 8px;text-align:right}
+.v{font-size:12px;padding:2px 6px;border-radius:6px}.v.ok{background:var(--accbg);color:var(--acc)}.v.bad{background:var(--badbg);color:var(--bad)}
 .chart img{display:block;width:100%;height:auto;margin-top:6px;border-radius:6px;background:#fff}
-.tabs{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.tabs button{border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px;padding:4px 10px;cursor:pointer}.tabs button.on{background:var(--acc);color:#fff}
-.asin{display:flex;flex-direction:column;font-size:12px;color:var(--mut);margin-top:6px}.asin input{max-width:260px}
-.linkbtn{border:0;background:none;color:var(--acc);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:0}
-@media (max-width:520px){.chart{margin-left:0}}
-@media (max-width:520px){.offers,.links,.addshop{margin-left:0}.ih{flex-wrap:wrap}.ih .nm{order:5;flex-basis:100%}.ih .qty{margin-left:auto}.rf input{width:110px}.big{font-size:26px}}
+.addshop select{font-size:14px;padding:6px 8px;margin:6px 0 0 30px}
+.big{font-size:30px;font-weight:800}
+.save{color:var(--acc);font-weight:700}
+.ord{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:8px 0}.ord:first-of-type{border-top:0}
+.ord b{white-space:nowrap}.ord small{display:block;color:var(--mut)}
+.hint{color:var(--warn);font-size:13px}
+.warn{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:8px 10px;font-size:14px;margin-top:8px}
+table{width:100%;border-collapse:collapse;font-size:14px}td{padding:2px 0}td:last-child{text-align:right;white-space:nowrap}
+.fold{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.fold>summary{font-size:15px;font-weight:600;color:var(--ink)}
+.shop{border-top:1px solid var(--line);padding:8px 0}
+.sf{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:6px;margin-top:4px}
+.sf label{display:flex;flex-direction:column;font-size:12px;color:var(--mut)}.sf input{width:100%;padding:7px 8px}
+.ck{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:4px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.foot{color:var(--mut);font-size:12px;text-align:center;margin-top:18px}
+@media (max-width:520px){.rows,.meta,.more,.addshop select{margin-left:0}.row input{width:100px}.big{font-size:26px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="top">
-    <div>
-      <h1 data-t="title"></h1>
-      <p class="sig"><b>✳</b> Claude</p>
-    </div>
-    <div class="lang" role="group" aria-label="Sprache / 语言"><button data-lang="zh">中文</button><button data-lang="de">Deutsch</button></div>
+    <div><h1 data-t="title"></h1><p class="sig"><b>✳</b> Claude</p></div>
+    <div class="lang"><button data-lang="zh">中文</button><button data-lang="de">Deutsch</button></div>
   </div>
-  <p data-t="intro"></p>
-  <span class="pill" data-t="safe"></span>
   <div class="cd" id="cd"></div>
 
-  <details class="panel" id="how"><summary><h2 data-t="howT"></h2></summary><div data-t="how"></div></details>
-
-  <section class="panel">
-    <div class="ph"><h2 data-t="cartT"></h2><span class="badge" id="demoBadge" data-t="demoBadge"></span></div>
-    <div class="srch">
-      <h3 data-t="srchT"></h3>
-      <div class="sr1"><input id="q" type="search" enterkeyhint="search"><select id="cat"></select></div>
-      <div class="chips" id="chips"></div>
-      <div class="slinks" id="slinks"></div>
-      <div class="btns"><button class="btn" id="qAdd" data-t="qAdd"></button></div>
-      <p class="note" data-t="srchNote"></p>
-    </div>
-    <h3 data-t="pasteT"></h3>
-    <textarea id="paste"></textarea>
-    <div class="btns"><button class="btn" id="addBtn" data-t="add"></button><button class="btn ghost sm" id="sampleBtn" data-t="sample"></button><button class="btn ghost sm" id="clearDemo" data-t="clearDemo"></button></div>
-    <p class="note" id="msg"></p>
-    <div id="items"></div>
+  <section class="card">
+    <h2 data-t="askT"></h2>
+    <div class="ask" style="margin-top:8px"><input id="q" enterkeyhint="go" autocomplete="off"><button class="btn" id="go" data-t="go"></button></div>
+    <div class="chips" id="ex"></div>
+    <p class="note" id="msg" data-t="askNote"></p>
   </section>
 
-  <details class="panel" id="shopPanel" open><summary><h2 data-t="shopsT"></h2></summary><p class="note" data-t="shopsSub"></p><div id="shops"></div></details>
+  <section class="card"><div id="items"></div></section>
+  <section class="card" id="plan"></section>
 
-  <section class="panel" id="plan"></section>
-
-  <details class="panel"><summary><h2 data-t="syncT"></h2></summary>
+  <details class="fold" id="shopFold"><summary data-t="shopsT"></summary><p class="note" data-t="shopsSub"></p><div id="shops"></div></details>
+  <details class="fold"><summary data-t="howT"></summary><div data-t="how"></div></details>
+  <details class="fold"><summary data-t="syncT"></summary>
     <p class="note" data-t="syncSub"></p>
     <div class="btns"><button class="btn sm" id="expBtn" data-t="export"></button></div>
-    <textarea id="code"></textarea>
+    <textarea id="code" style="margin-top:8px"></textarea>
     <div class="btns"><button class="btn ghost sm" id="impBtn" data-t="import"></button><button class="btn ghost sm" id="resetBtn" data-t="reset"></button></div>
     <p class="note" id="syncMsg"></p>
   </details>
@@ -133,303 +107,263 @@ a{color:var(--acc)}
 </div>
 <script>
 'use strict';
+// id, name, hosts (for recognising links), search url
 const SHOPS=[
- {id:'amazon',n:'Amazon.de',h:['amazon.de','amzn.eu','amzn.to','a.co'],s:q=>'https://www.amazon.de/s?k='+q},
- {id:'mediamarkt',n:'MediaMarkt',h:['mediamarkt.de'],s:q=>'https://www.mediamarkt.de/de/search.html?query='+q},
- {id:'saturn',n:'Saturn',h:['saturn.de'],s:q=>'https://www.saturn.de/de/search.html?query='+q},
- {id:'otto',n:'OTTO',h:['otto.de'],s:q=>'https://www.otto.de/suche/'+q+'/'},
- {id:'ebay',n:'eBay',h:['ebay.de','ebay.com','ebay.us'],s:q=>'https://www.ebay.de/sch/i.html?_nkw='+q},
- {id:'galaxus',n:'Galaxus',h:['galaxus.de'],s:q=>'https://www.galaxus.de/search?q='+q},
- {id:'mindfactory',n:'Mindfactory',h:['mindfactory.de'],s:q=>'https://www.mindfactory.de/search_result.php?search_query='+q},
- {id:'alternate',n:'Alternate',h:['alternate.de'],s:q=>'https://www.alternate.de/listing.xhtml?q='+q},
- {id:'nbb',n:'notebooksbilliger',h:['notebooksbilliger.de'],s:q=>'https://www.notebooksbilliger.de/produkte/'+q},
- {id:'douglas',n:'Douglas',h:['douglas.de'],s:q=>'https://www.douglas.de/de/search?q='+q},
- {id:'flaconi',n:'Flaconi',h:['flaconi.de'],s:q=>'https://www.flaconi.de/search/?q='+q},
- {id:'zalando',n:'Zalando',h:['zalando.de'],s:q=>'https://www.zalando.de/katalog/?q='+q},
- {id:'other',n:null,h:[],s:null}
-];
+ ['amazon','Amazon.de',['amazon.de','amzn.eu','amzn.to','a.co'],'https://www.amazon.de/s?k='],
+ ['otto','OTTO',['otto.de'],'https://www.otto.de/suche/{q}/'],
+ ['ebay','eBay',['ebay.de','ebay.com','ebay.us'],'https://www.ebay.de/sch/i.html?_nkw='],
+ ['kaufland','Kaufland',['kaufland.de'],'https://www.kaufland.de/s/?search_value='],
+ ['lidl','Lidl',['lidl.de'],'https://www.lidl.de/q/search?q='],
+ ['galaxus','Galaxus',['galaxus.de'],'https://www.galaxus.de/search?q='],
+ ['mediamarkt','MediaMarkt',['mediamarkt.de'],'https://www.mediamarkt.de/de/search.html?query='],
+ ['saturn','Saturn',['saturn.de'],'https://www.saturn.de/de/search.html?query='],
+ ['cyberport','Cyberport',['cyberport.de'],'https://www.cyberport.de/tools/search-results.html?query='],
+ ['conrad','Conrad',['conrad.de'],'https://www.conrad.de/de/search.html?search='],
+ ['nbb','notebooksbilliger',['notebooksbilliger.de'],'https://www.notebooksbilliger.de/produkte/'],
+ ['mindfactory','Mindfactory',['mindfactory.de'],'https://www.mindfactory.de/search_result.php?search_query='],
+ ['alternate','Alternate',['alternate.de'],'https://www.alternate.de/listing.xhtml?q='],
+ ['caseking','Caseking',['caseking.de'],'https://www.caseking.de/search?q='],
+ ['douglas','Douglas',['douglas.de'],'https://www.douglas.de/de/search?q='],
+ ['flaconi','Flaconi',['flaconi.de'],'https://www.flaconi.de/search/?q='],
+ ['notino','Notino',['notino.de'],'https://www.notino.de/search.asp?exps='],
+ ['dm','dm',['dm.de'],'https://www.dm.de/search?query='],
+ ['rossmann','Rossmann',['rossmann.de'],'https://www.rossmann.de/de/search/?text='],
+ ['ikea','IKEA',['ikea.com'],'https://www.ikea.com/de/de/search/?q='],
+ ['xxxlutz','XXXLutz',['xxxlutz.de'],'https://www.xxxlutz.de/s/?s='],
+ ['benuta','benuta',['benuta.de'],'https://www.benuta.de/search?q='],
+ ['tchibo','Tchibo',['tchibo.de'],'https://www.tchibo.de/search?q='],
+ ['zalando','Zalando',['zalando.de'],'https://www.zalando.de/katalog/?q='],
+ ['aboutyou','About You',['aboutyou.de'],'https://www.aboutyou.de/suche?term='],
+ ['hm','H&M',['hm.com'],'https://www2.hm.com/de_de/search-results.html?q='],
+ ['decathlon','Decathlon',['decathlon.de'],'https://www.decathlon.de/search?Ntt='],
+ ['smyths','Smyths Toys',['smythstoys.com'],'https://www.smythstoys.com/de/de-de/search/?text='],
+ ['thomann','Thomann',['thomann.de'],'https://www.thomann.de/de/search_dir.html?sw='],
+ ['other','',[],'']
+].map(([id,n,h,s])=>({id,n,h,s}));
+const CATS={
+ general:['amazon','otto','ebay','kaufland','galaxus','lidl'],
+ pc:['amazon','mindfactory','alternate','caseking','nbb','cyberport','galaxus'],
+ tech:['amazon','mediamarkt','saturn','otto','cyberport','galaxus','kaufland'],
+ beauty:['douglas','flaconi','notino','dm','rossmann','amazon'],
+ home:['ikea','xxxlutz','otto','benuta','kaufland','lidl','amazon'],
+ fashion:['zalando','aboutyou','hm','otto','amazon'],
+ sport:['decathlon','amazon','zalando','otto'],
+ toys:['smyths','amazon','kaufland','otto','lidl'],
+ music:['thomann','amazon','ebay']};
+const KW={
+ pc:/\b(rtx|gtx|geforce|nvidia|radeon|rx ?\d{4}|gpu|grafikkarte|ddr[45]|ram|arbeitsspeicher|\d{4} ?(mhz|mt\/s)|crucial|kingston|corsair|g\.?skill|ssd|nvme|m\.2|cpu|ryzen|intel core|core i[3579]|mainboard|motherboard|netzteil|psu|gehäuse|kühler|ventilator)\b|显卡|内存条|内存|固态|硬盘|主板|电源|机箱|散热/i,
+ tech:/\b(iphone|ipad|macbook|samsung|galaxy|pixel|xiaomi|tv|fernseher|oled|kopfhörer|headphones?|airpods|laptop|notebook|monitor|playstation|ps5|xbox|switch|dyson|staubsauger|saugroboter|kaffeemaschine|kaffeevollautomat|waschmaschine|kühlschrank|smartwatch|kamera|drucker|soundbar|airfryer|heißluftfritteuse)\b|手机|电视|耳机|笔记本|显示器|吸尘器|扫地机|咖啡机|洗衣机|冰箱|手表|相机|打印机|空气炸锅/i,
+ beauty:/\b(parfum|perfume|eau de|edp|edt|duft|lippenstift|lipstick|mascara|foundation|creme|cream|serum|shampoo|make-?up|nivea|chanel|dior|lancôme|lancome|estée|estee|clinique|shiseido|la roche|loreal|l'oréal|kosmetik|pflege)\b|香水|口红|唇膏|面霜|精华|洗发|化妆|护肤|面膜|防晒/i,
+ home:/\b(teppich|sofa|couch|bett|matratze|tisch|stuhl|schrank|regal|lampe|leuchte|vorhang|gardine|kissen|decke|bettwäsche|möbel|kommode|spiegel)\b|地毯|沙发|床垫|床|桌|椅|柜|书架|灯|窗帘|枕|被子|家具/i,
+ fashion:/\b(schuhe?|sneaker|stiefel|jacke|mantel|hose|jeans|kleid|pullover|hoodie|t-?shirt|hemd|tasche|rucksack|nike|adidas|puma|levi'?s|zara)\b|鞋|外套|夹克|裤|裙|毛衣|卫衣|衬衫|包|背包/i,
+ sport:/\b(fahrrad|e-?bike|yoga|hantel|laufschuh|zelt|camping|ski|fitness|trainingsgerät)\b|自行车|瑜伽|哑铃|跑鞋|帐篷|露营|滑雪|健身/i,
+ toys:/\b(lego|playmobil|spielzeug|puppe|barbie|brettspiel|puzzle)\b|乐高|玩具|积木|拼图/i,
+ music:/\b(gitarre|guitar|klavier|piano|keyboard|mikrofon|drum|schlagzeug|geige)\b|吉他|钢琴|电子琴|麦克风|架子鼓|小提琴/i};
+const guessCat=s=>{for(const k of ['pc','beauty','home','toys','music','sport','fashion','tech'])if(KW[k].test(s))return k;return 'general';};
+
 const T={
-zh:{title:'黑五到手价比价 · 德国版',
- intro:'把想买的商品链接丢进来，填上各家店的价格，算出连运费、优惠码、返现在内最便宜的买法，顺便识破假降价。',
- safe:'✓ 不用登录亚马逊或任何商店，不保存账号密码',
- cdBefore:'Black Friday：{0}（还有 {1} 天）· Cyber Monday：{2}',cdToday:'今天就是 Black Friday！Cyber Monday：{0}',cdCM:'今天是 Cyber Monday，黑五最后一天',cdBetween:'黑五周末进行中 · Cyber Monday：{0}',cdAfter:'今年黑五已结束，下次：{0}',
- howT:'怎么用（手机 / 电脑）',
- how:'<h3>放到手机桌面</h3><p><b>iPhone：</b>用 Safari 打开 → 点底部分享按钮 → “添加到主屏幕”。</p><p><b>安卓：</b>用 Chrome 打开 → 点右上角 ⋮ → 往下滑，点“安装并创建快捷方式”或“添加到主屏幕”。</p><h3>加商品</h3><p><b>最快：</b>在“搜一个商品”里输入名字、选类别，点各家店的按钮看价格，再点“加入购物车”。</p><p><b>或者：</b></p><p>1.在亚马逊、MediaMarkt、Douglas 等 App 里打开商品 → 分享 → 复制链接。</p><p>2. 回到这里，长按输入框 → 粘贴 → “识别并加入”。也可以直接写商品名。</p><p>3. 给每家店填价格。商品页上写的“30 天最低价”（Niedrigster Preis der letzten 30 Tage）也填上，App 会帮你看是不是真降价。</p><p><b>亚马逊商品</b>会直接显示历史价格图（camelcamelcamel / Keepa），一眼看出是不是先涨后降。分享的短链接看不出商品编号，填一下 ASIN 就行。</p><p>4. 在“各家店的运费和优惠”里，按结算页填运费、包邮门槛、优惠码和返现。</p><h3>看结果，自己去买</h3><p>App 会算出在哪家买哪几件最便宜。点“打开商品”去商店，下单和付款都由你自己完成。</p><p class="muted">不用注册、不用登录。每个人的数据只存在自己的设备上，互不影响。换设备用“导出 / 导入”。</p>',
- cartT:'我的购物车',demoBadge:'示例（价格和运费都是编的）',
- pastePh:'在亚马逊、MediaMarkt、Douglas 等 App 里点“分享 → 复制链接”，粘贴到这里；也可以直接写商品名',
- add:'识别并加入',sample:'贴一条示例链接',clearDemo:'清空示例',
- addOk:'已加入：{0}（{1}）。在下面填各家店的价格。',addOkDemo:'已加入：{0}（{1}）。示例商品已清空。在下面填各家店的价格。',addDup:'这个链接已经加过了。同一个链接里要比不同规格，直接写商品名再加一次。',addEmpty:'先粘贴链接，或者写个商品名。',
- unknown:'未认出名字的商品',fromNone:'没有链接',
- qty:'数量',price:'价格 €',low30:'30 天最低价 €',addShop:'＋ 加一家店比价',open:'打开商品 ↗',search:'去这家搜 ↗',idealo:'idealo 查全网价 ↗',
- vReal:'现在就是近 30 天最低价 ✓',vFake:'比近 30 天最低价贵 {0}，可能是先涨后降',vNoPrice:'还没填价格',
- shopsT:'各家店的运费和优惠',shopsSub:'按结算页上看到的填。不填就当免运费、没有优惠码。只显示购物车里出现过的店。',noShops:'先加商品、填价格，这里会出现对应的店。',
- ship:'运费 €',free:'满多少包邮 €',vAmt:'优惠码减 €',vPct:'或打折 %',vMin:'优惠码门槛 €',cb:'返现 %',prime:'我是 Amazon Prime 会员（亚马逊免运费）',
- planT:'最便宜的买法',planEmpty:'勾选至少一件、并给它填上价格，这里就会算出来。',total:'一共要付',afterCb:'扣掉返现后相当于 {0}',save:'比“每件都去标价最低的店买”省 {0}',same:'已经是最省的买法。',orderAt:'在 {0} 下单',sub:'商品合计',vLine:'优惠码',shipLine:'运费',payLine:'这一单付',cbLine:'返现（几周后到账）',freeGap:'再买 {0} 就包邮',vGap:'再买 {0} 就能用优惠码',
- warnT:'下单前看一眼',warnFake:'{0}（{1}）：比近 30 天最低价贵 {2}，可能是先涨后降。',warnCb:'返现要先从返现网站点进商店再下单才算；退货会扣回。',warnRet:'网购一般有 14 天无理由退货期。买完如果又降价，可以看能不能退了重买。',
- syncT:'换手机 / 电脑：导出和导入',syncSub:'这个网页不用登录，数据只存在这台设备的这个浏览器里。想换设备用：在这里生成导出代码，发到另一台设备，粘贴后点“导入”。',export:'生成导出代码',import:'导入',codePh:'把导出代码粘贴到这里',expOk:'已生成，复制下面整段代码发到另一台设备。',copied:'已生成并复制到剪贴板。',impOk:'导入成功。',impBad:'代码不对，没有导入。',reset:'全部清空',resetOk:'已清空。',
- foot:'价格都是你自己从商店页面看来填的，下单前以商店结算页为准。',
- srchT:'🔍 搜一个商品，看各家店卖多少',qPh:'输入商品名，例如 RTX 5080、Dyson V15、Chanel No 5',qAdd:'加入购物车，对比勾选的这几家',srchNote:'网页没法自己去商店读价格（浏览器不允许，我们也不爬取商店网站）。点上面每家店的按钮看价格，再填回购物车里对应的店。',pasteT:'或者：粘贴分享链接',
- chartT:'📈 亚马逊历史价格',asinLbl:'ASIN（亚马逊商品编号）',asinPh:'B0 开头的 10 位，比如 B0DTJFSSZG',asinHint:'分享出来的短链接里看不出商品编号。在亚马逊商品页往下找“Produktinformation → ASIN”，填进来就会显示历史价格图。',chartFail:'这张图暂时加载不出来，点右边的链接去网站上看。',chartHow:'过去一年的价格（Keepa）：橙色是亚马逊自营价，蓝紫色是其他卖家的新品价，最右边是现在。',
- catPc:'电脑配件',catTech:'电器数码',catBeauty:'美妆香水',catFashion:'服饰鞋包',catAll:'全部商店',qEmpty:'先输入商品名。',qNone:'至少勾一家店。',qOk:'已加入：{0}，建好了 {1} 家店的价格行。点上面各家店的按钮看价格，再填进来。',qOkDemo:'已加入：{0}，建好了 {1} 家店的价格行，示例已清空。点上面各家店的按钮看价格，再填进来。',typeFirst:'输入商品名后，这里会出现各家店的搜索按钮。'},
+zh:{title:'黑五比价 · 德国版',
+ cdBefore:'Black Friday {0}（还有 {1} 天）· Cyber Monday {2}',cdToday:'今天就是 Black Friday！Cyber Monday {0}',cdCM:'今天是 Cyber Monday，黑五最后一天',cdBetween:'黑五周末进行中 · Cyber Monday {0}',cdAfter:'今年黑五已结束，下次：{0}',
+ askT:'想买什么？',qPh:'商品名，或粘贴商店的分享链接',go:'比价',askNote:'自动推荐该去哪几家店看。点店名看价格，把价格填进框里，最便宜的买法会自动算出来。',try:'试试：',
+ empty:'购物车是空的。在上面输入想买的东西就行。',
+ cat:'类别',catNames:{general:'综合',pc:'电脑配件',tech:'电器数码',beauty:'美妆香水',home:'家居地毯',fashion:'服饰鞋包',sport:'运动',toys:'玩具',music:'乐器'},
+ pricePh:'€ 价格',cheapest:'最便宜',addShop:'＋ 加一家店',open:'原商品',moreT:'更多：真假降价、亚马逊价格走势',
+ lowT:'商品页上写的“近 30 天最低价”（Niedrigster Preis der letzten 30 Tage），填了就能看出是不是真降价：',vReal:'真降价 ✓',vFake:'贵了 {0}，可能先涨后降',
+ chartT:'亚马逊过去一年的价格（Keepa）：橙色是亚马逊自营，紫色是其他卖家。',asinLbl:'想看亚马逊价格走势？填商品编号 ASIN（商品页“Produktinformation”里 B0 开头的 10 位）：',chartFail:'价格图暂时加载不出来。',
+ planT:'最便宜的买法',planEmpty:'给商品填上至少一家店的价格，这里就会算出来。',total:'一共 {0}',buyAt:'在 {0} 买',afterCb:'扣掉返现后相当于 {0}',save:'比每件都去标价最低的店买再省 {0}',same:'已经是最省的买法。',freeGap:'再买 {0} 就包邮',vGap:'再买 {0} 能用优惠码',detail:'明细（运费、优惠码、返现）',sub:'商品',vLine:'优惠码',shipLine:'运费',cbLine:'返现（之后到账）',payLine:'这一单付',
+ warnFake:'⚠ {0} 在 {1} 比近 30 天最低价贵 {2}，可能是先涨后降。',
+ shopsT:'运费、优惠码、返现（可选）',shopsSub:'按结算页填，不填就当免运费、没优惠。只列出购物车里用到的店。',noShops:'先给商品填价格。',
+ ship:'运费 €',free:'满多少包邮 €',vAmt:'优惠码减 €',vPct:'或打折 %',vMin:'优惠码门槛 €',cb:'返现 %',prime:'我有 Amazon Prime（亚马逊免运费）',
+ howT:'怎么用 · 放到手机桌面',
+ how:'<p>1. 在“想买什么”里输入商品名，或者粘贴亚马逊、MediaMarkt、Douglas 等 App 的分享链接，点“比价”。</p><p>2. 自动列出该去看的几家店。点店名会打开那家店的搜索结果，把看到的价格填进框里。</p><p>3. 最便宜的买法会自动算出来。下单付款在商店里自己完成。</p><h3>放到手机桌面</h3><p><b>iPhone：</b>Safari 打开 → 底部分享按钮 → “添加到主屏幕”。</p><p><b>安卓：</b>Chrome 打开 → 右上角 ⋮ → 往下滑 → “安装并创建快捷方式”或“添加到主屏幕”。</p><p class="muted">不用注册、不用登录。数据只存在你自己的设备上，每个人互不影响。网页没法自己去商店读价格（浏览器不允许，我们也不爬取商店网站），所以价格要你点进去看了再填。</p>',
+ syncT:'换手机 / 电脑：导出和导入',syncSub:'不用登录。在这里生成一段代码，发到另一台设备，粘贴后点“导入”。',export:'生成导出代码',import:'导入',codePh:'把导出代码粘贴到这里',expOk:'已生成，复制整段发到另一台设备。',copied:'已生成并复制。',impOk:'导入成功。',impBad:'代码不对，没有导入。',reset:'全部清空',resetOk:'已清空。',
+ added:'已加入“{0}”，推荐了 {1} 家店（{2}）。点店名看价格，填进来就行。',dup:'这个链接已经加过了。',needName:'请输入商品名（比如 Teppich 200x300）。价格请填在下面各家店的框里。',emptyQ:'先输入想买的东西。',unknown:'未认出名字的商品（点这里改名）',
+ foot:'价格由你从商店页面看来填写，下单前以商店结算页为准。'},
 de:{title:'Black-Friday-Preisvergleich',
- intro:'Produktlinks einfügen, Preise der Shops eintragen – die Seite berechnet den günstigsten Einkauf inklusive Versand, Gutscheinen und Cashback und entlarvt Schein-Rabatte.',
- safe:'✓ Kein Login bei Amazon oder anderen Shops, keine Passwörter',
- cdBefore:'Black Friday: {0} (noch {1} Tage) · Cyber Monday: {2}',cdToday:'Heute ist Black Friday! Cyber Monday: {0}',cdCM:'Heute ist Cyber Monday – letzter Aktionstag',cdBetween:'Black-Friday-Wochenende läuft · Cyber Monday: {0}',cdAfter:'Black Friday ist vorbei – nächster: {0}',
- howT:'So geht’s (Handy / PC)',
- how:'<h3>Auf den Startbildschirm legen</h3><p><b>iPhone:</b> In Safari öffnen → Teilen-Symbol unten → „Zum Home-Bildschirm“.</p><p><b>Android:</b> In Chrome öffnen → ⋮ oben rechts → nach unten scrollen → „Installieren“ bzw. „Zum Startbildschirm hinzufügen“.</p><h3>Produkte hinzufügen</h3><p><b>Am schnellsten:</b> Unter „Produkt suchen“ den Namen eingeben, Kategorie wählen, auf die Shops tippen und Preise ansehen, dann „In den Warenkorb“.</p><p><b>Oder:</b></p><p>1.In der App von Amazon, MediaMarkt, Douglas usw. das Produkt öffnen → Teilen → Link kopieren.</p><p>2. Hier lange ins Feld tippen → Einfügen → „Erkennen und hinzufügen“. Du kannst auch einfach den Produktnamen eintippen.</p><p>3. Für jeden Shop den Preis eintragen, dazu den „niedrigsten Preis der letzten 30 Tage“ von der Produktseite – so siehst du, ob der Rabatt echt ist.</p><p><b>Amazon-Produkte</b> zeigen direkt den Preisverlauf (camelcamelcamel / Keepa) – so erkennst du sofort, ob der Preis vorher erhöht wurde. Bei Kurzlinks einfach die ASIN eintragen.</p><p>4. Unter „Versand & Rabatte der Shops“ Versandkosten, Grenze für Gratisversand, Gutschein und Cashback laut Kasse eintragen.</p><h3>Ergebnis ansehen, selbst bestellen</h3><p>Die Seite zeigt, in welchem Shop du was am günstigsten kaufst. Mit „Produkt öffnen“ gehst du zum Shop und bestellst dort selbst.</p><p class="muted">Ohne Anmeldung. Deine Daten bleiben nur auf deinem Gerät – jede Person hat ihre eigene Liste. Gerät wechseln: „Export / Import“.</p>',
- cartT:'Mein Warenkorb',demoBadge:'Beispiel (Preise und Versand sind ausgedacht)',
- pastePh:'In der App von Amazon, MediaMarkt, Douglas usw. „Teilen → Link kopieren“ und hier einfügen – oder einfach den Produktnamen schreiben',
- add:'Erkennen und hinzufügen',sample:'Beispiel-Link einfügen',clearDemo:'Beispiel löschen',
- addOk:'Hinzugefügt: {0} ({1}). Trag unten die Preise der Shops ein.',addOkDemo:'Hinzugefügt: {0} ({1}). Das Beispiel wurde gelöscht. Trag unten die Preise der Shops ein.',addDup:'Diesen Link hast du schon. Für eine andere Variante einfach den Namen eintippen und erneut hinzufügen.',addEmpty:'Bitte zuerst einen Link einfügen oder einen Produktnamen schreiben.',
- unknown:'Unbekanntes Produkt',fromNone:'ohne Link',
- qty:'Menge',price:'Preis €',low30:'Tiefstpreis 30 Tage €',addShop:'＋ Weiteren Shop vergleichen',open:'Produkt öffnen ↗',search:'In diesem Shop suchen ↗',idealo:'Auf idealo vergleichen ↗',
- vReal:'Aktuell der niedrigste Preis der letzten 30 Tage ✓',vFake:'{0} teurer als der 30-Tage-Tiefstpreis – vermutlich vorher erhöht',vNoPrice:'Noch kein Preis',
- shopsT:'Versand & Rabatte der Shops',shopsSub:'So eintragen, wie es an der Kasse steht. Leer = versandkostenfrei, kein Gutschein. Es erscheinen nur Shops aus deinem Warenkorb.',noShops:'Füge zuerst Produkte mit Preisen hinzu – dann erscheinen hier die Shops.',
- ship:'Versand €',free:'Gratisversand ab €',vAmt:'Gutschein −€',vPct:'oder Rabatt %',vMin:'Gutschein ab €',cb:'Cashback %',prime:'Ich habe Amazon Prime (kein Versand bei Amazon)',
- planT:'Günstigster Einkauf',planEmpty:'Mindestens ein Produkt anhaken und einen Preis eintragen – dann wird hier gerechnet.',total:'Insgesamt zu zahlen',afterCb:'Nach Cashback effektiv {0}',save:'{0} günstiger als „jedes Produkt im Shop mit dem niedrigsten Preis“',same:'Das ist bereits der günstigste Weg.',orderAt:'Bestellung bei {0}',sub:'Warenwert',vLine:'Gutschein',shipLine:'Versand',payLine:'Diese Bestellung',cbLine:'Cashback (kommt nach einigen Wochen)',freeGap:'Noch {0} bis zum Gratisversand',vGap:'Noch {0}, dann gilt der Gutschein',
- warnT:'Vor dem Bestellen',warnFake:'{0} ({1}): {2} teurer als der 30-Tage-Tiefstpreis – vermutlich vorher erhöht.',warnCb:'Cashback zählt nur, wenn du über das Cashback-Portal in den Shop gehst; bei Rücksendung wird es abgezogen.',warnRet:'Online-Käufe kannst du meist 14 Tage ohne Grund zurückschicken. Wird es danach billiger, prüfe, ob Zurückschicken und neu Kaufen geht.',
- syncT:'Gerät wechseln: Export / Import',syncSub:'Ohne Anmeldung – die Daten liegen nur in diesem Browser auf diesem Gerät. Zum Übertragen: Export-Code erzeugen, auf das andere Gerät schicken, dort einfügen und „Importieren“ tippen.',export:'Export-Code erzeugen',import:'Importieren',codePh:'Export-Code hier einfügen',expOk:'Erzeugt – kopiere den ganzen Code unten auf das andere Gerät.',copied:'Erzeugt und in die Zwischenablage kopiert.',impOk:'Import erfolgreich.',impBad:'Ungültiger Code, nichts importiert.',reset:'Alles löschen',resetOk:'Gelöscht.',
- foot:'Alle Preise trägst du selbst von den Shopseiten ein. Maßgeblich ist der Preis an der Kasse des Shops.',
- srchT:'🔍 Produkt suchen – was kostet es in den Shops?',qPh:'Produktname, z. B. RTX 5080, Dyson V15, Chanel No 5',qAdd:'In den Warenkorb – diese Shops vergleichen',srchNote:'Die Seite kann Preise nicht selbst aus den Shops lesen (der Browser erlaubt das nicht, und wir lesen Shopseiten nicht automatisch aus). Tippe oben auf die Shops, schau dir den Preis an und trag ihn im Warenkorb beim jeweiligen Shop ein.',pasteT:'Oder: Teilen-Link einfügen',
- chartT:'📈 Amazon-Preisverlauf',asinLbl:'ASIN (Amazon-Artikelnummer)',asinPh:'10 Zeichen, beginnt mit B0, z. B. B0DTJFSSZG',asinHint:'Geteilte Kurzlinks enthalten keine Artikelnummer. Auf der Amazon-Produktseite unter „Produktinformation → ASIN“ nachsehen und hier eintragen – dann erscheint der Preisverlauf.',chartFail:'Diese Grafik lädt gerade nicht – nutze den Link daneben.',chartHow:'Preise des letzten Jahres (Keepa): Orange = Amazon selbst, Lila = Neu von anderen Händlern, ganz rechts = heute.',
- catPc:'PC-Komponenten',catTech:'Elektronik',catBeauty:'Beauty & Parfum',catFashion:'Mode',catAll:'Alle Shops',qEmpty:'Bitte zuerst einen Produktnamen eingeben.',qNone:'Mindestens einen Shop anhaken.',qOk:'Hinzugefügt: {0} – mit Preiszeilen für {1} Shops. Tippe oben auf die Shops und trag die Preise ein.',qOkDemo:'Hinzugefügt: {0} – mit Preiszeilen für {1} Shops; das Beispiel wurde gelöscht. Tippe oben auf die Shops und trag die Preise ein.',typeFirst:'Gib einen Produktnamen ein – dann erscheinen hier die Such-Buttons der Shops.'}
-};
-const OTHER={zh:'其他商店',de:'Anderer Shop'};
-const CATS={pc:['amazon','mindfactory','alternate','nbb','galaxus','mediamarkt'],tech:['amazon','mediamarkt','saturn','otto','galaxus','ebay'],beauty:['douglas','flaconi','amazon'],fashion:['zalando','otto','amazon'],all:SHOPS.filter(s=>s.s).map(s=>s.id)};
-const CATKEY={pc:'catPc',tech:'catTech',beauty:'catBeauty',fashion:'catFashion',all:'catAll'};
-let qShops=null;
-function renderSearch(){
-  if(!CATS[S.cat])S.cat='pc';if(!qShops)qShops=new Set(CATS[S.cat]);
-  const sel=document.getElementById('cat');sel.innerHTML=Object.keys(CATS).map(k=>`<option value="${k}"${k===S.cat?' selected':''}>${t(CATKEY[k])}</option>`).join('');
-  document.getElementById('chips').innerHTML=CATS[S.cat].map(id=>`<label class="chip${qShops.has(id)?' on':''}"><input type="checkbox" data-qs="${id}"${qShops.has(id)?' checked':''}>${esc(shopName(id))}</label>`).join('');
-  renderLinks();
-}
-function renderLinks(){
-  const q=document.getElementById('q').value.trim(),box=document.getElementById('slinks');
-  if(!q){box.innerHTML=`<span class="note">${t('typeFirst')}</span>`;return;}
-  const e=encodeURIComponent(q);
-  box.innerHTML=CATS[S.cat].filter(id=>qShops.has(id)).map(id=>`<a href="${esc(SHOPS.find(s=>s.id===id).s(e))}" target="_blank" rel="noopener">${esc(shopName(id))} ↗</a>`).join('')
-   +`<a class="cmp" href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${e}" target="_blank" rel="noopener">idealo ↗</a><a class="cmp" href="https://geizhals.de/?fs=${e}" target="_blank" rel="noopener">geizhals ↗</a><a class="cmp" href="https://keepa.com/#!search/3-${e}" target="_blank" rel="noopener">Keepa ↗</a><a class="cmp" href="https://de.camelcamelcamel.com/search?sq=${e}" target="_blank" rel="noopener">camelcamelcamel ↗</a>`;
-}
-function addFromSearch(){
-  const q=document.getElementById('q').value.trim();
-  if(!q){msg(t('qEmpty'));return;}
-  const ids=CATS[S.cat].filter(id=>qShops.has(id));if(!ids.length){msg(t('qNone'));return;}
-  const wasDemo=S.demo;if(S.demo){S.items=S.items.filter(i=>!i.demo);S.cfg={};S.demo=false;}
-  const it={id:uid(),name:q,url:'',src:null,qty:1,on:true,offers:{}};ids.forEach(id=>{it.offers[id]={p:null,low:null};});
-  S.items.push(it);msg(t(wasDemo?'qOkDemo':'qOk',q,ids.length));render();
-}
-const KEY='bf-de-v1';
-let S=null;
+ cdBefore:'Black Friday {0} (noch {1} Tage) · Cyber Monday {2}',cdToday:'Heute ist Black Friday! Cyber Monday {0}',cdCM:'Heute ist Cyber Monday – letzter Aktionstag',cdBetween:'Black-Friday-Wochenende läuft · Cyber Monday {0}',cdAfter:'Black Friday ist vorbei – nächster: {0}',
+ askT:'Was möchtest du kaufen?',qPh:'Produktname oder Teilen-Link eines Shops',go:'Vergleichen',askNote:'Die Seite schlägt passende Shops vor. Tippe auf einen Shop, schau dir den Preis an und trag ihn ein – der günstigste Einkauf wird automatisch berechnet.',try:'Probier:',
+ empty:'Der Warenkorb ist leer. Oben einfach eingeben, was du kaufen möchtest.',
+ cat:'Kategorie',catNames:{general:'Allgemein',pc:'PC-Komponenten',tech:'Elektronik',beauty:'Beauty & Parfum',home:'Wohnen & Teppiche',fashion:'Mode',sport:'Sport',toys:'Spielzeug',music:'Musik'},
+ pricePh:'€ Preis',cheapest:'Am günstigsten',addShop:'＋ Shop hinzufügen',open:'Original',moreT:'Mehr: echter Rabatt?, Amazon-Preisverlauf',
+ lowT:'„Niedrigster Preis der letzten 30 Tage“ von der Produktseite – damit siehst du, ob der Rabatt echt ist:',vReal:'echter Rabatt ✓',vFake:'{0} teurer – vermutlich vorher erhöht',
+ chartT:'Amazon-Preise des letzten Jahres (Keepa): Orange = Amazon, Lila = andere Händler.',asinLbl:'Amazon-Preisverlauf ansehen? ASIN eintragen (Produktseite → „Produktinformation“, 10 Zeichen, beginnt mit B0):',chartFail:'Die Grafik lädt gerade nicht.',
+ planT:'Günstigster Einkauf',planEmpty:'Trag für ein Produkt mindestens einen Shop-Preis ein – dann wird hier gerechnet.',total:'Insgesamt {0}',buyAt:'Bei {0} kaufen',afterCb:'Nach Cashback effektiv {0}',save:'{0} günstiger als jedes Produkt einzeln beim billigsten Shop',same:'Das ist bereits der günstigste Weg.',freeGap:'Noch {0} bis Gratisversand',vGap:'Noch {0}, dann gilt der Gutschein',detail:'Details (Versand, Gutschein, Cashback)',sub:'Warenwert',vLine:'Gutschein',shipLine:'Versand',cbLine:'Cashback (kommt später)',payLine:'Diese Bestellung',
+ warnFake:'⚠ {0} bei {1}: {2} teurer als der 30-Tage-Tiefstpreis – vermutlich vorher erhöht.',
+ shopsT:'Versand, Gutscheine, Cashback (optional)',shopsSub:'Wie an der Kasse eintragen. Leer = versandkostenfrei, kein Rabatt. Nur Shops aus deinem Warenkorb.',noShops:'Trag zuerst Preise ein.',
+ ship:'Versand €',free:'Gratis ab €',vAmt:'Gutschein −€',vPct:'oder Rabatt %',vMin:'Gutschein ab €',cb:'Cashback %',prime:'Ich habe Amazon Prime (kein Versand bei Amazon)',
+ howT:'So geht’s · Auf den Startbildschirm',
+ how:'<p>1. Unter „Was möchtest du kaufen?“ den Produktnamen eingeben oder einen Teilen-Link aus der App von Amazon, MediaMarkt, Douglas usw. einfügen und „Vergleichen“ tippen.</p><p>2. Passende Shops erscheinen automatisch. Ein Tipp auf den Shop öffnet dort die Suche – Preis ansehen und eintragen.</p><p>3. Der günstigste Einkauf wird automatisch berechnet. Bestellen und bezahlen tust du selbst im Shop.</p><h3>Auf den Startbildschirm</h3><p><b>iPhone:</b> In Safari öffnen → Teilen-Symbol → „Zum Home-Bildschirm“.</p><p><b>Android:</b> In Chrome öffnen → ⋮ → nach unten scrollen → „Installieren“ bzw. „Zum Startbildschirm hinzufügen“.</p><p class="muted">Ohne Anmeldung. Deine Daten bleiben auf deinem Gerät – jede Person hat ihre eigene Liste. Die Seite kann Preise nicht selbst aus den Shops lesen (der Browser erlaubt das nicht, und wir lesen Shopseiten nicht automatisch aus) – deshalb trägst du sie ein.</p>',
+ syncT:'Gerät wechseln: Export / Import',syncSub:'Ohne Anmeldung: Code erzeugen, auf das andere Gerät schicken, dort einfügen und „Importieren“.',export:'Export-Code erzeugen',import:'Importieren',codePh:'Export-Code hier einfügen',expOk:'Erzeugt – den ganzen Code aufs andere Gerät schicken.',copied:'Erzeugt und kopiert.',impOk:'Import erfolgreich.',impBad:'Ungültiger Code, nichts importiert.',reset:'Alles löschen',resetOk:'Gelöscht.',
+ added:'„{0}“ hinzugefügt – {1} Shops vorgeschlagen ({2}). Auf einen Shop tippen, Preis eintragen.',dup:'Diesen Link hast du schon.',needName:'Bitte einen Produktnamen eingeben (z. B. Teppich 200x300). Preise gehören in die Felder bei den Shops unten.',emptyQ:'Bitte zuerst eingeben, was du kaufen möchtest.',unknown:'Unbekanntes Produkt (hier umbenennen)',
+ foot:'Preise trägst du selbst von den Shopseiten ein. Maßgeblich ist der Preis an der Kasse des Shops.'}};
+const EXAMPLES=['RTX 5080','Chanel No 5 100 ml','Teppich 200x300','Dyson V15','LEGO Technic','Nike Air Max'];
+const KEY='bf-de-v2';
+let S;
 const r2=x=>Math.round(x*100)/100;
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const t=(k,...a)=>(T[S.lang][k]||k).replace(/\{(\d)\}/g,(m,i)=>a[i]);
-const shopName=id=>{const s=SHOPS.find(x=>x.id===id);return s&&s.n?s.n:OTHER[S.lang];};
+const t=(k,...a)=>String(T[S.lang][k]??k).replace(/\{(\d)\}/g,(m,i)=>a[i]);
+const shop=id=>SHOPS.find(s=>s.id===id)||SHOPS[SHOPS.length-1];
+const shopName=id=>shop(id).n||(S.lang==='de'?'Anderer Shop':'其他商店');
+const searchUrl=(id,q)=>{const s=shop(id).s;if(!s)return '';const e=encodeURIComponent(q);return s.includes('{q}')?s.replace('{q}',e):s+e;};
 const eur=v=>new Intl.NumberFormat(S.lang==='de'?'de-DE':'zh-CN',{style:'currency',currency:'EUR'}).format(v);
 const uid=()=>Math.random().toString(36).slice(2,9);
-function num(raw){let s=String(raw==null?'':raw).replace(/[€\s]/g,'');if(!s)return null;
-  if(s.includes(',')&&s.includes('.'))s=s.replace(/\./g,'').replace(',','.');
-  else if(s.includes(','))s=s.replace(',','.');
-  else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
+function num(raw){let s=String(raw??'').replace(/[€\s]/g,'');if(!s)return null;
+  if(s.includes(',')&&s.includes('.'))s=s.replace(/\./g,'').replace(',','.');else if(s.includes(','))s=s.replace(',','.');else if(/^\d{1,3}(\.\d{3})+$/.test(s))s=s.replace(/\./g,'');
   const v=parseFloat(s);return isFinite(v)&&v>=0?r2(v):null;}
 const shown=v=>v==null?'':(S.lang==='de'?String(v).replace('.',','):String(v));
+const asinOf=s=>{const m=String(s||'').match(/(?:\/dp\/|\/gp\/product\/|\/gp\/aw\/d\/|\/product\/|ASIN[:\s]*|^\s*)([A-Z0-9]{10})(?![A-Z0-9])/i);return m&&/\d/.test(m[1])?m[1].toUpperCase():'';};
 
-function demo(){
-  const it=(name,offers,asin)=>({id:uid(),name,url:'',src:null,qty:1,on:true,demo:true,offers,asin:asin||''});
-  return {items:[
-    it('Grafikkarte RTX 5090 32 GB',{mindfactory:{p:2849,low:2849},alternate:{p:2879,low:2879},amazon:{p:2985.97,low:2899}}),
-    it('Crucial Pro DDR5 32 GB (2×16) 6000',{amazon:{p:597.98,low:499},mindfactory:{p:579,low:579},alternate:{p:589,low:589}},'B0CTHXMYL8'),
-    it('Parfum 100 ml',{douglas:{p:84.95,low:84.95},flaconi:{p:82.95,low:82.95},amazon:{p:86,low:86}})],
-   cfg:{mindfactory:{ship:6.99},alternate:{ship:5.99,vAmt:25,vMin:1000},amazon:{ship:3.99,free:39},douglas:{ship:4.95,free:39,cb:3},flaconi:{ship:4.95,free:99}}};
-}
 function load(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY)||'null');}catch(e){}
   const lang=(navigator.language||'').toLowerCase().startsWith('de')?'de':'zh';
-  if(s&&Array.isArray(s.items))return Object.assign({lang,prime:false,demo:false,cfg:{}},s);
-  const d=demo();return {lang,items:d.items,cfg:d.cfg,prime:false,demo:true};}
+  return Object.assign({lang,items:[],cfg:{},prime:false},s&&Array.isArray(s.items)?s:{});}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 const cfg=id=>S.cfg[id]||(S.cfg[id]={});
-
-const asinOf=s=>{const m=String(s||'').match(/(?:\/dp\/|\/gp\/product\/|\/gp\/aw\/d\/|\/product\/|ASIN[:\s]*|^\s*)([A-Z0-9]{10})(?![A-Z0-9])/i);return m&&/\d/.test(m[1])?m[1].toUpperCase():'';};
-function chartHTML(it){
-  if(!it.asin&&!('amazon' in it.offers))return '';
-  if(!it.asin)return `<div class="chart"><b>${t('chartT')}</b><label class="asin">${t('asinLbl')}<input data-id="${it.id}" data-f="asin" placeholder="${esc(t('asinPh'))}"></label><p class="note">${t('asinHint')}</p></div>`;
-  const a=it.asin;
-  const src=`https://graph.keepa.com/pricehistory.png?asin=${a}&domain=de&range=365`;
-  return `<div class="chart"><div class="ch"><b>${t('chartT')}</b></div>
-    <img class="phimg" referrerpolicy="no-referrer" alt="${esc(t('chartT'))}" src="${esc(src)}">
-    <p class="note">${t('chartHow')} ASIN ${a} · <a href="https://de.camelcamelcamel.com/product/${a}" target="_blank" rel="noopener">camelcamelcamel ↗</a> · <a href="https://keepa.com/#!product/3-${a}" target="_blank" rel="noopener">Keepa ↗</a> · <button class="linkbtn" data-act="noasin" data-id="${it.id}">${t('asinLbl')} ✎</button></p></div>`;
-}
-document.addEventListener('error',e=>{const x=e.target;if(x&&x.classList&&x.classList.contains('phimg')){const p=document.createElement('p');p.className='note';p.textContent=t('chartFail');x.replaceWith(p);}},true);
-// ---- parsing a share text ----
-function parse(text){
-  const m=text.match(/https?:\/\/[^\s"'<>，。）)]+/i);const url=m?m[0]:'';let host='';
-  try{host=url?new URL(url).hostname.replace(/^www\.|^m\./,''):'';}catch(e){}
-  const shop=host?(SHOPS.find(s=>s.h.some(h=>host===h||host.endsWith('.'+h)))||{id:'other'}).id:null;
-  let name=text.replace(url,' ').replace(/(Schau dir (das|dies|diesen Artikel) an|Sieh dir (das|dies) an|Check (this|it) out|bei Amazon\.de|auf Amazon|Ich habe .* gefunden|Teilen|Jetzt ansehen)[:!]?/gi,' ')
-    .replace(/[「」【】"“”]/g,' ').replace(/\s+/g,' ').trim().replace(/^[-:|,]+|[-:|,]+$/g,'').trim();
-  if(!name&&url){try{const segs=new URL(url).pathname.split('/').filter(x=>/[a-z]/i.test(x)&&/[-_]/.test(x));
-      const best=segs.sort((a,b)=>b.length-a.length)[0];
-      if(best)name=decodeURIComponent(best).replace(/\.html?$/,'').replace(/^_+/,'').replace(/[-_]+/g,' ').replace(/\s+\d{5,}.*$/,'').replace(/\s+(?=[A-Z0-9]*\d)[A-Z0-9]{6,}$/,'').trim();}catch(e){}}
-  if(name.length>120)name=name.slice(0,120)+'…';
-  return {url,shop,name};
-}
-function addFromText(){
-  const box=document.getElementById('paste');const v=box.value.trim();
-  if(!v){msg(t('addEmpty'));return;}
-  const p=parse(v);
-  if(p.url&&S.items.some(i=>i.url===p.url)){msg(t('addDup'));return;}
-  const wasDemo=S.demo;
-  if(S.demo){S.items=S.items.filter(i=>!i.demo);S.cfg={};S.demo=false;}
-  const it={id:uid(),name:p.name||t('unknown'),url:p.url,src:p.shop,qty:1,on:true,offers:{},asin:p.shop==='amazon'?asinOf(p.url):''};
-  if(p.shop)it.offers[p.shop]={p:null,low:null};
-  S.items.push(it);box.value='';
-  msg(t(wasDemo?'addOkDemo':'addOk',it.name,p.shop?shopName(p.shop):t('fromNone')));
-  render();
-  setTimeout(()=>{const e=document.querySelector(`[data-id="${it.id}"][data-f="p"]`);if(e)e.scrollIntoView({block:'center',behavior:'smooth'});},50);
-}
 const msg=s=>{document.getElementById('msg').textContent=s;};
 
-// ---- the maths ----
-function orderCost(shop,lines){
-  const c=cfg(shop);const sub=r2(lines.reduce((a,l)=>a+l.p*l.qty,0));
-  let v=0;const hasV=(c.vAmt||c.vPct);
-  if(hasV&&sub>=(c.vMin||0))v=r2(Math.min(sub,(c.vAmt||0)+sub*(c.vPct||0)/100));
-  let ship=c.ship||0;if(shop==='amazon'&&S.prime)ship=0;
-  if(ship&&c.free&&sub-v>=c.free)ship=0;
+// ---- input: a name or a share link ----
+function parse(text){
+  const m=text.match(/https?:\/\/[^\s"'<>，。）)]+/i);const url=m?m[0]:'';let host='';
+  try{host=url?new URL(url).hostname.replace(/^(www\d?|m)\./,''):'';}catch(e){}
+  const src=host?(SHOPS.find(s=>s.h.some(h=>host===h||host.endsWith('.'+h)))||{id:'other'}).id:null;
+  let name=text.replace(url,' ').replace(/(Schau dir (das|dies|diesen Artikel) an|Sieh dir (das|dies) an|Check (this|it) out|bei Amazon\.de|auf Amazon|Jetzt ansehen)[:!]?/gi,' ')
+    .replace(/[「」【】"“”]/g,' ').replace(/\s+/g,' ').trim().replace(/^[-:|,]+|[-:|,]+$/g,'').trim();
+  if(!name&&url){try{const segs=new URL(url).pathname.split('/').filter(x=>/[a-z]/i.test(x)&&/[-_]/.test(x));const b=segs.sort((a,c)=>c.length-a.length)[0];
+    if(b)name=decodeURIComponent(b).replace(/\.html?$/,'').replace(/^_+/,'').replace(/[-_]+/g,' ').replace(/\s+\d{5,}.*$/,'').replace(/\s+(?=[A-Z0-9]*\d)[A-Z0-9]{6,}$/,'').trim();}catch(e){}}
+  if(name.length>110)name=name.slice(0,110)+'…';
+  return {url,src,name};}
+function add(text){
+  const v=String(text||'').trim();if(!v){msg(t('emptyQ'));return;}
+  const p=parse(v);
+  if(!p.url&&!/[A-Za-zÀ-ÿ一-鿿]{2,}/.test(v)){msg(t('needName'));return;}
+  if(p.url&&S.items.some(i=>i.url===p.url)){msg(t('dup'));return;}
+  const cat=guessCat(p.name||'');const ids=[...new Set([...(p.src&&p.src!=='other'?[p.src]:[]),...CATS[cat]])];
+  if(p.src==='other')ids.push('other');
+  const it={id:uid(),name:p.name||t('unknown'),url:p.url,src:p.src,cat,qty:1,on:true,asin:p.src==='amazon'?asinOf(p.url):'',offers:{}};
+  ids.forEach(id=>{it.offers[id]={p:null,low:null};});
+  S.items.unshift(it);document.getElementById('q').value='';
+  msg(t('added',it.name,ids.length,T[S.lang].catNames[cat]));render();
+}
+
+// ---- maths ----
+function orderCost(sid,lines){
+  const c=cfg(sid);const sub=r2(lines.reduce((a,l)=>a+l.p*l.qty,0));
+  let v=0;const hasV=c.vAmt||c.vPct;if(hasV&&sub>=(c.vMin||0))v=r2(Math.min(sub,(c.vAmt||0)+sub*(c.vPct||0)/100));
+  let ship=c.ship||0;if(sid==='amazon'&&S.prime)ship=0;if(ship&&c.free&&sub-v>=c.free)ship=0;
   const pay=r2(sub-v+ship),cb=r2((sub-v)*(c.cb||0)/100);
-  const freeGap=(ship&&c.free)?r2(c.free-(sub-v)):0,vGap=(hasV&&!v&&c.vMin)?r2(c.vMin-sub):0;
-  return {shop,lines,sub,v,ship,pay,cb,net:r2(pay-cb),freeGap,vGap};
-}
-function evalAssign(units,choice){
-  const by={};units.forEach((u,i)=>{const o=u.opts[choice[i]];(by[o.shop]=by[o.shop]||[]).push({it:u.it,p:o.p,qty:u.it.qty});});
-  const orders=Object.keys(by).map(s=>orderCost(s,by[s]));
-  return {orders,pay:r2(orders.reduce((a,o)=>a+o.pay,0)),cb:r2(orders.reduce((a,o)=>a+o.cb,0)),net:r2(orders.reduce((a,o)=>a+o.net,0))};
-}
+  return {sid,lines,sub,v,ship,pay,cb,net:r2(pay-cb),freeGap:(ship&&c.free)?r2(c.free-(sub-v)):0,vGap:(hasV&&!v&&c.vMin)?r2(c.vMin-sub):0};}
+function evalA(units,ch){const by={};units.forEach((u,i)=>{const o=u.opts[ch[i]];(by[o.sid]=by[o.sid]||[]).push({it:u.it,p:o.p,qty:u.it.qty});});
+  const orders=Object.keys(by).map(s=>orderCost(s,by[s]));const sum=k=>r2(orders.reduce((a,o)=>a+o[k],0));return {orders,pay:sum('pay'),cb:sum('cb'),net:sum('net')};}
 function solve(){
-  const units=S.items.filter(i=>i.on).map(it=>({it,opts:Object.entries(it.offers).filter(([,o])=>o.p>0).map(([shop,o])=>({shop,p:o.p})).sort((a,b)=>a.p-b.p)})).filter(u=>u.opts.length);
+  const units=S.items.filter(i=>i.on).map(it=>({it,opts:Object.entries(it.offers).filter(([,o])=>o.p>0).map(([sid,o])=>({sid,p:o.p})).sort((a,b)=>a.p-b.p)})).filter(u=>u.opts.length);
   if(!units.length)return null;
-  const cheap=units.map(()=>0);const base=evalAssign(units,cheap);
-  let best=base,bestC=cheap.slice();
-  const combos=units.reduce((a,u)=>a*u.opts.length,1);
-  if(combos<=200000){const c=units.map(()=>0);
-    (function dfs(i){if(i===units.length){const r=evalAssign(units,c);if(r.net<best.net-0.001||(Math.abs(r.net-best.net)<0.001&&r.orders.length<best.orders.length)){best=r;bestC=c.slice();}return;}
-      for(let k=0;k<units[i].opts.length;k++){c[i]=k;dfs(i+1);}})(0);}
-  else{const shops=[...new Set(units.flatMap(u=>u.opts.map(o=>o.shop)))];
-    const starts=[cheap,...shops.map(s=>units.map(u=>{const k=u.opts.findIndex(o=>o.shop===s);return k<0?0:k;}))];
-    for(const st of starts){let c=st.slice(),cur=evalAssign(units,c),improved=true;
-      while(improved){improved=false;for(let i=0;i<units.length;i++)for(let k=0;k<units[i].opts.length;k++){if(k===c[i])continue;const old=c[i];c[i]=k;const r=evalAssign(units,c);if(r.net<cur.net-0.001){cur=r;improved=true;}else c[i]=old;}}
-      if(cur.net<best.net-0.001){best=cur;bestC=c.slice();}}}
-  return {best,base,units,bestC};
-}
+  const cheap=units.map(()=>0),base=evalA(units,cheap);let best=base,bestC=cheap.slice();
+  const better=(r,b)=>r.net<b.net-0.001||(Math.abs(r.net-b.net)<0.001&&r.orders.length<b.orders.length);
+  if(units.reduce((a,u)=>a*u.opts.length,1)<=200000){const c=units.map(()=>0);
+    (function dfs(i){if(i===units.length){const r=evalA(units,c);if(better(r,best)){best=r;bestC=c.slice();}return;}for(let k=0;k<units[i].opts.length;k++){c[i]=k;dfs(i+1);}})(0);}
+  else{const sids=[...new Set(units.flatMap(u=>u.opts.map(o=>o.sid)))];
+    for(const st of [cheap,...sids.map(s=>units.map(u=>Math.max(0,u.opts.findIndex(o=>o.sid===s))))]){let c=st.slice(),cur=evalA(units,c),imp=true;
+      while(imp){imp=false;for(let i=0;i<units.length;i++)for(let k=0;k<units[i].opts.length;k++){if(k===c[i])continue;const o=c[i];c[i]=k;const r=evalA(units,c);if(r.net<cur.net-0.001){cur=r;imp=true;}else c[i]=o;}}
+      if(better(cur,best)){best=cur;bestC=c.slice();}}}
+  const chosen={};units.forEach((u,i)=>{chosen[u.it.id]=u.opts[bestC[i]].sid;});
+  return {best,base,chosen};}
 
 // ---- rendering ----
 function countdown(){
-  const today=new Date().toLocaleDateString('en-CA',{timeZone:'Europe/Berlin'});
-  const bfOf=y=>{const d=new Date(Date.UTC(y,10,1));const th=(4-d.getUTCDay()+7)%7;return new Date(Date.UTC(y,10,1+th+21+1));};
-  const y=+today.slice(0,4),td=new Date(today+'T00:00:00Z');
-  let bf=bfOf(y);const cm=new Date(bf.getTime()+3*864e5);
+  const today=new Date().toLocaleDateString('en-CA',{timeZone:'Europe/Berlin'}),y=+today.slice(0,4),td=new Date(today+'T00:00:00Z');
+  const bfOf=y=>{const d=new Date(Date.UTC(y,10,1));const th=(4-d.getUTCDay()+7)%7;return new Date(Date.UTC(y,10,1+th+22));};
+  const bf=bfOf(y),cm=new Date(bf.getTime()+3*864e5);
   const f=d=>d.toLocaleDateString(S.lang==='de'?'de-DE':'zh-CN',{timeZone:'UTC',month:'long',day:'numeric',weekday:'short'});
-  const days=Math.round((bf-td)/864e5),dcm=Math.round((cm-td)/864e5);
-  let s;if(days>0)s=t('cdBefore',f(bf),days,f(cm));else if(days===0)s=t('cdToday',f(cm));else if(dcm>0)s=t('cdBetween',f(cm));else if(dcm===0)s=t('cdCM');else s=t('cdAfter',f(bfOf(y+1)));
-  document.getElementById('cd').textContent='⏳ '+s;
-}
-function verdict(o){if(!(o.p>0))return `<span class="v">${t('vNoPrice')}</span>`;
-  if(o.low>0){if(o.p>o.low+0.004)return `<span class="v bad">${t('vFake',eur(r2(o.p-o.low)))}</span>`;return `<span class="v ok">${t('vReal')}</span>`;}return '';}
-function itemsHTML(sol){
-  const chosen={};if(sol)sol.units.forEach((u,i)=>{chosen[u.it.id]=u.opts[sol.bestC[i]].shop;});
-  return S.items.map(it=>{const q=encodeURIComponent(it.name);
-    const rows=Object.keys(it.offers).map(sid=>{const o=it.offers[sid],sh=SHOPS.find(s=>s.id===sid);
-      const link=it.src===sid&&it.url?`<a href="${esc(it.url)}" target="_blank" rel="noopener">${t('open')}</a>`:(sh&&sh.s?`<a href="${esc(sh.s(q))}" target="_blank" rel="noopener">${t('search')}</a>`:'');
-      return `<div class="row${chosen[it.id]===sid&&it.on?' best':''}"><div class="rh"><b>${esc(shopName(sid))}</b>${link}<button class="x" data-act="rmo" data-id="${it.id}" data-s="${sid}" aria-label="×">×</button></div>
-       <div class="rf"><label>${t('price')}<input inputmode="decimal" data-id="${it.id}" data-s="${sid}" data-f="p" value="${esc(shown(o.p))}"></label><label>${t('low30')}<input inputmode="decimal" data-id="${it.id}" data-s="${sid}" data-f="low" value="${esc(shown(o.low))}"></label></div>${verdict(o)}</div>`;}).join('');
-    const free=SHOPS.filter(s=>!(s.id in it.offers));
-    return `<div class="item"><div class="ih"><input type="checkbox" data-act="on" data-id="${it.id}" ${it.on?'checked':''}><input class="nm" data-id="${it.id}" data-f="name" value="${esc(it.name)}"><span class="qty"><button data-act="q-" data-id="${it.id}">−</button><b>${it.qty}</b><button data-act="q+" data-id="${it.id}">+</button></span><button class="x" data-act="del" data-id="${it.id}" aria-label="×">×</button></div>
-      <div class="links">${it.url?`<a href="${esc(it.url)}" target="_blank" rel="noopener">${t('open')}</a>`:''}<a href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${q}" target="_blank" rel="noopener">${t('idealo')}</a></div>
-      ${chartHTML(it)}
-      <div class="offers">${rows}</div>
-      ${free.length?`<div class="addshop"><select data-act="adds" data-id="${it.id}"><option value="">${t('addShop')}</option>${free.map(s=>`<option value="${s.id}">${esc(shopName(s.id))}</option>`).join('')}</select></div>`:''}</div>`;}).join('');
-}
-function shopsHTML(){
-  const ids=[...new Set(S.items.flatMap(i=>Object.keys(i.offers)))];
-  if(!ids.length)return `<p class="note">${t('noShops')}</p>`;
-  const f=(id,k)=>`<label>${t(k)}<input inputmode="decimal" data-c="${k}" data-s="${id}" value="${esc(shown(cfg(id)[k]))}"></label>`;
-  return `<div class="shops">${ids.map(id=>`<div class="shop"><b>${esc(shopName(id))}</b>${id==='amazon'?`<label class="ck"><input type="checkbox" data-act="prime" ${S.prime?'checked':''}>${t('prime')}</label>`:''}<div class="sf">${['ship','free','vAmt','vPct','vMin','cb'].map(k=>f(id,k)).join('')}</div></div>`).join('')}</div>`;
-}
+  const d1=Math.round((bf-td)/864e5),d2=Math.round((cm-td)/864e5);
+  document.getElementById('cd').textContent='⏳ '+(d1>0?t('cdBefore',f(bf),d1,f(cm)):d1===0?t('cdToday',f(cm)):d2>0?t('cdBetween',f(cm)):d2===0?t('cdCM'):t('cdAfter',f(bfOf(y+1))));}
+function itemHTML(it,sol){
+  const best=sol&&it.on?sol.chosen[it.id]:null;const prices=Object.values(it.offers).map(o=>o.p).filter(p=>p>0);const min=prices.length?Math.min(...prices):null;
+  const rows=Object.keys(it.offers).map(sid=>{const o=it.offers[sid];const link=it.src===sid&&it.url?it.url:searchUrl(sid,it.name);
+    const fake=o.p>0&&o.low>0&&o.p>o.low+0.004;
+    return `<div class="row${best===sid?' best':''}">${link?`<a href="${esc(link)}" target="_blank" rel="noopener">${esc(shopName(sid))}</a>`:`<a>${esc(shopName(sid))}</a>`}
+      ${best===sid?`<span class="tag">${t('cheapest')}</span>`:fake?`<span class="tag bad">⚠</span>`:''}
+      <input inputmode="decimal" placeholder="${t('pricePh')}" data-id="${it.id}" data-s="${sid}" data-f="p" value="${esc(shown(o.p))}">
+      <button class="x" data-act="rmo" data-id="${it.id}" data-s="${sid}" aria-label="remove">×</button></div>`;}).join('');
+  const free=SHOPS.filter(s=>s.s&&!(s.id in it.offers));
+  const lows=Object.keys(it.offers).filter(sid=>it.offers[sid].p>0).map(sid=>{const o=it.offers[sid];
+    const v=o.low>0?(o.p>o.low+0.004?`<span class="v bad">${t('vFake',eur(r2(o.p-o.low)))}</span>`:`<span class="v ok">${t('vReal')}</span>`):'';
+    return `<div class="low"><span>${esc(shopName(sid))} ${v}</span><input inputmode="decimal" placeholder="€" data-id="${it.id}" data-s="${sid}" data-f="low" value="${esc(shown(o.low))}"></div>`;}).join('');
+  const amazonish=it.asin||('amazon' in it.offers);
+  const chart=!amazonish?'':(it.asin?`<div class="chart"><p class="note">${t('chartT')} · ASIN ${it.asin} · <a href="https://keepa.com/#!product/3-${it.asin}" target="_blank" rel="noopener">Keepa ↗</a> · <a href="https://de.camelcamelcamel.com/product/${it.asin}" target="_blank" rel="noopener">camelcamelcamel ↗</a> · <a href="#" data-act="noasin" data-id="${it.id}">✎</a></p><img class="phimg" referrerpolicy="no-referrer" loading="lazy" alt="Keepa" src="https://graph.keepa.com/pricehistory.png?asin=${it.asin}&amp;domain=de&amp;range=365"></div>`
+     :`<label class="note" style="display:block">${t('asinLbl')}<input data-id="${it.id}" data-f="asin" placeholder="B0…" style="margin-top:4px;width:100%;max-width:240px"></label>`);
+  const q=encodeURIComponent(it.name);
+  return `<div class="item"><div class="ih"><input type="checkbox" data-act="on" data-id="${it.id}" ${it.on?'checked':''}><input class="nm" data-id="${it.id}" data-f="name" value="${esc(it.name)}">
+     <span class="qty"><button data-act="q-" data-id="${it.id}">−</button><b>${it.qty}</b><button data-act="q+" data-id="${it.id}">+</button></span><button class="x" data-act="del" data-id="${it.id}" aria-label="delete">×</button></div>
+   <div class="meta">${t('cat')} <select data-act="cat" data-id="${it.id}">${Object.keys(CATS).map(k=>`<option value="${k}"${k===it.cat?' selected':''}>${T[S.lang].catNames[k]}</option>`).join('')}</select>
+     · <a href="https://www.idealo.de/preisvergleich/MainSearchProductCategory.html?q=${q}" target="_blank" rel="noopener">idealo ↗</a>
+     · <a href="https://geizhals.de/?fs=${q}" target="_blank" rel="noopener">geizhals ↗</a>${min!=null?` · ${eur(min)}`:''}</div>
+   <div class="rows">${rows}</div>
+   ${free.length?`<div class="addshop"><select data-act="adds" data-id="${it.id}"><option value="">${t('addShop')}</option>${free.map(s=>`<option value="${s.id}">${esc(s.n)}</option>`).join('')}</select></div>`:''}
+   <details class="more" data-id="${it.id}"${it.open?' open':''}><summary>${t('moreT')}</summary>${lows?`<p class="note">${t('lowT')}</p><div class="lows">${lows}</div>`:''}${chart}</details></div>`;}
 function planHTML(sol){
   if(!sol)return `<h2>${t('planT')}</h2><p class="note">${t('planEmpty')}</p>`;
   const b=sol.best,saved=r2(sol.base.net-b.net);
-  const ord=b.orders.map(o=>`<div class="order"><b>${t('orderAt',esc(shopName(o.shop)))}</b><table>
-    ${o.lines.map(l=>`<tr><td>${esc(l.it.name)} ×${l.qty}</td><td>${eur(r2(l.p*l.qty))}</td></tr>`).join('')}
-    ${o.v?`<tr><td>${t('vLine')}</td><td>−${eur(o.v)}</td></tr>`:''}
-    ${o.ship?`<tr><td>${t('shipLine')}</td><td>+${eur(o.ship)}</td></tr>`:''}
-    <tr class="tot"><td>${t('payLine')}</td><td>${eur(o.pay)}</td></tr>
-    ${o.cb?`<tr><td class="muted">${t('cbLine')}</td><td class="muted">−${eur(o.cb)}</td></tr>`:''}</table>
-    ${o.freeGap>0?`<p class="hint">${t('freeGap',eur(o.freeGap))}</p>`:''}${o.vGap>0?`<p class="hint">${t('vGap',eur(o.vGap))}</p>`:''}</div>`).join('');
-  const warns=[];
-  S.items.filter(i=>i.on).forEach(it=>Object.entries(it.offers).forEach(([sid,o])=>{if(o.p>0&&o.low>0&&o.p>o.low+0.004&&b.orders.some(od=>od.shop===sid&&od.lines.some(l=>l.it===it)))warns.push(t('warnFake',esc(it.name),esc(shopName(sid)),eur(r2(o.p-o.low))));}));
-  if(b.cb)warns.push(t('warnCb'));warns.push(t('warnRet'));
-  return `<h2>${t('planT')}</h2><p class="muted" style="margin-top:8px">${t('total')}</p><div class="big">${eur(b.pay)}</div>
-   ${b.cb?`<p class="muted">${t('afterCb',eur(b.net))}</p>`:''}
-   <p class="save">${saved>0.004?t('save',eur(saved)):t('same')}</p>${ord}
-   <div class="warns"><h3>${t('warnT')}</h3>${warns.map(w=>`<p>· ${w}</p>`).join('')}</div>`;
-}
+  const ords=b.orders.map(o=>`<div class="ord"><div>${t('buyAt',`<b>${esc(shopName(o.sid))}</b>`)}<small>${o.lines.map(l=>esc(l.it.name)+(l.qty>1?' ×'+l.qty:'')).join(' · ')}</small>
+      ${o.freeGap>0?`<small class="hint">${t('freeGap',eur(o.freeGap))}</small>`:''}${o.vGap>0?`<small class="hint">${t('vGap',eur(o.vGap))}</small>`:''}</div><b>${eur(o.pay)}</b></div>`).join('');
+  const det=b.orders.map(o=>`<p style="margin-top:8px"><b>${esc(shopName(o.sid))}</b></p><table>${o.lines.map(l=>`<tr><td>${esc(l.it.name)} ×${l.qty}</td><td>${eur(r2(l.p*l.qty))}</td></tr>`).join('')}
+      ${o.v?`<tr><td>${t('vLine')}</td><td>−${eur(o.v)}</td></tr>`:''}${o.ship?`<tr><td>${t('shipLine')}</td><td>+${eur(o.ship)}</td></tr>`:''}<tr><td><b>${t('payLine')}</b></td><td><b>${eur(o.pay)}</b></td></tr>${o.cb?`<tr><td class="muted">${t('cbLine')}</td><td class="muted">−${eur(o.cb)}</td></tr>`:''}</table>`).join('');
+  const warns=[];b.orders.forEach(o=>o.lines.forEach(l=>{const of=l.it.offers[o.sid];if(of.low>0&&of.p>of.low+0.004)warns.push(t('warnFake',esc(l.it.name),esc(shopName(o.sid)),eur(r2(of.p-of.low))));}));
+  return `<h2>${t('planT')}</h2><div class="big">${t('total',eur(b.pay))}</div>${b.cb?`<p class="muted">${t('afterCb',eur(b.net))}</p>`:''}
+   <p class="save">${saved>0.004?t('save',eur(saved)):t('same')}</p>${ords}${warns.map(w=>`<div class="warn">${w}</div>`).join('')}
+   <details style="margin-top:8px"><summary>${t('detail')}</summary>${det}</details>`;}
+function shopsHTML(){
+  const ids=[...new Set(S.items.flatMap(i=>Object.keys(i.offers).filter(s=>i.offers[s].p>0)))];
+  if(!ids.length)return `<p class="note">${t('noShops')}</p>`;
+  return ids.map(id=>`<div class="shop"><b>${esc(shopName(id))}</b>${id==='amazon'?`<label class="ck"><input type="checkbox" data-act="prime" ${S.prime?'checked':''}>${t('prime')}</label>`:''}
+    <div class="sf">${['ship','free','vAmt','vPct','vMin','cb'].map(k=>`<label>${t(k)}<input inputmode="decimal" data-c="${k}" data-s="${id}" value="${esc(shown(cfg(id)[k]))}"></label>`).join('')}</div></div>`).join('');}
 function applyLang(){
   document.documentElement.lang=S.lang==='de'?'de':'zh-CN';
   document.querySelectorAll('[data-t]').forEach(e=>{e.innerHTML=T[S.lang][e.dataset.t]||'';});
-  document.getElementById('paste').placeholder=t('pastePh');document.getElementById('code').placeholder=t('codePh');document.getElementById('q').placeholder=t('qPh');renderSearch();
-  document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on',b.dataset.lang===S.lang));
-}
+  document.getElementById('q').placeholder=t('qPh');document.getElementById('code').placeholder=t('codePh');
+  document.getElementById('ex').innerHTML=`<span class="note" style="margin:0">${t('try')}</span>`+EXAMPLES.map(x=>`<button class="chip" data-ex="${esc(x)}">${esc(x)}</button>`).join('');
+  document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('on',b.dataset.lang===S.lang));}
 function render(){
   const sol=solve();
-  document.getElementById('items').innerHTML=itemsHTML(sol);
-  document.getElementById('shops').innerHTML=shopsHTML();
+  document.getElementById('items').innerHTML=S.items.length?S.items.map(it=>itemHTML(it,sol)).join(''):`<p class="empty">${t('empty')}</p>`;
   document.getElementById('plan').innerHTML=planHTML(sol);
-  document.getElementById('demoBadge').hidden=!S.demo;document.getElementById('clearDemo').hidden=!S.demo;
-  countdown();save();
-}
+  document.getElementById('shops').innerHTML=shopsHTML();
+  countdown();save();}
 const find=id=>S.items.find(i=>i.id===id);
 
 // ---- events ----
-document.getElementById('q').addEventListener('input',renderLinks);
-document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();renderLinks();}});
-document.getElementById('qAdd').onclick=addFromSearch;
+document.getElementById('go').onclick=()=>add(document.getElementById('q').value);
+document.getElementById('q').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();add(e.target.value);}});
+document.addEventListener('toggle',e=>{const d=e.target;if(d.classList&&d.classList.contains('more')){const it=find(d.dataset.id);if(it){it.open=d.open;save();}}},true);
 document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
-  if(x.id==='cat'){S.cat=x.value;qShops=new Set(CATS[S.cat]);renderSearch();save();return;}
-  if(d.qs){if(x.checked)qShops.add(d.qs);else qShops.delete(d.qs);renderSearch();return;}
   if(d.f&&d.id){const it=find(d.id);if(!it)return;
-    if(d.f==='name'){it.name=x.value.trim()||t('unknown');}
-    else if(d.f==='asin'){it.asin=asinOf(x.value);}
-    else{it.offers[d.s][d.f]=num(x.value);}
+    if(d.f==='name')it.name=x.value.trim()||t('unknown');else if(d.f==='asin'){it.asin=asinOf(x.value);it.open=true;}else it.offers[d.s][d.f]=num(x.value);
     render();return;}
   if(d.c&&d.s){cfg(d.s)[d.c]=num(x.value);render();return;}
   if(d.act==='on'){find(d.id).on=x.checked;render();return;}
   if(d.act==='prime'){S.prime=x.checked;render();return;}
-  if(d.act==='adds'&&x.value){find(d.id).offers[x.value]={p:null,low:null};const sid=x.value;render();
+  if(d.act==='cat'){const it=find(d.id);it.cat=x.value;
+    for(const sid of Object.keys(it.offers))if(!(it.offers[sid].p>0)&&sid!==it.src)delete it.offers[sid];
+    CATS[it.cat].forEach(sid=>{if(!(sid in it.offers))it.offers[sid]={p:null,low:null};});render();return;}
+  if(d.act==='adds'&&x.value){const sid=x.value;find(d.id).offers[sid]={p:null,low:null};render();
     setTimeout(()=>{const el=document.querySelector(`[data-id="${d.id}"][data-s="${sid}"][data-f="p"]`);if(el)el.focus();},30);}
 });
-document.addEventListener('click',e=>{const x=e.target.closest('[data-act],[data-lang]');if(!x)return;const d=x.dataset;
+document.addEventListener('click',e=>{const x=e.target.closest('[data-act],[data-lang],[data-ex]');if(!x)return;const d=x.dataset;
+  if(d.ex){add(d.ex);return;}
   if(d.lang){S.lang=d.lang;applyLang();render();return;}
-  const it=d.id&&find(d.id);
-  if(d.act==='q+'&&it){it.qty=Math.min(99,it.qty+1);render();}
-  if(d.act==='q-'&&it){it.qty=Math.max(1,it.qty-1);render();}
-  if(d.act==='del'&&it){S.items=S.items.filter(i=>i!==it);render();}
-  if(d.act==='rmo'&&it){delete it.offers[d.s];render();}
-  if(d.act==='ch'&&it){it.ch=d.v;render();}
-  if(d.act==='noasin'&&it){it.asin='';render();}
+  const it=d.id&&find(d.id);if(!it)return;
+  if(d.act==='q+'){it.qty=Math.min(99,it.qty+1);render();}
+  if(d.act==='q-'){it.qty=Math.max(1,it.qty-1);render();}
+  if(d.act==='del'){S.items=S.items.filter(i=>i!==it);render();}
+  if(d.act==='rmo'){delete it.offers[d.s];render();}
+  if(d.act==='noasin'){e.preventDefault();it.asin='';render();}
 });
-document.getElementById('addBtn').onclick=addFromText;
-document.getElementById('sampleBtn').onclick=()=>{document.getElementById('paste').value='Schau dir das an: Kingston FURY Beast DDR5 32GB (2x16GB) 6000MT/s https://amzn.eu/d/0abcDEF';};
-document.getElementById('clearDemo').onclick=()=>{S.items=S.items.filter(i=>!i.demo);S.cfg={};S.demo=false;msg('');render();};
+document.addEventListener('error',e=>{const x=e.target;if(x&&x.classList&&x.classList.contains('phimg')){const p=document.createElement('p');p.className='note';p.textContent=t('chartFail');x.replaceWith(p);}},true);
 const b64e=s=>btoa(unescape(encodeURIComponent(s))),b64d=s=>decodeURIComponent(escape(atob(s)));
-document.getElementById('expBtn').onclick=async()=>{const code='BFDE1:'+b64e(JSON.stringify({items:S.items,cfg:S.cfg,prime:S.prime}));
-  const box=document.getElementById('code');box.value=code;box.select();let ok=false;
-  try{await navigator.clipboard.writeText(code);ok=true;}catch(e){}
-  document.getElementById('syncMsg').textContent=t(ok?'copied':'expOk');};
-document.getElementById('impBtn').onclick=()=>{const v=document.getElementById('code').value.trim();let o=null;
-  try{if(v.startsWith('BFDE1:'))o=JSON.parse(b64d(v.slice(6)));}catch(e){}
+document.getElementById('expBtn').onclick=async()=>{const code='BFDE2:'+b64e(JSON.stringify({items:S.items,cfg:S.cfg,prime:S.prime}));const box=document.getElementById('code');box.value=code;box.select();
+  let ok=false;try{await navigator.clipboard.writeText(code);ok=true;}catch(e){}document.getElementById('syncMsg').textContent=t(ok?'copied':'expOk');};
+document.getElementById('impBtn').onclick=()=>{const v=document.getElementById('code').value.trim();let o=null;try{if(/^BFDE[12]:/.test(v))o=JSON.parse(b64d(v.slice(6)));}catch(e){}
   if(!o||!Array.isArray(o.items)){document.getElementById('syncMsg').textContent=t('impBad');return;}
-  S.items=o.items;S.cfg=o.cfg||{};S.prime=!!o.prime;S.demo=false;document.getElementById('syncMsg').textContent=t('impOk');render();};
-document.getElementById('resetBtn').onclick=()=>{S.items=[];S.cfg={};S.demo=false;document.getElementById('syncMsg').textContent=t('resetOk');render();};
+  o.items.forEach(i=>{if(!i.cat)i.cat=guessCat(i.name||'');});S.items=o.items;S.cfg=o.cfg||{};S.prime=!!o.prime;document.getElementById('syncMsg').textContent=t('impOk');render();};
+document.getElementById('resetBtn').onclick=()=>{S.items=[];S.cfg={};document.getElementById('syncMsg').textContent=t('resetOk');render();};
 
 S=load();applyLang();render();
 </script>
