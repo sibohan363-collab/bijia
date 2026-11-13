@@ -249,7 +249,7 @@ summary{cursor:pointer;font-weight:600;font-size:14px}
       <p class="small muted">每个人填自己的 Key，只存在自己的手机或电脑上，不会传给你或别人。你把 App 分享到朋友圈、家庭群，别人用的是他们自己的 Key，不会用到你的账号。价格还是由程序算，AI 只负责看懂乱七八糟的券规则、帮你检查方案。</p>
       <div class="aigrid">
         <label class="field">用哪家<select id="aiProv"></select></label>
-        <label class="field">API Key<input type="password" id="aiKey" autocomplete="off" spellcheck="false" placeholder="sk-…"></label>
+        <label class="field">API Key<input type="password" id="aiKey" autocomplete="off" spellcheck="false" placeholder="sk-… 或 AIza…"></label>
         <label class="field">模型<input type="text" id="aiModel" spellcheck="false"></label>
         <label class="field">接口地址<input type="text" id="aiBase" spellcheck="false"></label>
       </div>
@@ -1011,6 +1011,7 @@ const AI_PROV=[
  {id:'kimi',name:'Kimi（月之暗面）',kind:'openai',base:'https://api.moonshot.cn/v1',model:'moonshot-v1-8k'},
  {id:'qwen',name:'通义千问',kind:'openai',base:'https://dashscope.aliyuncs.com/compatible-mode/v1',model:'qwen-plus'},
  {id:'glm',name:'智谱 GLM',kind:'openai',base:'https://open.bigmodel.cn/api/paas/v4',model:'glm-4-flash'},
+ {id:'gemini',name:'Google Gemini',kind:'openai',base:'https://generativelanguage.googleapis.com/v1beta/openai',model:'gemini-2.5-flash'},
  {id:'openai',name:'OpenAI',kind:'openai',base:'https://api.openai.com/v1',model:'gpt-4o-mini'},
  {id:'claude',name:'Claude（Anthropic）',kind:'anthropic',base:'https://api.anthropic.com/v1',model:'claude-sonnet-5-5'},
  {id:'custom',name:'其他（兼容 OpenAI 格式）',kind:'openai',base:'',model:''},
